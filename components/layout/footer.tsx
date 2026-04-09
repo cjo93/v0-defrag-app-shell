@@ -23,9 +23,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-border bg-card mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+    <footer className="border-t border-border/40 bg-card/40 backdrop-blur-sm mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-12">
           {/* About */}
           <div>
             <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">About</h4>

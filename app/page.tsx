@@ -9,16 +9,21 @@ export default function LandingPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="flex-1 py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section className="flex-1 py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Subtle ambient background */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
           {/* Left: Hero Copy */}
           <div className="space-y-8 max-w-xl">
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-balance leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-balance leading-tight tracking-tight">
                 You know what you meant. Defrag shows you what they may have heard.
               </h1>
               
-              <p className="text-lg md:text-xl text-muted-foreground text-balance leading-relaxed">
+              <p className="text-lg md:text-xl text-muted-foreground text-balance leading-relaxed font-light">
                 Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
               </p>
               
@@ -27,87 +32,91 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button size="lg" asChild className="text-base px-8 py-6 bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <Button size="lg" asChild className="text-base font-medium px-8 py-6 bg-gradient-to-br from-primary via-primary to-primary/90 hover:from-primary/95 hover:via-primary/90 hover:to-primary/85 shadow-lg hover:shadow-xl transition-all duration-200">
                 <Link href="/workspace">Open Workspace</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="text-base px-8 py-6">
+              <Button size="lg" variant="outline" asChild className="text-base px-8 py-6 hover:bg-muted/8 transition-colors">
                 <Link href="/pricing">See Pricing</Link>
               </Button>
             </div>
           </div>
 
-          {/* Right: Workspace Preview */}
+          {/* Right: Workspace Preview - Premium Rendering */}
           <div className="hidden lg:flex justify-center">
-            <div className="w-full max-w-2xl bg-card border border-border rounded-lg overflow-hidden shadow-xl flex flex-col">
+            <div className="w-full max-w-2xl bg-card/60 backdrop-blur-sm border border-border/60 rounded-xl overflow-hidden shadow-2xl flex flex-col relative">
+              {/* Ambient glow on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
               {/* Preview Header */}
-              <div className="border-b border-border px-4 py-3 bg-card">
-                <div className="text-xs font-semibold text-foreground/90">Workspace Preview</div>
+              <div className="border-b border-border/40 px-4 py-3 bg-gradient-to-r from-card/80 to-card/60 backdrop-blur">
+                <div className="text-xs font-semibold text-foreground tracking-wide">Live Workspace</div>
               </div>
               
               {/* Preview Content: Conversation + Canvas Layout */}
-              <div className="flex-1 flex overflow-hidden min-h-[400px]">
+              <div className="flex-1 flex overflow-hidden min-h-[420px] relative z-10">
                 {/* Left: Thread Lanes */}
-                <div className="w-2/5 border-r border-border flex flex-col">
+                <div className="w-2/5 border-r border-border/40 flex flex-col bg-gradient-to-b from-background/80 to-background/60">
                   {/* Primary Interpretation Lane */}
-                  <div className="flex-1 border-b border-border/50 p-4 space-y-2 bg-background/50">
-                    <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Primary</div>
+                  <div className="flex-1 border-b border-border/30 p-4 space-y-2">
+                    <div className="text-[10px] font-semibold text-primary/80 uppercase tracking-wider">Interpretation</div>
                     <div className="space-y-2">
-                      <div className="px-3 py-2 rounded bg-primary/10 border border-primary/20 text-xs text-foreground/90 leading-relaxed">
-                        They likely interpreted this as criticism
+                      <div className="px-3 py-2.5 rounded-md bg-gradient-to-br from-primary/12 to-primary/6 border border-primary/25 text-xs text-foreground/95 leading-relaxed font-medium">
+                        They may read criticism where you meant help
                       </div>
-                      <div className="px-3 py-2 rounded bg-primary/8 border border-primary/15 text-xs text-foreground/80 leading-relaxed">
-                        Your intent was to help, but timing felt abrupt
+                      <div className="px-3 py-2.5 rounded-md bg-primary/6 border border-primary/15 text-xs text-foreground/80 leading-relaxed">
+                        Timing felt abrupt during their stress
                       </div>
                     </div>
                   </div>
                   
-                  {/* Branch Simulation Lane */}
-                  <div className="flex-1 p-4 space-y-2 bg-background/30">
-                    <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Branch</div>
+                  {/* Simulations Lane */}
+                  <div className="flex-1 p-4 space-y-2">
+                    <div className="text-[10px] font-semibold text-secondary/80 uppercase tracking-wider">Simulations</div>
                     <div className="space-y-2">
-                      <div className="px-3 py-2 rounded bg-secondary/10 border border-secondary/20 text-xs text-foreground/90 leading-relaxed">
-                        Try: "I know this is hard for you..."
+                      <div className="px-3 py-2.5 rounded-md bg-gradient-to-br from-secondary/12 to-secondary/6 border border-secondary/25 text-xs text-foreground/95 leading-relaxed font-medium">
+                        Lead with validation: "I know this is hard..."
                       </div>
-                      <div className="px-3 py-2 rounded bg-secondary/8 border border-secondary/15 text-xs text-foreground/80 leading-relaxed">
-                        Lead with validation first
+                      <div className="px-3 py-2.5 rounded-md bg-secondary/6 border border-secondary/15 text-xs text-foreground/80 leading-relaxed">
+                        Empathy creates safety first
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Right: Canvas Field */}
-                <div className="flex-1 p-4 bg-background/20">
-                  <div className="h-full flex flex-col gap-3">
-                    {/* Artifact Grid */}
-                    <div className="grid grid-cols-2 gap-2 flex-1">
-                      <div className="rounded border border-primary/25 bg-primary/8 p-3 flex flex-col justify-between">
-                        <div className="text-xs font-medium text-foreground/80">Map</div>
-                        <div className="flex items-center gap-1">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse"></div>
-                          <div className="text-[10px] text-primary/70">generating</div>
-                        </div>
-                      </div>
-                      
-                      <div className="rounded border border-border bg-card p-3 flex flex-col justify-between">
-                        <div className="text-xs font-medium text-foreground/70">System</div>
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
-                      </div>
-                      
-                      <div className="rounded border border-border bg-card p-3 flex flex-col justify-between">
-                        <div className="text-xs font-medium text-foreground/70">Sim</div>
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
-                      </div>
-                      
-                      <div className="rounded border border-border/50 bg-muted/20 p-3 flex flex-col justify-between opacity-50">
-                        <div className="text-xs font-medium text-muted-foreground">Timing</div>
-                        <div className="w-1.5 h-1.5 rounded-full bg-muted/40"></div>
+                {/* Right: Canvas Field - Artifact Grid */}
+                <div className="flex-1 p-4 bg-gradient-to-br from-background/40 to-background/20 flex flex-col gap-3">
+                  {/* Artifact Grid */}
+                  <div className="grid grid-cols-2 gap-2 flex-1">
+                    <div className="rounded-lg border border-primary/30 bg-gradient-to-br from-primary/15 to-primary/8 p-3 flex flex-col justify-between hover:border-primary/50 hover:from-primary/20 transition-all">
+                      <div className="text-xs font-semibold text-primary/90">Map</div>
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/70 animate-pulse"></div>
+                        <div className="text-[10px] text-primary/70 font-medium">generating</div>
                       </div>
                     </div>
+                    
+                    <div className="rounded-lg border border-primary/20 bg-gradient-to-br from-primary/8 to-primary/4 p-3 flex flex-col justify-between hover:border-primary/35 transition-all">
+                      <div className="text-xs font-semibold text-foreground/70">System</div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
+                    </div>
+                    
+                    <div className="rounded-lg border border-secondary/20 bg-gradient-to-br from-secondary/8 to-secondary/4 p-3 flex flex-col justify-between hover:border-secondary/35 transition-all">
+                      <div className="text-xs font-semibold text-foreground/70">Sim</div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
+                    </div>
+                    
+                    <div className="rounded-lg border border-border/20 bg-muted/8 p-3 flex flex-col justify-between opacity-60 hover:opacity-80 transition-opacity">
+                      <div className="text-xs font-semibold text-muted-foreground/70">Timing</div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted/40"></div>
+                    </div>
+                  </div>
 
-                    {/* Canvas Active Indicator */}
-                    <div className="flex items-center justify-center py-3 rounded bg-primary/5 border border-primary/10">
-                      <div className="text-xs text-muted-foreground/80">Canvas active</div>
+                  {/* Canvas Status */}
+                  <div className="flex items-center justify-center py-2.5 rounded-lg bg-gradient-to-r from-primary/8 to-secondary/6 border border-primary/15">
+                    <div className="flex items-center gap-1.5">
+                      <span className="inline-block w-1 h-1 rounded-full bg-emerald-500/80 animate-pulse"></span>
+                      <div className="text-xs text-muted-foreground/80 font-medium">Canvas live</div>
                     </div>
                   </div>
                 </div>

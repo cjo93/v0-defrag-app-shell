@@ -13,11 +13,11 @@ const workspaces = [
 
 export function WorkspaceHeader() {
   return (
-    <header className="hidden md:flex flex-shrink-0 h-14 border-b border-border/30 bg-background/50 backdrop-blur-sm px-6 items-center justify-between gap-6">
+    <header className="hidden md:flex flex-shrink-0 h-14 border-b border-border/40 bg-card/60 backdrop-blur-md px-6 items-center justify-between gap-6 sticky top-0 z-30">
       {/* Left: Logo + Workspace Switcher */}
       <div className="flex items-center gap-4 min-w-0">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
           <div className="text-sm font-bold text-foreground tracking-widest">DEFRAG</div>
         </Link>
 
@@ -25,26 +25,26 @@ export function WorkspaceHeader() {
         <div className="flex items-center gap-2 border-l border-border/30 pl-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-xs gap-2">
+              <Button variant="ghost" size="sm" className="text-xs gap-2 hover:bg-muted/10 transition-colors">
                 <span className="hidden sm:inline">Main Workspace</span>
                 <span className="inline sm:hidden">Main</span>
-                <svg className="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 opacity-50 hover:opacity-70 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-48">
               {workspaces.map((ws) => (
-                <DropdownMenuItem key={ws.id} className={ws.active ? 'bg-primary/10' : ''}>
+                <DropdownMenuItem key={ws.id} className={`${ws.active ? 'bg-primary/15 border-l-2 border-primary' : ''} transition-colors`}>
                   <div className="flex items-center gap-2 w-full">
-                    <div className={`w-2 h-2 rounded-full ${ws.active ? 'bg-primary' : 'bg-muted'}`}></div>
+                    <div className={`w-2 h-2 rounded-full transition-all ${ws.active ? 'bg-primary scale-125' : 'bg-muted'}`}></div>
                     <span className="text-sm">{ws.name}</span>
                   </div>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <span className="text-sm text-primary">+ New workspace</span>
+              <DropdownMenuItem className="hover:bg-primary/10 transition-colors">
+                <span className="text-sm text-primary font-medium">+ New workspace</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

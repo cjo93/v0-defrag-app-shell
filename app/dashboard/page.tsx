@@ -45,30 +45,37 @@ export default function DashboardPage() {
               <p className="text-3xl font-bold text-foreground">0</p>
             </div>
 
-            {/* Your Baseline Panel */}
-            <div className="p-6 rounded-lg bg-gradient-to-br from-primary/8 to-secondary/5 border border-primary/20 space-y-4">
-              <div className="flex items-start justify-between">
+            {/* Your Baseline Panel - Premium Treatment */}
+            <div className="p-6 rounded-lg bg-gradient-to-br from-primary/12 via-primary/6 to-secondary/5 border border-primary/25 space-y-4 relative overflow-hidden group hover:border-primary/40 transition-colors">
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none"></div>
+              
+              <div className="relative z-10 flex items-start justify-between">
                 <div>
                   <p className="text-sm font-semibold text-primary tracking-wide uppercase">Your Baseline</p>
-                  <p className="text-xs text-muted-foreground font-light mt-1">Your relational profile</p>
+                  <p className="text-xs text-muted-foreground/70 font-light mt-1">Your relational profile</p>
                 </div>
               </div>
               
-              {/* Plain-language first layer */}
-              <div className="space-y-2.5">
+              {/* Plain-language first layer - prominent */}
+              <div className="relative z-10 space-y-3">
                 <div className="text-sm leading-relaxed">
-                  <p className="font-medium text-foreground">Direct communicator, conflict-averse under pressure</p>
+                  <p className="font-semibold text-foreground/95">Direct communicator who withdraws under pressure</p>
                 </div>
-                <div className="text-xs text-muted-foreground space-y-1.5">
-                  <p>Tends to withdraw then reconnect after cooling off</p>
+                <div className="text-xs text-muted-foreground/80 space-y-1.5 leading-relaxed">
+                  <p>Tends to go quiet when stressed, then reconnects after cooling off</p>
                   <p>Triggered by criticism when already tired</p>
-                  <p>Values honesty but struggles with timing</p>
+                  <p>Values honesty but struggles with timing and tone</p>
                 </div>
               </div>
               
-              {/* Secondary frameworks disclosure */}
-              <button className="text-xs font-medium text-primary/70 hover:text-primary transition flex items-center gap-1 pt-1">
-                <span>▼</span>
+              {/* Secondary frameworks disclosure - refined */}
+              <button className="relative z-10 text-xs font-medium text-primary/60 hover:text-primary/80 transition flex items-center gap-1.5 pt-2 group/btn">
+                <span className="inline-block w-3 h-3 flex items-center justify-center transform transition-transform group-hover/btn:translate-x-0.5">
+                  <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
+                    <path d="M 1 1 L 5 5 L 1 9" />
+                  </svg>
+                </span>
                 <span>Based on: insight layers</span>
               </button>
             </div>
