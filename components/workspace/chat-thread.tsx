@@ -28,14 +28,14 @@ const mockMessages: Message[] = [
 
 export function ChatThread() {
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-4">
+    <div className="flex-1 overflow-y-auto p-4 space-y-3">
       {mockMessages.map((message) => (
         <div key={message.id} className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="font-medium text-foreground text-sm">{message.author}</span>
+            <span className="text-xs font-semibold text-foreground tracking-wide">{message.author}</span>
             <span className="text-xs text-muted-foreground">{message.timestamp}</span>
           </div>
-          <p className="text-sm text-foreground bg-card p-3 rounded-md border border-border">
+          <p className="text-sm text-foreground leading-relaxed">
             {message.content}
           </p>
         </div>

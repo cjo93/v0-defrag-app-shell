@@ -8,69 +8,167 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-        <div className="text-center space-y-8 max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-pretty">
-            You know what you meant.
-          </h1>
-          
-          <h2 className="text-xl md:text-2xl text-muted-foreground text-balance">
-            Defrag shows you what they may have heard.
-          </h2>
+      {/* Hero Section with Integrated Preview */}
+      <section className="flex-1 py-16 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left: Hero Copy */}
+            <div className="space-y-8 max-w-xl">
+              <div className="space-y-6">
+                <h1 className="text-foreground text-pretty">
+                  You know what you meant.
+                </h1>
+                
+                <h2 className="text-2xl md:text-3xl font-semibold text-muted-foreground text-pretty">
+                  Defrag shows you what they may have heard.
+                </h2>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
+                  Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
+                </p>
+              </div>
 
-          <p className="text-lg text-muted-foreground text-balance">
-            Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
-          </p>
+              <p className="text-base text-muted-foreground italic">
+                See the interaction from more than one side before the same misunderstanding gets worse.
+              </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-            <Button size="lg" asChild>
-              <Link href="/dashboard">Get Started</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/pricing">View Pricing</Link>
-            </Button>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button size="lg" asChild className="text-base px-8 py-6">
+                  <Link href="/dashboard">Start Free Trial</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="text-base px-8 py-6">
+                  <Link href="/pricing">View Pricing</Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right: Workspace Preview */}
+            <div className="hidden lg:flex justify-center">
+              <div className="w-full max-w-lg aspect-square bg-card border border-border rounded-lg overflow-hidden shadow-2xl flex flex-col">
+                {/* Preview Header */}
+                <div className="border-b border-border px-6 py-4 bg-secondary/30">
+                  <h3 className="text-sm font-semibold text-foreground">Defrag Workspace</h3>
+                </div>
+                
+                {/* Preview Content */}
+                <div className="flex-1 flex overflow-hidden">
+                  {/* Preview Sidebar */}
+                  <div className="w-1/4 border-r border-border bg-secondary/10 p-4">
+                    <div className="space-y-3">
+                      <div className="h-2 bg-muted rounded w-2/3"></div>
+                      <div className="h-2 bg-muted rounded w-full"></div>
+                      <div className="h-2 bg-muted rounded w-3/4"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Preview Center Canvas */}
+                  <div className="flex-1 flex flex-col border-r border-border">
+                    <div className="flex-1 flex items-center justify-center p-6">
+                      <div className="space-y-4 w-full">
+                        <div className="h-3 bg-muted rounded w-5/6"></div>
+                        <div className="h-3 bg-muted rounded w-full"></div>
+                        <div className="h-3 bg-muted rounded w-4/5"></div>
+                      </div>
+                    </div>
+                    <div className="border-t border-border p-3 bg-secondary/20">
+                      <div className="h-8 bg-muted rounded"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Preview Right Panel */}
+                  <div className="w-1/4 bg-secondary/10 p-3 border-l border-border">
+                    <div className="space-y-2">
+                      <div className="h-2 bg-muted rounded"></div>
+                      <div className="h-2 bg-muted rounded w-4/5"></div>
+                      <div className="h-2 bg-muted rounded w-3/4"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <p className="text-sm text-muted-foreground pt-4">
-            See the interaction from more than one side before the same misunderstanding gets worse.
-          </p>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="bg-card border-t border-border py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-12 text-center">How Defrag Works</h2>
+      {/* How It Works Band */}
+      <section className="py-16 md:py-20 bg-card border-t border-b border-border">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-12 text-center">
+            How Defrag Works
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-3 text-center">
-              <div className="w-12 h-12 rounded-lg bg-primary text-primary-foreground flex items-center justify-center mx-auto text-lg font-semibold">
-                1
-              </div>
-              <h3 className="font-semibold text-foreground">Share the Moment</h3>
-              <p className="text-sm text-muted-foreground">
-                Describe the interaction and what you meant to communicate.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <p className="text-lg font-semibold text-foreground">
+                You describe the moment
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Share what happened and what you meant to communicate in the interaction.
               </p>
             </div>
 
-            <div className="space-y-3 text-center">
-              <div className="w-12 h-12 rounded-lg bg-primary text-primary-foreground flex items-center justify-center mx-auto text-lg font-semibold">
-                2
-              </div>
-              <h3 className="font-semibold text-foreground">See Their Perspective</h3>
-              <p className="text-sm text-muted-foreground">
-                Understand how they may be interpreting your words and actions.
+            <div className="space-y-4">
+              <p className="text-lg font-semibold text-foreground">
+                Defrag shows their perspective
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                See how they may be reading your words, tone, and actions in that moment.
               </p>
             </div>
 
-            <div className="space-y-3 text-center">
-              <div className="w-12 h-12 rounded-lg bg-primary text-primary-foreground flex items-center justify-center mx-auto text-lg font-semibold">
-                3
-              </div>
-              <h3 className="font-semibold text-foreground">Respond Better</h3>
-              <p className="text-sm text-muted-foreground">
-                Get suggestions for responses more likely to help and prevent misunderstanding.
+            <div className="space-y-4">
+              <p className="text-lg font-semibold text-foreground">
+                Get better responses
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Suggestions for what to say or do that's more likely to help and prevent misunderstanding.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What Defrag Helps You See */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
+            What Defrag Helps You See
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <div className="space-y-4 border-l-2 border-primary pl-6">
+              <h3 className="text-xl font-semibold text-foreground">
+                The gap between intent and impact
+              </h3>
+              <p className="text-base text-muted-foreground">
+                Your intention doesn't always match how others receive it. Defrag helps you see and close that gap.
+              </p>
+            </div>
+
+            <div className="space-y-4 border-l-2 border-primary pl-6">
+              <h3 className="text-xl font-semibold text-foreground">
+                What might be driving their reaction
+              </h3>
+              <p className="text-base text-muted-foreground">
+                Context, history, and unspoken emotions shape how people respond. Understanding this changes everything.
+              </p>
+            </div>
+
+            <div className="space-y-4 border-l-2 border-primary pl-6">
+              <h3 className="text-xl font-semibold text-foreground">
+                Patterns in your interactions
+              </h3>
+              <p className="text-base text-muted-foreground">
+                Recognize recurring misunderstandings and the conditions that create them.
+              </p>
+            </div>
+
+            <div className="space-y-4 border-l-2 border-primary pl-6">
+              <h3 className="text-xl font-semibold text-foreground">
+                Paths forward
+              </h3>
+              <p className="text-base text-muted-foreground">
+                Clear, actionable suggestions for responses and approaches that build understanding instead of conflict.
               </p>
             </div>
           </div>
@@ -78,14 +176,19 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-background py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-3xl font-bold text-foreground">Ready to communicate better?</h2>
-          <p className="text-lg text-muted-foreground">
-            Join teams already using Defrag to prevent misunderstandings and build stronger relationships.
-          </p>
-          <Button size="lg" asChild>
-            <Link href="/dashboard">Start Free Trial</Link>
+      <section className="py-16 md:py-20 bg-card border-t border-border">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Better communication starts here
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              See the interaction from more than one side. Prevent misunderstandings before they grow.
+            </p>
+          </div>
+          
+          <Button size="lg" asChild className="text-base px-10 py-7">
+            <Link href="/dashboard">Get Started Free</Link>
           </Button>
         </div>
       </section>

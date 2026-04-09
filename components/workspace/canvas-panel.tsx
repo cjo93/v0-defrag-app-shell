@@ -1,18 +1,25 @@
 export function CanvasPanel() {
   return (
-    <div className="w-80 border-l border-border bg-card flex flex-col h-full">
-      <div className="p-6 space-y-4 flex-1 overflow-y-auto">
-        <div>
-          <h3 className="font-semibold text-foreground text-sm mb-2">Canvas</h3>
-          <p className="text-xs text-muted-foreground mb-4">
-            Artifacts and reference materials appear here.
-          </p>
-        </div>
-
-        <div className="space-y-3">
-          <div className="p-3 rounded-md bg-secondary border border-border">
-            <p className="text-xs font-medium text-muted-foreground">No artifacts yet</p>
+    <div className="flex-1 min-w-0 bg-card border-l border-border flex flex-col h-full overflow-hidden">
+      {/* Canvas Header */}
+      <div className="flex-shrink-0 border-b border-border px-6 py-5 bg-background/50">
+        <h2 className="text-sm font-semibold text-foreground tracking-wide">Canvas</h2>
+        <p className="text-xs text-muted-foreground mt-1">
+          Workspace, relations, and insights
+        </p>
+      </div>
+      
+      {/* Canvas Content */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 flex flex-col items-center justify-center">
+        <div className="w-24 h-24 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-xs font-medium text-muted-foreground">Canvas</p>
           </div>
+        </div>
+        <div className="text-center max-w-xs">
+          <p className="text-sm text-muted-foreground">
+            Start a conversation to see the relational context and analysis.
+          </p>
         </div>
       </div>
     </div>
