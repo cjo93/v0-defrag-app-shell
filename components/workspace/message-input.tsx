@@ -14,13 +14,13 @@ export function MessageInput() {
   }
 
   return (
-    <div className="border-t border-border bg-card p-4 space-y-3">
-      <div className="flex gap-3">
+    <div className="border-t border-border/50 bg-background p-4 space-y-2.5">
+      <div className="flex gap-2">
         <Input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="bg-secondary border-border text-foreground"
+          placeholder="Describe a moment..."
+          className="bg-background border-border/50 text-foreground text-sm font-light placeholder:text-muted-foreground/50"
           onKeyPress={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
@@ -28,12 +28,12 @@ export function MessageInput() {
             }
           }}
         />
-        <Button onClick={handleSend} size="sm">
+        <Button onClick={handleSend} size="sm" className="px-4">
           Send
         </Button>
       </div>
-      <p className="text-xs text-muted-foreground">
-        Defrag helps you see how the other person may be reading the moment.
+      <p className="text-xs text-muted-foreground/70 font-light px-1">
+        Defrag reveals how the other person may be reading the interaction
       </p>
     </div>
   )

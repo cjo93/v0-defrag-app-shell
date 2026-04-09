@@ -8,7 +8,7 @@ interface Message {
 const mockMessages: Message[] = [
   {
     id: '1',
-    author: 'User',
+    author: 'You',
     content: 'How are we feeling about the current approach?',
     timestamp: '10:32 AM',
   },
@@ -20,7 +20,7 @@ const mockMessages: Message[] = [
   },
   {
     id: '3',
-    author: 'User',
+    author: 'You',
     content: 'I see. What if we frame it differently?',
     timestamp: '10:34 AM',
   },
@@ -28,18 +28,31 @@ const mockMessages: Message[] = [
 
 export function ChatThread() {
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-3">
-      {mockMessages.map((message) => (
-        <div key={message.id} className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-foreground tracking-wide">{message.author}</span>
-            <span className="text-xs text-muted-foreground">{message.timestamp}</span>
+    <div className="flex-1 overflow-y-auto space-y-4 p-5">
+      {mockMessages.map((message) => {
+        const isDefrag = message.author === 'Defrag'
+        return (
+          <div key={message.id} className="space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <span className={`text-xs font-semibold tracking-wide ${
+                isDefrag ? 'text-primary' : 'text-foreground'
+              }`}>
+                {message.author}
+              </span>
+              <span className="text-xs text-muted-foreground/70">{message.timestamp}</span>
+            </div>
+            <div className={`px-3 py-2.5 rounded-md border ${
+              isDefrag 
+                ? 'bg-secondary/20 border-secondary/40 text-foreground' 
+                : 'bg-background border-border/50 text-foreground'
+            }`}>
+              <p className="text-sm leading-relaxed font-light">
+                {message.content}
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-foreground leading-relaxed">
-            {message.content}
-          </p>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

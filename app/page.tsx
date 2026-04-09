@@ -46,42 +46,55 @@ export default function LandingPage() {
             <div className="hidden lg:flex justify-center">
               <div className="w-full max-w-lg aspect-square bg-background border border-border rounded-lg overflow-hidden shadow-2xl flex flex-col">
                 {/* Preview Header */}
-                <div className="border-b border-border px-4 py-3 bg-background/50">
-                  <h3 className="text-xs font-semibold text-foreground tracking-wide">Defrag Workspace</h3>
+                <div className="border-b border-border px-4 py-3 bg-background/50 border-border/50">
+                  <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">Defrag Workspace</h3>
+                  <p className="text-xs text-muted-foreground mt-1 font-light">Premium relational interface</p>
                 </div>
                 
-                {/* Preview Content - Three Column Layout */}
-                <div className="flex-1 flex overflow-hidden gap-0.5 bg-card/5">
-                  {/* Left: Thread Column */}
-                  <div className="w-1/4 border-r border-border/30 bg-background/50 p-2">
+                {/* Preview Content - Three Column Layout with Better Depth */}
+                <div className="flex-1 flex overflow-hidden gap-0 bg-card/3">
+                  {/* Left: Thread Column - Elegant */}
+                  <div className="w-1/4 border-r border-border/30 bg-background/70 p-2.5 space-y-3">
                     <div className="space-y-2">
-                      <div className="h-1.5 bg-muted/40 rounded w-3/4"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-full"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-2/3"></div>
-                      <div className="h-1 bg-muted/20 rounded mt-3"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-4/5"></div>
+                      <div className="h-1.5 bg-primary/40 rounded-full w-3/4"></div>
+                      <div className="h-1.5 bg-muted/30 rounded-full w-full"></div>
+                      <div className="h-1.5 bg-muted/30 rounded-full w-2/3"></div>
+                    </div>
+                    <div className="h-px bg-border/20"></div>
+                    <div className="space-y-2">
+                      <div className="h-1.5 bg-muted/30 rounded-full w-4/5"></div>
+                      <div className="h-1.5 bg-muted/20 rounded-full w-3/5"></div>
                     </div>
                   </div>
                   
-                  {/* Center: Canvas (DOMINANT - largest) */}
-                  <div className="flex-1 border-r border-border/30 flex flex-col items-center justify-center p-4">
-                    <div className="w-8 h-8 rounded-lg bg-secondary/30 border border-border/40 flex items-center justify-center mb-3">
-                      <span className="text-xs font-light text-muted-foreground/60">∞</span>
+                  {/* Center: Canvas (DOMINANT - heart of product) */}
+                  <div className="flex-1 border-r border-border/30 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-background via-background to-secondary/5">
+                    {/* Subtle ring animation visual */}
+                    <div className="w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center mb-2 relative">
+                      <div className="w-7 h-7 rounded-full border border-secondary/40 flex items-center justify-center absolute">
+                        <div className="w-4 h-4 rounded-full bg-secondary/20 border border-secondary/60 flex items-center justify-center">
+                          <span className="text-xs font-light text-muted-foreground/60">◆</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="space-y-1 w-full">
-                      <div className="h-1 bg-muted/30 rounded w-4/5 mx-auto"></div>
-                      <div className="h-1 bg-muted/20 rounded w-3/5 mx-auto"></div>
+                    <div className="space-y-1.5 w-3/4 mt-3">
+                      <div className="h-1 bg-muted/40 rounded-full w-full"></div>
+                      <div className="h-1 bg-muted/30 rounded-full w-4/5 mx-auto"></div>
+                      <div className="h-1 bg-muted/20 rounded-full w-3/5 mx-auto"></div>
                     </div>
                   </div>
                   
-                  {/* Right: Branch Column */}
-                  <div className="w-1/4 bg-background/50 p-2">
+                  {/* Right: Branch Column - Elegant */}
+                  <div className="w-1/4 bg-background/70 p-2.5 space-y-3">
                     <div className="space-y-2">
-                      <div className="h-1.5 bg-muted/40 rounded w-2/3"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-full"></div>
-                      <div className="h-1 bg-muted/20 rounded mt-3"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-3/4"></div>
-                      <div className="h-1.5 bg-muted/40 rounded w-2/3"></div>
+                      <div className="h-1.5 bg-muted/30 rounded-full w-2/3"></div>
+                      <div className="h-1.5 bg-muted/30 rounded-full w-full"></div>
+                      <div className="h-1.5 bg-muted/30 rounded-full w-3/4"></div>
+                    </div>
+                    <div className="h-px bg-border/20"></div>
+                    <div className="space-y-2">
+                      <div className="h-1.5 bg-muted/30 rounded-full w-4/5"></div>
+                      <div className="h-1.5 bg-muted/20 rounded-full w-2/3"></div>
                     </div>
                   </div>
                 </div>
