@@ -1,9 +1,18 @@
+'use client'
+
+import { BasedOnDisclosure } from './based-on-disclosure'
+
 interface Message {
   id: string
   author: string
   content: string
   timestamp: string
   type?: 'interpretation' | 'insight' | 'user'
+  sources?: {
+    name: string
+    description: string
+    detail: string
+  }[]
 }
 
 const mockMessages: Message[] = [
@@ -20,6 +29,23 @@ const mockMessages: Message[] = [
     content: 'They likely interpreted "we need to talk" as criticism or accusation, rather than collaborative problem-solving. Their upset reaction signals defensiveness.',
     timestamp: '2:15 PM',
     type: 'interpretation',
+    sources: [
+      {
+        name: 'Communication pattern',
+        description: 'Phrase interpretation layer',
+        detail: 'The phrase "we need to talk" triggers threat response in conflict-averse people'
+      },
+      {
+        name: 'Relational history',
+        description: 'Past interaction signals',
+        detail: 'Similar phrasing has preceded conflict in their relational experience'
+      },
+      {
+        name: 'Current state',
+        description: 'Emotional readiness',
+        detail: 'Already stressed, heightening defensive interpretation'
+      }
+    ]
   },
   {
     id: '3',
@@ -34,6 +60,18 @@ const mockMessages: Message[] = [
     content: 'Key insight: Leading with validation ("I know this is hard for you") before presenting the issue can shift them from defensive to collaborative. This signals you see them, not just the problem.',
     timestamp: '2:17 PM',
     type: 'insight',
+    sources: [
+      {
+        name: 'Attachment theory',
+        description: 'Emotional safety foundation',
+        detail: 'Validation creates nervous system downregulation before problem-solving'
+      },
+      {
+        name: 'Communication research',
+        description: 'Conflict resolution pattern',
+        detail: 'Leading with empathy increases receptivity to difficult conversations by 70%'
+      }
+    ]
   },
 ]
 
@@ -71,6 +109,9 @@ export function ChatThread() {
               <p className={`text-sm leading-relaxed font-light ${isInsight ? 'font-medium text-primary/95' : ''}`}>
                 {message.content}
               </p>
+              {isDefrag && message.sources && (
+                <BasedOnDisclosure sources={message.sources} />
+              )}
             </div>
           </div>
         )

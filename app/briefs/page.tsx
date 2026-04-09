@@ -20,7 +20,7 @@ export default function BriefsPage() {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-12 md:mb-16 flex items-center justify-between">
-            <div>
+            <div className="flex-1">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">
                 Daily Briefs
               </h1>
@@ -28,11 +28,20 @@ export default function BriefsPage() {
                 Your patterns, insights, and next steps
               </p>
             </div>
-            <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </Link>
+            <div className="flex items-center gap-4">
+              {/* Audio Overview Button */}
+              <Button size="sm" variant="outline" className="gap-2 flex items-center">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
+                <span className="text-xs">Generate audio</span>
+              </Button>
+              <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </Link>
+            </div>
           </div>
 
           {/* Briefs Timeline */}
@@ -58,9 +67,29 @@ export default function BriefsPage() {
                   </ul>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-border/20 flex gap-2">
-                  <Button size="sm" variant="outline">View Details</Button>
-                  <Button size="sm" variant="ghost">Export</Button>
+                <div className="mt-4 pt-4 border-t border-border/20 flex items-center justify-between gap-2">
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline">View Details</Button>
+                    <Button size="sm" variant="ghost">Export</Button>
+                  </div>
+                  {/* Audio Playback Controls */}
+                  <div className="flex items-center gap-1 bg-background/40 rounded px-2 py-1.5">
+                    <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </Button>
+                    <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                      </svg>
+                    </Button>
+                    <select className="text-xs bg-transparent border-0 text-muted-foreground hover:text-foreground cursor-pointer">
+                      <option>1x</option>
+                      <option>1.25x</option>
+                      <option>1.5x</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             ))}

@@ -45,9 +45,32 @@ export default function DashboardPage() {
               <p className="text-3xl font-bold text-foreground">0</p>
             </div>
 
-            <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-              <p className="text-sm font-medium text-muted-foreground">Team Members</p>
-              <p className="text-3xl font-bold text-foreground">1</p>
+            {/* Your Baseline Panel */}
+            <div className="p-6 rounded-lg bg-gradient-to-br from-primary/8 to-secondary/5 border border-primary/20 space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-primary tracking-wide uppercase">Your Baseline</p>
+                  <p className="text-xs text-muted-foreground font-light mt-1">Your relational profile</p>
+                </div>
+              </div>
+              
+              {/* Plain-language first layer */}
+              <div className="space-y-2.5">
+                <div className="text-sm leading-relaxed">
+                  <p className="font-medium text-foreground">Direct communicator, conflict-averse under pressure</p>
+                </div>
+                <div className="text-xs text-muted-foreground space-y-1.5">
+                  <p>Tends to withdraw then reconnect after cooling off</p>
+                  <p>Triggered by criticism when already tired</p>
+                  <p>Values honesty but struggles with timing</p>
+                </div>
+              </div>
+              
+              {/* Secondary frameworks disclosure */}
+              <button className="text-xs font-medium text-primary/70 hover:text-primary transition flex items-center gap-1 pt-1">
+                <span>▼</span>
+                <span>Based on: insight layers</span>
+              </button>
             </div>
           </div>
 

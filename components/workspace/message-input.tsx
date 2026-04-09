@@ -7,11 +7,21 @@ import { useState } from 'react'
 
 export function MessageInput({ compact = false }: { compact?: boolean }) {
   const [message, setMessage] = useState('')
+  const [isVoiceActive, setIsVoiceActive] = useState(false)
 
   const handleSend = () => {
     if (message.trim()) {
       setMessage('')
     }
+  }
+
+  const handleVoiceStart = () => {
+    setIsVoiceActive(true)
+    // Backend voice input will be wired in GitHub
+  }
+
+  const handleVoiceStop = () => {
+    setIsVoiceActive(false)
   }
 
   if (compact) {
@@ -34,6 +44,9 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
               <DropdownMenuItem>
                 <span className="text-sm">Upload document</span>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <span className="text-sm">Voice input</span>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -49,6 +62,17 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
               }
             }}
           />
+          <Button 
+            onClick={isVoiceActive ? handleVoiceStop : handleVoiceStart} 
+            size="sm" 
+            variant={isVoiceActive ? "default" : "ghost"}
+            className="px-2 h-8 text-muted-foreground hover:text-foreground"
+            title="Voice input"
+          >
+            <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
+            </svg>
+          </Button>
           <Button onClick={handleSend} size="sm" className="px-3 h-8 text-xs bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-medium">
             Send
           </Button>
@@ -76,6 +100,9 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
             <DropdownMenuItem>
               <span className="text-sm">Upload document</span>
             </DropdownMenuItem>
+            <DropdownMenuItem>
+              <span className="text-sm">Voice input</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -91,6 +118,17 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
             }
           }}
         />
+        <Button 
+          onClick={isVoiceActive ? handleVoiceStop : handleVoiceStart} 
+          size="sm" 
+          variant={isVoiceActive ? "default" : "ghost"}
+          className="px-2 text-muted-foreground hover:text-foreground"
+          title="Voice input (beta)"
+        >
+          <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
+          </svg>
+        </Button>
         <Button onClick={handleSend} size="sm" className="px-4 bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-medium">
           Send
         </Button>
