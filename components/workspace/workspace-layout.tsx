@@ -1,159 +1,163 @@
 'use client'
 
 import { ChatThread } from './chat-thread'
+import { BranchThread } from './branch-thread'
 import { MessageInput } from './message-input'
 import { CanvasPanel } from './canvas-panel'
 import { useState } from 'react'
 
-const tabs = [
-  { id: 'Chat', label: 'Chat' },
-  { id: 'Field', label: 'Field' },
-  { id: 'Branches', label: 'Branches' },
-  { id: 'Family', label: 'Family' },
-  { id: 'Brief', label: 'Brief' },
+const mobileDestinations = [
+  { id: 'Chat', label: 'Chat', icon: '💬' },
+  { id: 'Field', label: 'Field', icon: '◆' },
+  { id: 'Branches', label: 'Branches', icon: '⊕' },
+  { id: 'Family', label: 'Family', icon: '∞' },
+  { id: 'Brief', label: 'Brief', icon: '→' },
 ]
 
 export function WorkspaceLayout() {
-  const [activeTab, setActiveTab] = useState('Chat')
+  const [activeDestination, setActiveDestination] = useState('Chat')
 
-  // Desktop layout: THREE-COLUMN operating environment (no sidebar)
-  // Left thread | Center dominant canvas | Right branch thread
+  // Desktop layout: CORRECTED - left threads + right dominant canvas
+  // Left side: primary thread (top) + branch thread (bottom), Right side: dominant multimedia canvas
   const desktopLayout = (
-    <div className="hidden md:flex h-screen bg-background overflow-hidden gap-1">
-      {/* LEFT: Primary Thread */}
-      <div className="w-96 border-r border-border flex flex-col bg-background">
-        {/* Thread header */}
-        <div className="flex-shrink-0 border-b border-border px-5 py-4 bg-background/50 border-border/50">
-          <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Conversation</h2>
-          <p className="text-xs text-muted-foreground mt-2 font-light">Primary thread</p>
-        </div>
-        
-        {/* Thread content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto">
-            <ChatThread />
+    <div className="hidden md:flex h-screen bg-background overflow-hidden">
+      {/* LEFT SIDE: Two Vertical Thread Lanes */}
+      <div className="w-80 border-r border-border flex flex-col bg-background">
+        {/* Primary Thread Lane */}
+        <div className="flex-1 flex flex-col min-w-0 border-b border-border/50">
+          {/* Header */}
+          <div className="flex-shrink-0 border-b border-border/30 px-5 py-4 bg-background/50">
+            <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Primary</h2>
+            <p className="text-xs text-muted-foreground mt-1.5 font-light">Live interpretation</p>
           </div>
-          <div className="flex-shrink-0 border-t border-border/50">
-            <MessageInput />
-          </div>
-        </div>
-      </div>
-
-      {/* CENTER: Dominant AI Canvas (Heart of Product) */}
-      <div className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
-        <CanvasPanel />
-      </div>
-
-      {/* RIGHT: Secondary Branch Thread */}
-      <div className="w-96 border-l border-border flex flex-col bg-background">
-        {/* Branch header */}
-        <div className="flex-shrink-0 border-b border-border px-5 py-4 bg-background/50 border-border/50">
-          <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Branches</h2>
-          <p className="text-xs text-muted-foreground mt-2 font-light">Alternate perspectives</p>
-        </div>
-        
-        {/* Branch content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center">
-            <div className="w-16 h-16 rounded-lg bg-secondary/30 border border-border/60 flex items-center justify-center mb-4 shadow-sm">
-              <span className="text-xs font-medium text-muted-foreground/70 tracking-wide">Branch</span>
-            </div>
-            <p className="text-xs text-muted-foreground text-center font-light leading-relaxed max-w-xs">
-              Alternative interpretations and analysis appear here
-            </p>
-          </div>
-          <div className="flex-shrink-0 border-t border-border/50">
-            <MessageInput />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
-  // Mobile layout: iOS-first with bottom tab bar
-  const mobileLayout = (
-    <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
-      {/* Header */}
-      <div className="flex-shrink-0 border-b border-border bg-background/50 px-4 py-3.5 border-border/50">
-        <h1 className="text-sm font-semibold text-foreground tracking-wide">Defrag</h1>
-        <p className="text-xs text-muted-foreground mt-1 font-light">AI Workspace</p>
-      </div>
-
-      {/* Tab Content - Full Screen */}
-      <div className="flex-1 overflow-hidden flex flex-col min-w-0">
-        {activeTab === 'Chat' && (
+          
+          {/* Content */}
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex-1 overflow-y-auto">
               <ChatThread />
             </div>
-            <div className="flex-shrink-0 border-t border-border/50">
+            <div className="flex-shrink-0 border-t border-border/30">
+              <MessageInput compact />
+            </div>
+          </div>
+        </div>
+
+        {/* Branch/Simulation Thread Lane */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Header */}
+          <div className="flex-shrink-0 border-b border-border/30 px-5 py-4 bg-background/50">
+            <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Branch</h2>
+            <p className="text-xs text-muted-foreground mt-1.5 font-light">Simulations & rewrites</p>
+          </div>
+          
+          {/* Content */}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-y-auto">
+              <BranchThread />
+            </div>
+            <div className="flex-shrink-0 border-t border-border/30">
+              <MessageInput compact />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT SIDE: Dominant Multimedia Canvas */}
+      <div className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+        <CanvasPanel />
+      </div>
+    </div>
+  )
+
+  // Mobile layout: Destination-based full-screen views with premium app feel
+  const mobileLayout = (
+    <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
+      {/* Status Bar Area */}
+      <div className="flex-shrink-0 bg-background px-4 py-3 border-b border-border/30">
+        <h1 className="text-sm font-semibold text-foreground tracking-wide">Defrag</h1>
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 overflow-hidden flex flex-col min-w-0">
+        {/* Chat View */}
+        {activeDestination === 'Chat' && (
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-y-auto">
+              <ChatThread />
+            </div>
+            <div className="flex-shrink-0 border-t border-border/30">
               <MessageInput />
             </div>
           </div>
         )}
 
-        {activeTab === 'Field' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
-            <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 border border-border/60 flex items-center justify-center mb-8 shadow-lg">
-              <span className="text-2xl font-light text-muted-foreground/50">∞</span>
+        {/* Field View - Relational Canvas */}
+        {activeDestination === 'Field' && (
+          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/40 flex items-center justify-center mb-8">
+              <span className="text-4xl font-light text-muted-foreground/40">◆</span>
             </div>
-            <h2 className="text-base font-semibold text-foreground text-center mb-3 tracking-tight">Relational Canvas</h2>
-            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed">
-              Map relationships and context between people, moments, and patterns
+            <h2 className="text-lg font-semibold text-foreground text-center mb-3 tracking-tight">Relational Field</h2>
+            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed max-w-xs">
+              Dynamic relational maps, family systems views, and visual explainers appear here as AI generates insights
             </p>
           </div>
         )}
 
-        {activeTab === 'Branches' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
-            <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 border border-border/60 flex items-center justify-center mb-8 shadow-lg">
-              <span className="text-2xl font-light text-muted-foreground/50">⊕</span>
+        {/* Branches View - Alternative Threads */}
+        {activeDestination === 'Branches' && (
+          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/40 flex items-center justify-center mb-8">
+              <span className="text-4xl font-light text-muted-foreground/40">⊕</span>
             </div>
-            <h2 className="text-base font-semibold text-foreground text-center mb-3 tracking-tight">Alternative Threads</h2>
-            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed">
-              Explore different interpretations and responses to the same moment
+            <h2 className="text-lg font-semibold text-foreground text-center mb-3 tracking-tight">Branch Simulations</h2>
+            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed max-w-xs">
+              Alternate framings, rewritten responses, and other-side perspectives on the same moment
             </p>
           </div>
         )}
 
-        {activeTab === 'Family' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
-            <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 border border-border/60 flex items-center justify-center mb-8 shadow-lg">
-              <span className="text-2xl font-light text-muted-foreground/50">◆</span>
+        {/* Family View - System Relationships */}
+        {activeDestination === 'Family' && (
+          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/40 flex items-center justify-center mb-8">
+              <span className="text-4xl font-light text-muted-foreground/40">∞</span>
             </div>
-            <h2 className="text-base font-semibold text-foreground text-center mb-3 tracking-tight">Related Interactions</h2>
-            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed">
-              See how this moment connects to other conversations and patterns
+            <h2 className="text-lg font-semibold text-foreground text-center mb-3 tracking-tight">System View</h2>
+            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed max-w-xs">
+              See how this moment connects to patterns, history, and related interactions across your relationships
             </p>
           </div>
         )}
 
-        {activeTab === 'Brief' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
-            <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 border border-border/60 flex items-center justify-center mb-8 shadow-lg">
-              <span className="text-2xl font-light text-muted-foreground/50">→</span>
+        {/* Brief View - Daily Summary */}
+        {activeDestination === 'Brief' && (
+          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/40 flex items-center justify-center mb-8">
+              <span className="text-4xl font-light text-muted-foreground/40">→</span>
             </div>
-            <h2 className="text-base font-semibold text-foreground text-center mb-3 tracking-tight">Summary & Insights</h2>
-            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed">
-              Key takeaways, patterns, and suggestions for next steps
+            <h2 className="text-lg font-semibold text-foreground text-center mb-3 tracking-tight">Daily Brief</h2>
+            <p className="text-sm text-muted-foreground text-center font-light leading-relaxed max-w-xs">
+              Summary of insights, patterns, and suggested next steps for your relationships this week
             </p>
           </div>
         )}
       </div>
 
-      {/* Bottom Tab Bar - iOS Style */}
-      <div className="flex-shrink-0 border-t border-border bg-card flex gap-0 safe-area-inset-bottom">
-        {tabs.map((tab, idx) => (
+      {/* Premium Bottom Navigation */}
+      <div className="flex-shrink-0 border-t border-border/30 bg-background flex safe-area-inset-bottom">
+        {mobileDestinations.map((dest, idx) => (
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-3 px-2 text-xs font-medium transition-all rounded-t ${
-              activeTab === tab.id
-                ? 'bg-primary text-primary-foreground'
+            key={dest.id}
+            onClick={() => setActiveDestination(dest.id)}
+            className={`flex-1 flex flex-col items-center justify-center py-3 text-xs transition-all ${
+              activeDestination === dest.id
+                ? 'text-primary bg-primary/10'
                 : 'text-muted-foreground hover:text-foreground'
-            } ${idx === 0 ? '' : 'border-l border-border/30'}`}
+            } ${idx > 0 ? 'border-l border-border/20' : ''}`}
           >
-            {tab.label}
+            <span className="text-lg mb-1">{dest.icon}</span>
+            <span className="font-medium">{dest.label}</span>
           </button>
         ))}
       </div>
