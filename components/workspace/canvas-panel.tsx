@@ -1,27 +1,75 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
 
 export function CanvasPanel() {
+  const [selectedArtifact, setSelectedArtifact] = useState<string | null>('map')
+
+  const artifacts = [
+    {
+      id: 'map',
+      title: 'Relational Map',
+      subtitle: 'Connection patterns',
+      description: 'How they may be reading this moment. Where understanding breaks. What they might need from you.',
+      icon: IconRelationalMap,
+      status: 'generating',
+      color: 'from-primary/15 border-primary/30',
+      details: 'Shows emotional pathways, assumptions, and potential connection points.'
+    },
+    {
+      id: 'system',
+      title: 'System View',
+      subtitle: 'Family patterns',
+      description: 'Their relational history. Repeating patterns. How their background shapes this reaction.',
+      icon: IconSystemView,
+      status: 'ready',
+      color: 'from-secondary/15 border-secondary/30',
+      details: 'Includes family dynamics, learned responses, and inherited relational patterns.'
+    },
+    {
+      id: 'sim',
+      title: 'Simulations',
+      subtitle: 'Alternative paths',
+      description: 'What if you led differently? How would they likely respond? What might help more.',
+      icon: IconSimulations,
+      status: 'ready',
+      color: 'from-amber-500/10 border-amber-500/20',
+      details: '3 alternative conversation paths with predicted outcomes.'
+    },
+    {
+      id: 'timing',
+      title: 'Timing View',
+      subtitle: 'Pressure points',
+      description: 'External stress. Their emotional readiness. What this moment may mean to them.',
+      icon: IconTiming,
+      status: 'queued',
+      color: 'from-blue-500/10 border-blue-500/20',
+      details: 'Current pressures, sensitivities, and contextual factors shaping their reaction.'
+    },
+  ]
+
   return (
-    <div className="flex-1 min-w-0 bg-gradient-to-br from-background via-background to-secondary/3 flex flex-col h-full overflow-hidden relative">
-      {/* System Bar - Integrated Navigation (not floating) */}
-      <div className="flex-shrink-0 border-b border-border/40 bg-background/80 backdrop-blur-md px-8 py-3.5">
-        <div className="flex items-center justify-between gap-4 max-w-full">
-          {/* Left: Navigation */}
-          <div className="flex items-center gap-3 min-w-0">
+    <div className="flex-1 min-w-0 bg-background flex flex-col h-full overflow-hidden relative">
+      {/* Header */}
+      <div className="flex-shrink-0 border-b border-border/40 bg-background px-8 py-3.5">
+        <div className="flex items-center justify-between gap-4">
+          {/* Left: Back + Title */}
+          <div className="flex items-center gap-3">
             <Link href="/dashboard" className="flex-shrink-0 p-1.5 rounded hover:bg-muted/10 transition-colors text-muted-foreground hover:text-foreground" title="Back to Dashboard">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
-            <div className="flex flex-col min-w-0">
-              <span className="text-xs font-semibold text-foreground tracking-widest">WORKSPACE</span>
-              <span className="text-xs text-muted-foreground/60 font-light">Relational Field</span>
+            <div className="flex flex-col">
+              <span className="text-xs font-semibold text-foreground tracking-widest">Workspace</span>
+              <span className="text-xs text-muted-foreground/60 font-light">Live analysis</span>
             </div>
           </div>
 
-          {/* Right: System Status + Settings */}
+          {/* Right: Status + Settings */}
           <div className="flex items-center gap-3 flex-shrink-0">
             <div className="flex items-center gap-1.5 px-2 py-1 rounded text-xs text-muted-foreground/70 bg-muted/8 border border-border/40">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></span>
@@ -37,158 +85,112 @@ export function CanvasPanel() {
         </div>
       </div>
 
-      {/* Ambient Background Layers */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-full h-full opacity-40">
-          <div className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-gradient-to-tr from-secondary/4 via-transparent to-transparent blur-3xl"></div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
-      </div>
-
-      {/* Canvas Header - Premium Typographic Treatment */}
-      <div className="flex-shrink-0 border-b border-border/30 px-8 py-5 bg-background/60 backdrop-blur-sm relative z-10">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-sm font-semibold text-foreground tracking-wider">Analysis Canvas</h2>
-            <p className="text-xs text-muted-foreground mt-2 font-light leading-relaxed">
-              Relational analysis in real time
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto px-8 py-8">
+        <div className="max-w-3xl space-y-6">
+          {/* Intro */}
+          <div className="space-y-2 mb-8">
+            <h2 className="text-sm font-semibold text-foreground">Relational Analysis</h2>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Explore how this moment may be unfolding for them, what patterns may be active, and what could help next.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500/70 animate-pulse"></span>
-            <span>Processing…</span>
-          </div>
-        </div>
-      </div>
-      
-      {/* Canvas Content - Premium Artifact Composition */}
-      <div className="flex-1 overflow-y-auto px-8 py-8 flex flex-col items-center justify-start relative z-10">
-        <div className="max-w-3xl w-full space-y-8">
-          {/* System Flow Visualization */}
-          <div className="text-center space-y-4 py-6">
-            <div className="inline-flex items-center gap-2 text-xs text-muted-foreground/70 bg-muted/10 border border-border/40 rounded-full px-4 py-2">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/70 animate-pulse"></span>
-              <span className="font-medium">System flow: Thread → Branch → Artifacts → Brief</span>
-            </div>
-          </div>
 
-          {/* Artifact Flow with Visual Progression */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-            {/* Stage 1: Interpretation - Input to Map */}
-            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-6 overflow-hidden cursor-pointer hover:border-primary/40">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <IconRelationalMap className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Relational Map</p>
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-primary/20 text-primary/80 font-medium">Stage 1</span>
+          {/* Artifact Cards - Interactive Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {artifacts.map((artifact) => {
+              const Icon = artifact.icon
+              const isSelected = selectedArtifact === artifact.id
+              
+              return (
+                <button
+                  key={artifact.id}
+                  onClick={() => setSelectedArtifact(artifact.id)}
+                  className={`text-left rounded-lg border transition-all duration-200 p-4 group ${
+                    isSelected
+                      ? `bg-gradient-to-br ${artifact.color} to-transparent border-opacity-100 ring-1`
+                      : 'bg-card/40 border-border/50 hover:border-border/80 hover:bg-card/60'
+                  }`}
+                >
+                  <div className="space-y-3">
+                    {/* Header */}
+                    <div className="flex items-start gap-3">
+                      <div className={`flex-shrink-0 w-9 h-9 rounded flex items-center justify-center ${
+                        isSelected ? 'bg-primary/20 border border-primary/30' : 'bg-muted/20 border border-border/40'
+                      }`}>
+                        <Icon className="w-5 h-5 text-foreground/70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xs font-semibold text-foreground">{artifact.title}</h3>
+                        <p className="text-xs text-muted-foreground/70 font-light">{artifact.subtitle}</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Visual connections, assumptions, where understanding breaks</p>
-                  </div>
-                </div>
-                <div className="flex gap-1.5 pt-2">
-                  <div className="w-2 h-2 rounded-full bg-primary/70 animate-pulse"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/50 animate-pulse" style={{animationDelay: '0.15s'}}></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{animationDelay: '0.3s'}}></div>
-                </div>
-              </div>
-              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none"><IconTiming className="w-24 h-24 opacity-10" /></div>
-            </div>
 
-            {/* Stage 2: System Context */}
-            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-6 overflow-hidden cursor-pointer hover:border-primary/40">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <IconSystemView className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">System View</p>
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-600/80 font-medium">Ready</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Family patterns, history, relational structures</p>
-                  </div>
-                </div>
-                <div className="flex gap-1.5 pt-2">
-                  <div className="w-2 h-2 rounded-full bg-primary/70"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/50"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/30"></div>
-                </div>
-              </div>
-              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none">→</div>
-            </div>
+                    {/* Description */}
+                    <p className="text-xs text-muted-foreground/80 leading-relaxed">{artifact.description}</p>
 
-            {/* Stage 3: Simulations */}
-            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-6 overflow-hidden cursor-pointer hover:border-primary/40">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <IconSimulations className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Simulations</p>
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-600/80 font-medium">3 paths</span>
+                    {/* Status */}
+                    <div className="flex items-center gap-1.5">
+                      {artifact.status === 'generating' && (
+                        <>
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/70 animate-pulse"></span>
+                          <span className="text-xs text-primary/70 font-medium">Generating…</span>
+                        </>
+                      )}
+                      {artifact.status === 'ready' && (
+                        <>
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/70"></span>
+                          <span className="text-xs text-emerald-600/70 font-medium">Ready</span>
+                        </>
+                      )}
+                      {artifact.status === 'queued' && (
+                        <>
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500/70"></span>
+                          <span className="text-xs text-amber-600/70 font-medium">Queued</span>
+                        </>
+                      )}
                     </div>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Alternative conversations, rewritten responses</p>
                   </div>
-                </div>
-                <div className="flex gap-1.5 pt-2">
-                  <div className="w-2 h-2 rounded-full bg-primary/70"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/50"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary/30"></div>
-                </div>
-              </div>
-              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none"><IconTiming className="w-24 h-24 opacity-10" /></div>
-            </div>
-
-            {/* Stage 4: Timing Analysis */}
-            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-6 overflow-hidden cursor-pointer hover:border-primary/40 opacity-80">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <IconTiming className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Timing View</p>
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600/80 font-medium">Queued</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">External factors, emotional state, pressure</p>
-                  </div>
-                </div>
-                <div className="flex gap-1.5 pt-2">
-                  <div className="w-2 h-2 rounded-full bg-muted/50"></div>
-                  <div className="w-2 h-2 rounded-full bg-muted/40"></div>
-                  <div className="w-2 h-2 rounded-full bg-muted/30"></div>
-                </div>
-              </div>
-            </div>
+                </button>
+              )
+            })}
           </div>
 
-          {/* Final Output - Brief */}
-          <div className="border border-primary/40 rounded-lg bg-gradient-to-br from-primary/8 to-primary/3 p-6">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/30 border border-primary/50 flex items-center justify-center">
-                <IconTiming className="w-5 h-5 text-primary" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Brief Output</p>
-                  <span className="text-xs px-1.5 py-0.5 rounded bg-primary/20 text-primary/80 font-medium">Final</span>
+          {/* Selected Artifact Detail */}
+          {selectedArtifact && (
+            <div className="mt-8 p-6 rounded-lg border border-primary/30 bg-gradient-to-br from-primary/8 via-primary/5 to-transparent">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">About this analysis</h3>
+                  <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
+                    {artifacts.find(a => a.id === selectedArtifact)?.details}
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground font-light mt-2">Coherent summary with recommended next steps and conversation framing</p>
+                <div className="flex gap-2">
+                  <Button size="sm" className="text-xs h-8 bg-primary hover:bg-primary/90">
+                    Open Full View
+                  </Button>
+                  <Button size="sm" variant="outline" className="text-xs h-8">
+                    Export
+                  </Button>
+                </div>
               </div>
+            </div>
+          )}
+
+          {/* Follow-up Prompt */}
+          <div className="pt-4 border-t border-border/30">
+            <p className="text-xs text-muted-foreground mb-3">Next steps:</p>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="ghost" className="text-xs h-7 px-2 border border-border/40 hover:border-primary/30 hover:bg-primary/10">
+                Practice this conversation
+              </Button>
+              <Button size="sm" variant="ghost" className="text-xs h-7 px-2 border border-border/40 hover:border-primary/30 hover:bg-primary/10">
+                Show me another angle
+              </Button>
+              <Button size="sm" variant="ghost" className="text-xs h-7 px-2 border border-border/40 hover:border-primary/30 hover:bg-primary/10">
+                Create a brief
+              </Button>
             </div>
           </div>
         </div>

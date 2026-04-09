@@ -31,8 +31,8 @@ export function WorkspaceLayout() {
           {/* Header */}
           <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50 flex items-center justify-between">
             <div>
-              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Primary</h2>
-              <p className="text-xs text-muted-foreground mt-1.5 font-light">Live interpretation</p>
+              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Interpretation</h2>
+              <p className="text-xs text-muted-foreground mt-1.5 font-light">What may be happening</p>
             </div>
             <button
               onClick={() => setIsBranchOpen(!isBranchOpen)}
@@ -63,8 +63,8 @@ export function WorkspaceLayout() {
           <div className="w-96 flex flex-col bg-background border-l border-border/30 min-w-0 animate-in fade-in duration-200">
             {/* Header */}
             <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50">
-              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Branch</h2>
-              <p className="text-xs text-muted-foreground mt-1.5 font-light">Simulations & rewrites</p>
+              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Simulations</h2>
+              <p className="text-xs text-muted-foreground mt-1.5 font-light">Try another approach</p>
             </div>
             
             {/* Content */}

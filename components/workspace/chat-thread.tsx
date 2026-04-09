@@ -1,6 +1,8 @@
 'use client'
 
 import { BasedOnDisclosure } from './based-on-disclosure'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 interface Message {
   id: string
@@ -12,6 +14,10 @@ interface Message {
     name: string
     description: string
     detail: string
+  }[]
+  followUp?: {
+    label: string
+    action: string
   }[]
 }
 
@@ -31,20 +37,25 @@ const mockMessages: Message[] = [
     type: 'interpretation',
     sources: [
       {
-        name: 'Communication pattern',
-        description: 'Phrase interpretation layer',
-        detail: 'The phrase "we need to talk" triggers threat response in conflict-averse people'
+        name: 'Communication Patterns',
+        description: 'How they read the moment',
+        detail: 'The phrase "we need to talk" triggers defensiveness in conflict-averse people'
       },
       {
-        name: 'Relational history',
-        description: 'Past interaction signals',
-        detail: 'Similar phrasing has preceded conflict in their relational experience'
+        name: 'Attachment Theory',
+        description: 'Their relational template',
+        detail: 'Earned security would lean toward curiosity; fearful attachment creates defensive response first'
       },
       {
-        name: 'Current state',
-        description: 'Emotional readiness',
-        detail: 'Already stressed, heightening defensive interpretation'
+        name: 'Current State',
+        description: 'Their emotional capacity',
+        detail: 'Already stressed, heightening threat-detection and reducing receptivity to new information'
       }
+    ],
+    followUp: [
+      { label: 'What makes you say that?', action: 'expand_sources' },
+      { label: 'Try another approach', action: 'show_simulations' },
+      { label: 'Walk me through this', action: 'expand_detail' },
     ]
   },
   {
@@ -57,36 +68,43 @@ const mockMessages: Message[] = [
   {
     id: '4',
     author: 'Defrag',
-    content: 'Key insight: Leading with validation ("I know this is hard for you") before presenting the issue can shift them from defensive to collaborative. This signals you see them, not just the problem.',
+    content: 'Leading with validation ("I know this is hard for you") before presenting the issue can shift them from defensive to collaborative. This signals you see them, not just the problem.',
     timestamp: '2:17 PM',
     type: 'insight',
     sources: [
       {
-        name: 'Attachment theory',
-        description: 'Emotional safety foundation',
-        detail: 'Validation creates nervous system downregulation before problem-solving'
+        name: 'Attachment Theory',
+        description: 'How nervous systems regulate',
+        detail: 'Validation creates safety signals that downregulate defensive responses'
       },
       {
-        name: 'Communication research',
-        description: 'Conflict resolution pattern',
-        detail: 'Leading with empathy increases receptivity to difficult conversations by 70%'
+        name: 'Neuroscience Research',
+        description: 'What works in conversations',
+        detail: 'Leading with empathy increases receptivity in conflict by approximately 70%'
+      },
+      {
+        name: 'Relational Patterns',
+        description: 'Why this specifically',
+        detail: 'They likely learned to trust through feeling seen first—this approach mirrors that template'
       }
+    ],
+    followUp: [
+      { label: 'Show me what this is based on', action: 'expand_sources' },
+      { label: 'Practice the conversation', action: 'open_practice' },
+      { label: 'That doesn\'t sound like them', action: 'alternative_framing' },
     ]
   },
 ]
 
 export function ChatThread() {
+  const [expandedMessage, setExpandedMessage] = useState<string | null>(null)
+
   return (
     <div className="flex-1 overflow-y-auto space-y-4 p-4">
-      {/* Engine Identity */}
-      <div className="sticky top-0 bg-background/80 backdrop-blur-sm pb-3 mb-2 border-b border-border/30">
-        <p className="text-xs font-semibold text-foreground/80 tracking-wider uppercase">Interpretation Engine</p>
-        <p className="text-xs text-muted-foreground/60 font-light mt-1">Live relational analysis thread</p>
-      </div>
-
       {mockMessages.map((message) => {
         const isDefrag = message.author === 'Defrag'
         const isInsight = message.type === 'insight'
+        const isExpanded = expandedMessage === message.id
         
         return (
           <div key={message.id} className="space-y-2 animate-in fade-in-50">
@@ -110,9 +128,28 @@ export function ChatThread() {
                 {message.content}
               </p>
               {isDefrag && message.sources && (
-                <BasedOnDisclosure sources={message.sources} />
+                <div className="mt-3 pt-3 border-t border-border/20">
+                  <BasedOnDisclosure sources={message.sources} />
+                </div>
               )}
             </div>
+
+            {/* Follow-up Actions - Product-Native */}
+            {isDefrag && message.followUp && (
+              <div className="flex flex-wrap gap-2 px-1">
+                {message.followUp.map((action, idx) => (
+                  <Button
+                    key={idx}
+                    size="sm"
+                    variant="ghost"
+                    className="text-xs h-7 px-2 text-muted-foreground hover:text-foreground hover:bg-primary/10 border border-border/40 hover:border-primary/30 transition-all"
+                    onClick={() => setExpandedMessage(isExpanded && expandedMessage === message.id ? null : message.id)}
+                  >
+                    {action.label}
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
         )
       })}
