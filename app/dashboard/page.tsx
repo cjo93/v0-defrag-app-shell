@@ -29,103 +29,155 @@ export default function DashboardPage() {
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-foreground">Welcome back</h2>
             <p className="text-muted-foreground">
-              Here&apos;s your overview of recent activity and interactions.
+              Here&apos;s your relational baseline and current alignment context.
             </p>
           </div>
 
-          {/* Quick stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-              <p className="text-sm font-medium text-muted-foreground">Active Workspaces</p>
-              <p className="text-3xl font-bold text-foreground">1</p>
-            </div>
-
-            <div className="p-6 rounded-lg bg-card border border-border space-y-3">
-              <p className="text-sm font-medium text-muted-foreground">Interactions This Month</p>
-              <p className="text-3xl font-bold text-foreground">0</p>
-            </div>
-
-            {/* Your Baseline Panel - Premium Treatment */}
-            <div className="p-6 rounded-lg bg-gradient-to-br from-primary/12 via-primary/6 to-secondary/5 border border-primary/25 space-y-4 relative overflow-hidden group hover:border-primary/40 transition-colors">
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none"></div>
-              
-              <div className="relative z-10 flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-primary tracking-wide uppercase">Your Baseline</p>
-                  <p className="text-xs text-muted-foreground/70 font-light mt-1">Your relational profile</p>
-                </div>
+          {/* Your Baseline - Enhanced Full-Width Panel */}
+          <div className="p-8 rounded-lg bg-gradient-to-br from-primary/12 via-primary/6 to-secondary/5 border border-primary/25 space-y-6 relative overflow-hidden group hover:border-primary/40 transition-all">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
+            
+            <div className="relative z-10 space-y-6">
+              {/* Header */}
+              <div>
+                <p className="text-sm font-semibold text-primary tracking-wide uppercase">Your Baseline</p>
+                <p className="text-xs text-muted-foreground/70 font-light mt-1">Your relational profile and insight foundation</p>
               </div>
-              
-              {/* Plain-language first layer - prominent */}
-              <div className="relative z-10 space-y-3">
+
+              {/* Primary Profile - Plain Language First */}
+              <div className="space-y-3">
                 <div className="text-sm leading-relaxed">
                   <p className="font-semibold text-foreground/95">Direct communicator who withdraws under pressure</p>
                 </div>
-                <div className="text-xs text-muted-foreground/80 space-y-1.5 leading-relaxed">
-                  <p>Tends to go quiet when stressed, then reconnects after cooling off</p>
-                  <p>Triggered by criticism when already tired</p>
-                  <p>Values honesty but struggles with timing and tone</p>
+                <div className="text-xs text-muted-foreground/85 space-y-2 leading-relaxed grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-foreground/80 font-medium">Interaction Style:</p>
+                    <p>Values honesty, tends to say what you think, but timing and tone often become friction points</p>
+                  </div>
+                  <div>
+                    <p className="text-foreground/80 font-medium">Under Pressure:</p>
+                    <p>Goes quiet when stressed, needs space to process, reconnects after cooling off</p>
+                  </div>
+                  <div>
+                    <p className="text-foreground/80 font-medium">Sensitivities:</p>
+                    <p>Triggered by criticism, especially when tired or already managing stress</p>
+                  </div>
+                  <div>
+                    <p className="text-foreground/80 font-medium">Current State:</p>
+                    <p>Baseline alignment active—check-ins may help prevent cycles of withdrawal</p>
+                  </div>
                 </div>
               </div>
-              
-              {/* Secondary frameworks disclosure - refined */}
-              <button className="relative z-10 text-xs font-medium text-primary/60 hover:text-primary/80 transition flex items-center gap-1.5 pt-2 group/btn">
-                <span className="inline-block w-3 h-3 flex items-center justify-center transform transition-transform group-hover/btn:translate-x-0.5">
-                  <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
-                    <path d="M 1 1 L 5 5 L 1 9" />
-                  </svg>
-                </span>
-                <span>Based on: insight layers</span>
-              </button>
+
+              {/* Framework Layers - Expandable */}
+              <div className="space-y-3 pt-2 border-t border-primary/15">
+                <button className="text-xs font-medium text-primary/65 hover:text-primary/85 transition-all flex items-center gap-1.5 group/btn">
+                  <span className="inline-block w-3 h-3 flex items-center justify-center transition-transform duration-200 group-hover/btn:rotate-90">
+                    <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
+                      <path d="M 1 1 L 5 5 L 1 9" />
+                    </svg>
+                  </span>
+                  <span>Framework foundations (Human Design, Astrology, Gene Keys, Numerology)</span>
+                </button>
+
+                {/* Example expanded state hint */}
+                <div className="text-xs text-muted-foreground/80 space-y-2 pl-5">
+                  <p className="italic">Hover or click to explore your personal frameworks—these shape how you process relationships and respond under pressure.</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Recent section */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Get Started</h3>
+          {/* Current Relational Context - New Alignment Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-lg bg-card border border-border/60 space-y-4">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Relational Alignment</p>
+                <p className="text-xs text-muted-foreground/70 font-light">How your style is landing</p>
+              </div>
+              <div className="space-y-3 text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/70 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Clarity:</span> Direct style is appreciated when timed well</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500/70 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Timing mismatch:</span> Directness can feel harsh when other person is overwhelmed</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500/70 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Repair pattern:</span> Space helps, but reconnection requires vulnerability</p>
+                </div>
+              </div>
+            </div>
 
-            <div className="p-6 rounded-lg bg-card border border-border space-y-4">
-              <h4 className="font-medium text-foreground">Create your first workspace</h4>
-              <p className="text-sm text-muted-foreground">
-                Set up a workspace to begin analyzing interactions and getting insights.
-              </p>
-              <Button asChild>
-                <Link href="/workspace">Go to Workspace</Link>
+            <div className="p-6 rounded-lg bg-card border border-border/60 space-y-4">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Pressure Indicators</p>
+                <p className="text-xs text-muted-foreground/70 font-light">Watch for these signals</p>
+              </div>
+              <div className="space-y-3 text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500/60 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Withdrawal cycle:</span> When you go quiet, they may interpret it as rejection</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500/60 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Fatigue effect:</span> Your directness amplifies when you're already tired</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500/60 mt-1 flex-shrink-0"></span>
+                  <p className="text-muted-foreground/90"><span className="text-foreground font-medium">Safety concern:</span> They may need to hear validation before problem-solving</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Action Cards */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-foreground">Quick Actions</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Button asChild className="h-12 text-sm font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/95 hover:to-primary/85">
+                <Link href="/workspace">Open Workspace</Link>
+              </Button>
+
+              <Button variant="outline" asChild className="h-12 text-sm font-medium hover:bg-muted/8">
+                <Link href="/learn">Learn About Relational Dynamics</Link>
               </Button>
             </div>
           </div>
 
           {/* Features section */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Key Features</h3>
+            <h3 className="text-sm font-semibold text-foreground">Workspace Features</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-secondary border border-border space-y-2">
-                <p className="font-medium text-foreground text-sm">Multi-perspective Analysis</p>
+                <p className="font-medium text-foreground text-sm">Relational Maps</p>
                 <p className="text-xs text-muted-foreground">
-                  See interactions from multiple viewpoints
+                  See the interaction from their perspective
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-secondary border border-border space-y-2">
-                <p className="font-medium text-foreground text-sm">Suggested Responses</p>
+                <p className="font-medium text-foreground text-sm">Simulations</p>
                 <p className="text-xs text-muted-foreground">
-                  Get recommendations for better communication
+                  Try another approach before the conversation
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-secondary border border-border space-y-2">
-                <p className="font-medium text-foreground text-sm">Team Collaboration</p>
+                <p className="font-medium text-foreground text-sm">System Context</p>
                 <p className="text-xs text-muted-foreground">
-                  Work together to prevent misunderstandings
+                  Understand inherited patterns and pressures
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-secondary border border-border space-y-2">
-                <p className="font-medium text-foreground text-sm">Insights & Analytics</p>
+                <p className="font-medium text-foreground text-sm">Timing Awareness</p>
                 <p className="text-xs text-muted-foreground">
-                  Track patterns and improve over time
+                  Learn when conversations are more likely to land
                 </p>
               </div>
             </div>

@@ -37,19 +37,19 @@ const mockMessages: Message[] = [
     type: 'interpretation',
     sources: [
       {
-        name: 'Communication Patterns',
-        description: 'How they read the moment',
-        detail: 'The phrase "we need to talk" triggers defensiveness in conflict-averse people'
+        name: 'Human Design: 4/1 profile',
+        description: 'Testing and verification tendency',
+        detail: 'May need to test ideas before trusting them—defensive response may be testing your commitment'
       },
       {
-        name: 'Attachment Theory',
-        description: 'Their relational template',
-        detail: 'Earned security would lean toward curiosity; fearful attachment creates defensive response first'
+        name: 'Attachment patterns',
+        description: 'How they build safety',
+        detail: 'They likely learned to check for reliability before opening up—may sense your frustration'
       },
       {
-        name: 'Current State',
-        description: 'Their emotional capacity',
-        detail: 'Already stressed, heightening threat-detection and reducing receptivity to new information'
+        name: 'Current timing pressure',
+        description: 'Their stress capacity',
+        detail: 'Already at threshold, making defensive interpretation more likely regardless of your intent'
       }
     ],
     followUp: [
@@ -73,19 +73,19 @@ const mockMessages: Message[] = [
     type: 'insight',
     sources: [
       {
-        name: 'Attachment Theory',
-        description: 'How nervous systems regulate',
-        detail: 'Validation creates safety signals that downregulate defensive responses'
+        name: 'Astrology: Saturn in 7th house transit',
+        description: 'Current relational pressure cycle',
+        detail: 'Current transit may intensify scrutiny of relationship integrity—they may be evaluating commitment more carefully'
       },
       {
-        name: 'Neuroscience Research',
-        description: 'What works in conversations',
-        detail: 'Leading with empathy increases receptivity in conflict by approximately 70%'
+        name: 'Numerology: current cycle emphasis',
+        description: 'Timing layer: endings and truth',
+        detail: 'Current period may amplify need for honesty and accountability—their defensiveness may signal they're checking if you mean it'
       },
       {
-        name: 'Relational Patterns',
-        description: 'Why this specifically',
-        detail: 'They likely learned to trust through feeling seen first—this approach mirrors that template'
+        name: 'Nervous system state',
+        description: 'How they process in this moment',
+        detail: 'Validation first signals safety before problem-solving; acknowledgment of their experience shifts them toward collaboration'
       }
     ],
     followUp: [
