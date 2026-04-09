@@ -16,8 +16,8 @@ export function Sidebar() {
     <div className="w-56 border-r border-border bg-background h-screen flex flex-col overflow-y-auto">
       {/* Header */}
       <div className="p-4 flex-shrink-0">
-        <Link href="/" className="font-semibold text-lg tracking-tight text-foreground block">
-          Defrag
+        <Link href="/" className="font-bold text-lg tracking-tight text-foreground block">
+          DEFRAG
         </Link>
       </div>
 

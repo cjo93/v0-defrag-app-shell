@@ -90,13 +90,15 @@ export function WorkspaceLayout() {
   // Mobile layout: Destination-based full-screen views (NOT a literal desktop mirror)
   const mobileLayout = (
     <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
-      {/* Premium Status Bar Area */}
-      <div className="flex-shrink-0 bg-gradient-to-b from-background to-background/50 backdrop-blur-sm px-4 py-3.5 border-b border-border/30">
+      {/* Premium Mobile Header */}
+      <div className="flex-shrink-0 bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-xl px-5 py-4 border-b border-border/25 shadow-sm">
         <div className="flex items-center justify-between">
-          <h1 className="text-sm font-semibold text-foreground tracking-wider">Defrag</h1>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/70 animate-pulse"></span>
-            <span>Live</span>
+          <h1 className="text-base font-bold text-foreground tracking-tight">DEFRAG</h1>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/90 animate-pulse"></span>
+              <span className="text-[10px] font-semibold text-emerald-500/90 tracking-wide uppercase">Live</span>
+            </span>
           </div>
         </div>
       </div>
@@ -118,10 +120,10 @@ export function WorkspaceLayout() {
         {/* Field - Relational canvas/map view */}
         {activeDestination === 'Field' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">Relational Field</h2>
-              <p className="text-xs text-muted-foreground font-light">Visual mapping &amp; system analysis</p>
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">Relational Field</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Visual mapping &amp; system analysis</p>
             </div>
 
             {/* Content */}
@@ -166,10 +168,10 @@ export function WorkspaceLayout() {
         {/* Branches - Alternative framings and simulations */}
         {activeDestination === 'Branches' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">Simulation Branch</h2>
-              <p className="text-xs text-muted-foreground font-light">Alternate paths &amp; rewritten responses</p>
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">Simulation Branch</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Alternate paths &amp; rewritten responses</p>
             </div>
 
             {/* Content */}
@@ -199,10 +201,10 @@ export function WorkspaceLayout() {
         {/* Family - System relationships and context */}
         {activeDestination === 'Family' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">System View</h2>
-              <p className="text-xs text-muted-foreground font-light">Family patterns &amp; relational history</p>
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">System View</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Family patterns &amp; relational history</p>
             </div>
 
             {/* Content */}
@@ -290,22 +292,38 @@ export function WorkspaceLayout() {
         )}
       </div>
 
-      {/* Premium Bottom Navigation - Native iOS App Feel */}
-      <div className="flex-shrink-0 border-t border-border/40 bg-background/90 backdrop-blur-lg flex safe-area-inset-bottom">
+      {/* Premium Bottom Navigation - First-Class Mobile Experience */}
+      <div className="flex-shrink-0 border-t border-border/30 bg-background/95 backdrop-blur-xl flex safe-area-inset-bottom shadow-[0_-2px_20px_rgba(0,0,0,0.08)]">
         {mobileDestinations.map((dest, idx) => {
           const IconComponent = dest.icon
+          const isActive = activeDestination === dest.id
           return (
           <button
             key={dest.id}
             onClick={() => setActiveDestination(dest.id)}
-            className={`flex-1 flex flex-col items-center justify-center py-4 px-2 text-xs font-medium transition-all ${
-              activeDestination === dest.id
-                ? 'text-primary bg-gradient-to-b from-primary/15 to-primary/5 border-t-2 border-primary'
-                : 'text-muted-foreground/70 hover:text-foreground hover:bg-muted/5'
+            className={`flex-1 flex flex-col items-center justify-center py-4 px-2 text-xs font-semibold transition-all duration-200 relative ${
+              isActive
+                ? 'text-foreground'
+                : 'text-muted-foreground/60 hover:text-foreground/80 hover:bg-muted/5'
             }`}
           >
-            <IconComponent className="w-5 h-5 mb-1.5" />
-            <span className="leading-tight text-xs tracking-tight">{dest.label}</span>
+            {/* Active indicator bar */}
+            {isActive && (
+              <span className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-transparent via-foreground to-transparent rounded-full"></span>
+            )}
+            
+            {/* Icon with active state */}
+            <div className={`relative mb-1.5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`}>
+              <IconComponent className={`w-6 h-6 transition-all ${isActive ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' : ''}`} />
+              {isActive && (
+                <span className="absolute inset-0 bg-gradient-to-br from-foreground/10 to-transparent rounded-full blur-sm"></span>
+              )}
+            </div>
+            
+            {/* Label */}
+            <span className={`leading-tight text-[11px] tracking-tight transition-all ${isActive ? 'font-bold' : 'font-medium'}`}>
+              {dest.label}
+            </span>
           </button>
           )
         })}

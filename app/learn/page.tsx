@@ -101,18 +101,26 @@ export default function LearnPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
       
-      <main className="flex-1 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-12 md:mb-16">
-            <div className="inline-block mb-4">
-              <p className="text-xs font-semibold text-primary/80 tracking-widest uppercase mb-3">Educational Frameworks</p>
+      <main className="flex-1 py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Ambient background */}
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <div className="absolute top-[15%] right-[20%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          {/* Premium Header */}
+          <div className="mb-14 md:mb-20">
+            <div className="inline-block mb-5">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/25">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></span>
+                <span className="text-[10px] font-bold text-primary/90 tracking-[0.12em] uppercase">Educational Frameworks</span>
+              </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 text-balance leading-[1.08] tracking-tight">
               Understanding Relational Dynamics
             </h1>
-            <p className="text-base text-muted-foreground font-light max-w-2xl leading-relaxed">
-              Explore the frameworks that shape how we show up in relationships. Visual-first, scannable, and designed to deepen self-understanding.
+            <p className="text-lg md:text-xl text-muted-foreground/80 font-light max-w-2xl leading-relaxed text-pretty">
+              Explore the frameworks that shape how we show up in relationships. Visual-first, scannable, designed to deepen self-understanding.
             </p>
           </div>
 
@@ -130,22 +138,25 @@ export default function LearnPage() {
             ))}
           </div>
 
-          {/* Disclaimers & CTA */}
-          <div className="border-t border-border/40 pt-8 space-y-6">
-            <p className="text-sm text-muted-foreground/90 leading-relaxed max-w-3xl">
+          {/* Premium Footer & CTA */}
+          <div className="border-t border-border/30 pt-12 space-y-8 mt-8">
+            <p className="text-base text-muted-foreground/85 leading-relaxed max-w-3xl font-light">
               These concepts come alive in context. Bring a specific moment to the workspace, and you'll see how these dynamics show up in real conversations—family patterns, attachment responses, timing pressures, and what might actually help.
             </p>
             
-            <div className="p-6 rounded-lg bg-card border border-border/40 space-y-3">
-              <p className="text-xs font-semibold text-foreground uppercase tracking-wide">Disclaimer</p>
-              <p className="text-xs text-muted-foreground/90 leading-relaxed">
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-card via-card/95 to-card/90 border border-border/40 space-y-4">
+              <p className="text-[10px] font-bold text-foreground/80 uppercase tracking-[0.12em]">Disclaimer</p>
+              <p className="text-sm text-muted-foreground/85 leading-relaxed font-light">
                 This content is educational and anti-stigma, not therapeutic or diagnostic. If you're working through significant trauma or relationship issues, a licensed therapist can provide personalized support.
               </p>
             </div>
 
-            <Button size="lg" asChild>
-              <Link href="/workspace">Try These Concepts in Your Workspace</Link>
-            </Button>
+            <Link
+              href="/workspace"
+              className="inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-foreground/20 transition-all duration-300"
+            >
+              Try These Concepts in Your Workspace
+            </Link>
           </div>
         </div>
       </main>
