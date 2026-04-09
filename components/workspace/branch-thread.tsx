@@ -22,7 +22,7 @@ const mockBranches: Message[] = [
     id: '3',
     type: 'simulation',
     title: 'If you said...',
-    content: 'Try: "I noticed something and I'm wondering if I'm reading it right..."',
+    content: 'Try: "I noticed something and I&apos;m wondering if I&apos;m reading it right..."',
   },
 ]
 
