@@ -105,11 +105,11 @@ export function WorkspaceLayout() {
         {/* Chat - Primary conversational view */}
         {activeDestination === 'Chat' && (
           <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-background via-background to-secondary/2">
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto px-4 py-3">
               <ChatThread />
             </div>
-            <div className="flex-shrink-0 border-t border-border/30 bg-background/50 backdrop-blur-sm">
-              <MessageInput />
+            <div className="flex-shrink-0 border-t border-border/30 bg-background/50 backdrop-blur-sm px-4 py-3">
+              <MessageInput compact />
             </div>
           </div>
         )}
@@ -117,41 +117,44 @@ export function WorkspaceLayout() {
         {/* Field - Relational canvas/map view */}
         {activeDestination === 'Field' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-gradient-to-br from-primary/8 via-secondary/4 to-transparent blur-3xl"></div>
+            {/* Header */}
+            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Relational Field</h2>
+              <p className="text-xs text-muted-foreground font-light">Visual mapping &amp; system analysis</p>
             </div>
-            
-            <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 relative z-10">
-              <div className="relative w-40 h-40 mb-10">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
-                  <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
-                  <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <span className="text-4xl font-light text-foreground/50">◆</span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="space-y-5 w-full max-w-md">
-                <div className="space-y-2 text-center">
-                  <h2 className="text-xl font-semibold text-foreground">Relational Field</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed font-light">
-                    Dynamic relational maps, family systems views, and AI-generated visual explainers
-                  </p>
-                </div>
-
-                <div className="space-y-2.5">
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">◆ Relational Maps</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Visual connections and assumptions</p>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { 
+                  icon: '◆', 
+                  title: 'Connection map', 
+                  desc: 'Their likely emotional path & where you diverged',
+                  color: 'from-primary/15 border-primary/30' 
+                },
+                { 
+                  icon: '∞', 
+                  title: 'Family system view', 
+                  desc: 'Patterns from their history shaping this reaction',
+                  color: 'from-secondary/15 border-secondary/30' 
+                },
+                { 
+                  icon: '→', 
+                  title: 'Timing pressure analysis', 
+                  desc: 'External stressors intensifying sensitivity',
+                  color: 'from-amber-500/10 border-amber-500/20' 
+                },
+              ].map((item, idx) => (
+                <div key={idx} className={`border rounded-lg p-4 bg-gradient-to-br ${item.color} to-transparent hover:scale-105 transition-transform cursor-pointer`}>
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl font-light text-foreground/70">{item.icon}</span>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                    </div>
                   </div>
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">∞ System Views</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Family dynamics and relational patterns</p>
-                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -159,41 +162,29 @@ export function WorkspaceLayout() {
         {/* Branches - Alternative framings and simulations */}
         {activeDestination === 'Branches' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-gradient-to-br from-primary/8 via-secondary/4 to-transparent blur-3xl"></div>
+            {/* Header */}
+            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Simulation Branch</h2>
+              <p className="text-xs text-muted-foreground font-light">Alternate paths &amp; rewritten responses</p>
             </div>
-            
-            <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 relative z-10">
-              <div className="relative w-40 h-40 mb-10">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
-                  <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
-                  <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <span className="text-4xl font-light text-foreground/50">⊕</span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="space-y-5 w-full max-w-md">
-                <div className="space-y-2 text-center">
-                  <h2 className="text-xl font-semibold text-foreground">Branch Simulations</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed font-light">
-                    Alternate framings, rewritten responses, and other-side perspectives
-                  </p>
-                </div>
-
-                <div className="space-y-2.5">
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">⊕ Rewritten Response</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Alternative way to express the same meaning</p>
-                  </div>
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">⊕ Other-Side View</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">How they might interpret the interaction</p>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { icon: '↻', title: 'Rewritten: Softer lead', desc: '"I want to check something with you"' },
+                { icon: '⊕', title: 'Simulation: If you validate first', desc: 'They relax → become receptive' },
+                { icon: '◇', title: 'Their perspective', desc: 'They see confrontation, not partnership' },
+              ].map((item, idx) => (
+                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 transition-all cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <span className="text-xl font-light text-secondary/80">{item.icon}</span>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -201,41 +192,47 @@ export function WorkspaceLayout() {
         {/* Family - System relationships and context */}
         {activeDestination === 'Family' && (
           <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-gradient-to-br from-primary/8 via-secondary/4 to-transparent blur-3xl"></div>
+            {/* Header */}
+            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
+              <h2 className="text-lg font-semibold text-foreground mb-1">System View</h2>
+              <p className="text-xs text-muted-foreground font-light">Family patterns &amp; relational history</p>
             </div>
-            
-            <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 relative z-10">
-              <div className="relative w-40 h-40 mb-10">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
-                  <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
-                  <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <span className="text-4xl font-light text-foreground/50">∞</span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="space-y-5 w-full max-w-md">
-                <div className="space-y-2 text-center">
-                  <h2 className="text-xl font-semibold text-foreground">System View</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed font-light">
-                    Relational patterns, history, and family dynamics shaping interpretation
-                  </p>
-                </div>
-
-                <div className="space-y-2.5">
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">∞ Family Patterns</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Recurring themes and relational structures</p>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { 
+                  icon: '∞', 
+                  title: 'Repeating patterns', 
+                  desc: 'How their family taught them to defend',
+                  status: '3 identified' 
+                },
+                { 
+                  icon: '◇', 
+                  title: 'Historical triggers', 
+                  desc: 'Past events that mirror this moment',
+                  status: '2 mapped' 
+                },
+                { 
+                  icon: '→', 
+                  title: 'Their relational role', 
+                  desc: 'How they see themselves in families',
+                  status: 'Primary' 
+                },
+              ].map((item, idx) => (
+                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/15 hover:to-secondary/8 transition-all">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 flex-1">
+                      <span className="text-2xl font-light text-secondary/80">{item.icon}</span>
+                      <div>
+                        <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                        <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded bg-secondary/20 text-secondary/90 font-medium whitespace-nowrap">{item.status}</span>
                   </div>
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">∞ Historical Context</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">What happened before that shapes now</p>
-                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         )}

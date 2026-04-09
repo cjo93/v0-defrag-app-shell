@@ -29,7 +29,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
               }
             }}
           />
-          <Button onClick={handleSend} size="sm" className="px-3 h-8 text-xs">
+          <Button onClick={handleSend} size="sm" className="px-3 h-8 text-xs bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-medium">
             Send
           </Button>
         </div>
@@ -52,7 +52,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
             }
           }}
         />
-        <Button onClick={handleSend} size="sm" className="px-4">
+        <Button onClick={handleSend} size="sm" className="px-4 bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-medium">
           Send
         </Button>
       </div>

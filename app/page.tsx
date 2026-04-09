@@ -43,11 +43,11 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4 md:pt-6">
-              <Button size="lg" asChild className="text-base px-8 py-6 font-semibold">
-                <Link href="/workspace">Start Workspace</Link>
+              <Button size="lg" asChild className="text-base px-8 py-6 font-semibold bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80">
+                <Link href="/workspace">Open Workspace</Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="text-base px-8 py-6">
-                <Link href="/pricing">View Pricing</Link>
+                <Link href="/pricing">Explore Plans</Link>
               </Button>
             </div>
           </div>
