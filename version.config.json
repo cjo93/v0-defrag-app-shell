@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "defrag",
+    "defaultVersion": "40",
+    "minSupportedVersion": "38",
+    "maxSupportedVersion": "40"
+  },
+  "build": {
+    "node": "22",
+    "npm": "10.x",
+    "lockfileVersion": 3
+  },
+  "deploy": {
+    "production": {
+      "targetVersion": "40",
+      "fallback": "38"
+    },
+    "staging": {
+      "targetVersion": "40",
+      "fallback": "38"
+    }
+  },
+  "versionHistory": {
+    "38": {
+      "tag": "v38-shell",
+      "date": "2026-04-09",
+      "description": "Clean product shell with baseline setup, complete onboarding flow, real artifact visualization, and system intelligence feel"
+    },
+    "40": {
+      "tag": "v40-restored",
+      "date": "2026-04-09",
+      "description": "Restored version 38 as new version with production improvements, serving as current stable baseline"
+    }
+  }
+}
