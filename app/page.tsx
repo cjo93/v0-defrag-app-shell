@@ -52,64 +52,96 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right: Workspace Preview - Corrected Architecture */}
+          {/* Right: Workspace Preview - Corrected Architecture with Visible Outputs */}
           <div className="hidden lg:flex justify-center">
-            <div className="w-full max-w-xl aspect-square bg-gradient-to-br from-background via-background to-secondary/5 border border-border/40 rounded-xl overflow-hidden shadow-2xl flex flex-col relative">
+            <div className="w-full max-w-2xl aspect-auto bg-gradient-to-br from-background via-background to-secondary/3 border border-border/40 rounded-lg overflow-hidden shadow-2xl flex flex-col relative">
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none"></div>
 
               {/* Preview Header */}
-              <div className="border-b border-border/30 px-6 py-4 bg-background/50 relative z-10">
-                <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">Premium Workspace</h3>
-                <p className="text-xs text-muted-foreground mt-2 font-light">Relational intelligence operating environment</p>
+              <div className="border-b border-border/30 px-5 py-3 bg-background/60 backdrop-blur-sm relative z-10">
+                <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">Defrag Workspace</h3>
+                <p className="text-xs text-muted-foreground mt-1 font-light">Relational intelligence operating system</p>
               </div>
               
               {/* Preview Content - LEFT THREADS + RIGHT CANVAS */}
-              <div className="flex-1 flex overflow-hidden gap-0 bg-background relative z-10">
+              <div className="flex-1 flex overflow-hidden gap-0 bg-gradient-to-br from-background via-background to-secondary/5 relative z-10 min-h-96">
                 {/* LEFT: Two Thread Lanes Stacked */}
-                <div className="w-1/3 border-r border-border/30 flex flex-col gap-0 bg-background/50">
+                <div className="w-1/3 border-r border-border/30 flex flex-col gap-0 bg-background/40">
                   {/* Primary Thread */}
-                  <div className="flex-1 border-b border-border/20 p-3 space-y-2">
-                    <div className="space-y-1.5">
-                      <div className="h-1 bg-primary/40 rounded-full w-2/3"></div>
-                      <div className="h-1 bg-muted/30 rounded-full w-full"></div>
-                      <div className="h-1 bg-muted/20 rounded-full w-3/4"></div>
+                  <div className="flex-1 border-b border-border/20 p-2.5 space-y-1.5 overflow-hidden">
+                    <div className="text-xs font-semibold text-foreground/70 tracking-wide uppercase">Primary</div>
+                    <div className="space-y-1">
+                      <div className="h-0.5 bg-primary/50 rounded-full w-4/5"></div>
+                      <div className="h-0.5 bg-muted/30 rounded-full w-full"></div>
+                      <div className="h-0.5 bg-muted/20 rounded-full w-3/4"></div>
+                    </div>
+                    <div className="h-px bg-border/10 my-1"></div>
+                    <div className="space-y-1">
+                      <div className="h-0.5 bg-muted/30 rounded-full w-3/5"></div>
+                      <div className="h-0.5 bg-muted/20 rounded-full w-4/5"></div>
                     </div>
                   </div>
                   
                   {/* Branch Thread */}
-                  <div className="flex-1 p-3 space-y-2">
-                    <div className="space-y-1.5">
-                      <div className="h-1 bg-secondary/30 rounded-full w-2/3"></div>
-                      <div className="h-1 bg-muted/20 rounded-full w-full"></div>
-                      <div className="h-1 bg-muted/15 rounded-full w-3/5"></div>
+                  <div className="flex-1 p-2.5 space-y-1.5 overflow-hidden">
+                    <div className="text-xs font-semibold text-foreground/70 tracking-wide uppercase">Branch</div>
+                    <div className="space-y-1">
+                      <div className="h-0.5 bg-secondary/40 rounded-full w-2/3"></div>
+                      <div className="h-0.5 bg-muted/30 rounded-full w-full"></div>
+                      <div className="h-0.5 bg-muted/20 rounded-full w-3/5"></div>
+                    </div>
+                    <div className="h-px bg-border/10 my-1"></div>
+                    <div className="space-y-1">
+                      <div className="h-0.5 bg-muted/20 rounded-full w-4/5"></div>
                     </div>
                   </div>
                 </div>
                 
-                {/* RIGHT: Dominant Multimedia Canvas */}
-                <div className="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-secondary/5 via-background to-background relative">
-                  {/* Inner glow */}
-                  <div className="absolute inset-0 bg-radial-gradient opacity-10 pointer-events-none"></div>
-                  
-                  {/* Canvas Visual */}
-                  <div className="relative z-10 flex flex-col items-center gap-3">
-                    {/* Concentric Rings - Product Identity */}
-                    <div className="relative w-12 h-12">
-                      <div className="absolute inset-0 w-12 h-12 rounded-full border border-border/20"></div>
-                      <div className="absolute inset-1 w-10 h-10 rounded-full border border-border/30"></div>
-                      <div className="absolute inset-1.5 w-9 h-9 rounded-full bg-primary/10 border border-primary/40"></div>
-                      <div className="absolute inset-2.5 w-7 h-7 rounded-full flex items-center justify-center">
-                        <span className="text-lg font-light text-muted-foreground/60">◆</span>
+                {/* RIGHT: Dominant Multimedia Canvas - Showing Artifacts */}
+                <div className="flex-1 flex flex-col p-3 gap-2 overflow-hidden">
+                  {/* Artifact Cards Grid */}
+                  <div className="grid grid-cols-2 gap-2 flex-1">
+                    {/* Map Card */}
+                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/60">◆ Map</div>
+                      <div className="flex gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
+                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
                       </div>
                     </div>
                     
-                    {/* Text Indicators */}
-                    <div className="space-y-1 text-center">
-                      <div className="h-0.5 bg-muted/40 rounded-full w-8 mx-auto"></div>
-                      <div className="h-0.5 bg-muted/30 rounded-full w-10 mx-auto"></div>
-                      <div className="h-0.5 bg-muted/20 rounded-full w-6 mx-auto"></div>
+                    {/* System Card */}
+                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/60">∞ System</div>
+                      <div className="flex gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
+                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                      </div>
                     </div>
+                    
+                    {/* Simulation Card */}
+                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/60">⊕ Sim</div>
+                      <div className="flex gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
+                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Timing Card */}
+                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/60">→ Timing</div>
+                      <div className="flex gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
+                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Central Visual with Activity Indicator */}
+                  <div className="flex items-center justify-center p-2 rounded border border-border/30 bg-gradient-to-br from-primary/5 to-secondary/3">
+                    <div className="text-xs text-muted-foreground/70 font-light">Canvas Active</div>
                   </div>
                 </div>
               </div>
