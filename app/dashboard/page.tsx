@@ -17,8 +17,8 @@ export default function DashboardPage() {
             <Button variant="outline" size="sm" asChild>
               <Link href="/">Home</Link>
             </Button>
-            <Button variant="ghost" size="sm">
-              Settings
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/settings">Settings</Link>
             </Button>
           </div>
         </div>
