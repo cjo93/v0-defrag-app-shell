@@ -3,7 +3,6 @@
 import { ChatThread } from './chat-thread'
 import { MessageInput } from './message-input'
 import { CanvasPanel } from './canvas-panel'
-import { Sidebar } from '@/components/layout/sidebar'
 import { useState } from 'react'
 
 const tabs = [
@@ -16,63 +15,56 @@ const tabs = [
 
 export function WorkspaceLayout() {
   const [activeTab, setActiveTab] = useState('Chat')
-  const [showBranchPanel, setShowBranchPanel] = useState(false)
 
-  // Desktop layout: narrow left rail + large center canvas + optional right panel
+  // Desktop layout: THREE-COLUMN operating environment (no sidebar)
+  // Left thread | Center dominant canvas | Right branch thread
   const desktopLayout = (
     <div className="hidden md:flex h-screen bg-background overflow-hidden">
-      <Sidebar />
-      
-      {/* Main workspace area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Top action bar (minimal) */}
-        <div className="flex-shrink-0 border-b border-border bg-background/50 px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-sm font-semibold text-foreground">Workspace</h1>
-          </div>
-          <button
-            onClick={() => setShowBranchPanel(!showBranchPanel)}
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {showBranchPanel ? 'Hide' : 'Show'} Branch
-          </button>
+      {/* LEFT: Primary Thread */}
+      <div className="w-96 border-r border-border flex flex-col bg-background">
+        {/* Thread header */}
+        <div className="flex-shrink-0 border-b border-border px-6 py-4 bg-background/50">
+          <h2 className="text-sm font-semibold text-foreground tracking-wide">Conversation</h2>
+          <p className="text-xs text-muted-foreground mt-1">Primary thread</p>
         </div>
-
-        {/* Main content: thread (smaller) + canvas (dominant) */}
-        <div className="flex-1 flex overflow-hidden gap-6 p-6">
-          {/* Left: Thread (subordinate, occupies less visual weight) */}
-          <div className="w-72 flex flex-col border border-border rounded-lg bg-card overflow-hidden">
-            <div className="flex-1 flex flex-col">
-              <ChatThread />
-              <div className="flex-shrink-0 border-t border-border">
-                <MessageInput />
-              </div>
-            </div>
+        
+        {/* Thread content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto">
+            <ChatThread />
           </div>
-
-          {/* Center: Canvas (DOMINANT - heart of product) */}
-          <div className="flex-1 flex flex-col border border-border rounded-lg overflow-hidden bg-card">
-            <CanvasPanel />
+          <div className="flex-shrink-0 border-t border-border">
+            <MessageInput />
           </div>
+        </div>
+      </div>
 
-          {/* Right: Branch panel (optional, secondary) */}
-          {showBranchPanel && (
-            <div className="w-80 border border-border rounded-lg bg-card overflow-hidden flex flex-col">
-              <div className="flex-shrink-0 border-b border-border px-6 py-5 bg-background/50">
-                <h2 className="text-sm font-semibold text-foreground tracking-wide">Branches</h2>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Alternative conversations and perspectives
-                </p>
-              </div>
-              <div className="flex-1 overflow-y-auto p-6 flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">
-                    Branch analysis appears here
-                  </p>
-                </div>
-              </div>
+      {/* CENTER: Dominant AI Canvas (Heart of Product) */}
+      <div className="flex-1 flex flex-col min-w-0 bg-background">
+        <CanvasPanel />
+      </div>
+
+      {/* RIGHT: Secondary Branch Thread */}
+      <div className="w-96 border-l border-border flex flex-col bg-background">
+        {/* Branch header */}
+        <div className="flex-shrink-0 border-b border-border px-6 py-4 bg-background/50">
+          <h2 className="text-sm font-semibold text-foreground tracking-wide">Branches</h2>
+          <p className="text-xs text-muted-foreground mt-1">Alternate perspectives</p>
+        </div>
+        
+        {/* Branch content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center">
+            <div className="w-16 h-16 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-4">
+              <span className="text-xs font-medium text-muted-foreground">Branch</span>
             </div>
-          )}
+            <p className="text-xs text-muted-foreground text-center">
+              Alternative threads and analysis appear here.
+            </p>
+          </div>
+          <div className="flex-shrink-0 border-t border-border">
+            <MessageInput />
+          </div>
         </div>
       </div>
     </div>
@@ -82,12 +74,12 @@ export function WorkspaceLayout() {
   const mobileLayout = (
     <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 border-b border-border bg-background/50 px-4 py-3">
-        <h1 className="text-sm font-semibold text-foreground">Defrag</h1>
-        <p className="text-xs text-muted-foreground mt-0.5">Workspace</p>
+      <div className="flex-shrink-0 border-b border-border bg-background/50 px-4 py-4">
+        <h1 className="text-base font-semibold text-foreground">Defrag</h1>
+        <p className="text-xs text-muted-foreground mt-1">AI Workspace</p>
       </div>
 
-      {/* Tab Content */}
+      {/* Tab Content - Full Screen */}
       <div className="flex-1 overflow-hidden flex flex-col min-w-0">
         {activeTab === 'Chat' && (
           <div className="flex-1 flex flex-col overflow-hidden">
@@ -101,56 +93,56 @@ export function WorkspaceLayout() {
         )}
 
         {activeTab === 'Field' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-            <div className="w-20 h-20 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
-              <p className="text-xs font-medium text-muted-foreground">Field</p>
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+            <div className="w-24 h-24 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Field</span>
             </div>
-            <h2 className="text-sm font-semibold text-foreground text-center mb-2">Relational Canvas</h2>
-            <p className="text-sm text-muted-foreground text-center">
-              Map relationships and context in this view.
+            <h2 className="text-base font-semibold text-foreground text-center mb-3">Relational Canvas</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-xs">
+              Map relationships and context between people, moments, and patterns.
             </p>
           </div>
         )}
 
         {activeTab === 'Branches' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-            <div className="w-20 h-20 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
-              <p className="text-xs font-medium text-muted-foreground">Branches</p>
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+            <div className="w-24 h-24 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Branch</span>
             </div>
-            <h2 className="text-sm font-semibold text-foreground text-center mb-2">Alternative Threads</h2>
-            <p className="text-sm text-muted-foreground text-center">
-              Explore different conversation paths.
+            <h2 className="text-base font-semibold text-foreground text-center mb-3">Alternative Threads</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-xs">
+              Explore different interpretations and responses to the same moment.
             </p>
           </div>
         )}
 
         {activeTab === 'Family' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-            <div className="w-20 h-20 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
-              <p className="text-xs font-medium text-muted-foreground">Family</p>
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+            <div className="w-24 h-24 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Family</span>
             </div>
-            <h2 className="text-sm font-semibold text-foreground text-center mb-2">Relationships</h2>
-            <p className="text-sm text-muted-foreground text-center">
-              Understand connected interactions.
+            <h2 className="text-base font-semibold text-foreground text-center mb-3">Related Interactions</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-xs">
+              See how this moment connects to other conversations and patterns.
             </p>
           </div>
         )}
 
         {activeTab === 'Brief' && (
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-            <div className="w-20 h-20 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
-              <p className="text-xs font-medium text-muted-foreground">Brief</p>
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+            <div className="w-24 h-24 rounded-lg bg-secondary/20 border border-border/50 flex items-center justify-center mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Brief</span>
             </div>
-            <h2 className="text-sm font-semibold text-foreground text-center mb-2">Summary & Insights</h2>
-            <p className="text-sm text-muted-foreground text-center">
-              Key takeaways and next steps.
+            <h2 className="text-base font-semibold text-foreground text-center mb-3">Summary & Insights</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-xs">
+              Key takeaways, patterns, and suggestions for next steps.
             </p>
           </div>
         )}
       </div>
 
       {/* Bottom Tab Bar - iOS Style */}
-      <div className="flex-shrink-0 border-t border-border bg-card flex gap-1 p-1.5 safe-area-inset-bottom">
+      <div className="flex-shrink-0 border-t border-border bg-card flex gap-0.5 p-1 safe-area-inset-bottom">
         {tabs.map((tab) => (
           <button
             key={tab.id}
