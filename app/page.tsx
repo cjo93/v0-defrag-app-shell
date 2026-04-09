@@ -5,130 +5,110 @@ import Link from 'next/link'
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
       
-      {/* Hero Section - Premium Cinematic */}
-      <section className="flex-1 py-12 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-secondary/5 blur-3xl"></div>
-          <div className="absolute bottom-1/4 -left-40 w-80 h-80 rounded-full bg-secondary/5 blur-3xl"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
-          {/* Left: Premium Hero Copy */}
-          <div className="space-y-6 md:space-y-8 max-w-xl">
-            <div className="space-y-4 md:space-y-6">
-              <div className="inline-block">
-                <p className="text-xs font-semibold text-primary/80 tracking-widest uppercase mb-3">Relational Intelligence</p>
-              </div>
-              
-              <h1 className="text-foreground text-pretty leading-tight">
-                <span className="block text-4xl md:text-5xl lg:text-6xl font-bold">You know what you meant.</span>
-                <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-primary/80">Defrag shows you what they may have heard.</span>
+      {/* Hero Section */}
+      <section className="flex-1 py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Hero Copy */}
+          <div className="space-y-8 max-w-xl">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-balance leading-tight">
+                You know what you meant. Defrag shows you what they may have heard.
               </h1>
               
-              <h2 className="text-lg md:text-xl font-semibold text-muted-foreground text-pretty">
+              <p className="text-lg md:text-xl text-muted-foreground text-balance leading-relaxed">
                 Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
-              </h2>
+              </p>
               
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty font-light">
+              <p className="text-base text-muted-foreground/80 text-balance font-light">
                 See the interaction from more than one side before the same misunderstanding gets worse.
               </p>
             </div>
 
-            <p className="text-xs md:text-sm text-muted-foreground/80 italic font-light leading-relaxed">
-              Dynamic AI workspace. Relational maps. System perspectives. Simulations.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 md:pt-6">
-              <Button size="lg" asChild className="text-base px-8 py-6 font-semibold bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button size="lg" asChild className="text-base px-8 py-6 bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80">
                 <Link href="/workspace">Open Workspace</Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="text-base px-8 py-6">
-                <Link href="/pricing">Explore Plans</Link>
+                <Link href="/pricing">See Pricing</Link>
               </Button>
             </div>
           </div>
 
-          {/* Right: Workspace Preview - Corrected Architecture with Visible Outputs */}
+          {/* Right: Workspace Preview */}
           <div className="hidden lg:flex justify-center">
-            <div className="w-full max-w-2xl aspect-auto bg-gradient-to-br from-background via-background to-secondary/3 border border-border/40 rounded-lg overflow-hidden shadow-2xl flex flex-col relative">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none"></div>
-
+            <div className="w-full max-w-2xl bg-card border border-border rounded-lg overflow-hidden shadow-xl flex flex-col">
               {/* Preview Header */}
-              <div className="border-b border-border/30 px-5 py-3 bg-background/60 backdrop-blur-sm relative z-10">
-                <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">DEFRAG Workspace</h3>
-                <p className="text-xs text-muted-foreground mt-1 font-light">Live relational analysis</p>
+              <div className="border-b border-border px-4 py-3 bg-card">
+                <div className="text-xs font-semibold text-foreground/90">Workspace Preview</div>
               </div>
               
-              {/* Preview Content - LEFT THREADS + RIGHT CANVAS */}
-              <div className="flex-1 flex overflow-hidden gap-0 bg-gradient-to-br from-background via-background to-secondary/5 relative z-10 min-h-96">
-                {/* LEFT: Two Thread Lanes Stacked */}
-                <div className="w-1/3 border-r border-border/30 flex flex-col gap-0 bg-background/40">
-                  {/* Primary Thread */}
-                  <div className="flex-1 border-b border-border/20 p-3 space-y-2 overflow-hidden">
-                    <div className="text-xs font-semibold text-foreground/80 tracking-widest uppercase">Interpretation</div>
-                    <div className="space-y-1.5 text-xs">
-                      <div className="px-2 py-1.5 rounded bg-primary/12 border border-primary/20 text-foreground/90 leading-snug">You interpreted threat</div>
-                      <div className="px-2 py-1.5 rounded bg-primary/8 border border-primary/15 text-foreground/80 leading-snug">They heard it as rejection</div>
+              {/* Preview Content: Conversation + Canvas Layout */}
+              <div className="flex-1 flex overflow-hidden min-h-[400px]">
+                {/* Left: Thread Lanes */}
+                <div className="w-2/5 border-r border-border flex flex-col">
+                  {/* Primary Interpretation Lane */}
+                  <div className="flex-1 border-b border-border/50 p-4 space-y-2 bg-background/50">
+                    <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Primary</div>
+                    <div className="space-y-2">
+                      <div className="px-3 py-2 rounded bg-primary/10 border border-primary/20 text-xs text-foreground/90 leading-relaxed">
+                        They likely interpreted this as criticism
+                      </div>
+                      <div className="px-3 py-2 rounded bg-primary/8 border border-primary/15 text-xs text-foreground/80 leading-relaxed">
+                        Your intent was to help, but timing felt abrupt
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Branch Thread */}
-                  <div className="flex-1 p-3 space-y-2 overflow-hidden">
-                    <div className="text-xs font-semibold text-foreground/80 tracking-widest uppercase">Simulation</div>
-                    <div className="space-y-1.5 text-xs">
-                      <div className="px-2 py-1.5 rounded bg-secondary/12 border border-secondary/20 text-foreground/90 leading-snug">Soften lead: check-in first</div>
-                      <div className="px-2 py-1.5 rounded bg-secondary/8 border border-secondary/15 text-foreground/80 leading-snug">Lead with: I value us</div>
+                  {/* Branch Simulation Lane */}
+                  <div className="flex-1 p-4 space-y-2 bg-background/30">
+                    <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Branch</div>
+                    <div className="space-y-2">
+                      <div className="px-3 py-2 rounded bg-secondary/10 border border-secondary/20 text-xs text-foreground/90 leading-relaxed">
+                        Try: "I know this is hard for you..."
+                      </div>
+                      <div className="px-3 py-2 rounded bg-secondary/8 border border-secondary/15 text-xs text-foreground/80 leading-relaxed">
+                        Lead with validation first
+                      </div>
                     </div>
                   </div>
                 </div>
                 
-                {/* RIGHT: Dominant Multimedia Canvas - Showing Artifacts */}
-                <div className="flex-1 flex flex-col p-3 gap-2 overflow-hidden">
-                  {/* Artifact Cards Grid - Real Flow */}
-                  <div className="grid grid-cols-2 gap-2 flex-1">
-                    {/* Map Card - Generating */}
-                    <div className="rounded border border-primary/30 bg-primary/10 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-primary/90 flex items-center gap-1">Map <span className="text-xs text-primary/70 font-light">gen…</span></div>
-                      <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/70 animate-pulse"></div>
-                        <div className="w-1 h-1 rounded-full bg-primary/50 animate-pulse" style={{animationDelay: '0.1s'}}></div>
+                {/* Right: Canvas Field */}
+                <div className="flex-1 p-4 bg-background/20">
+                  <div className="h-full flex flex-col gap-3">
+                    {/* Artifact Grid */}
+                    <div className="grid grid-cols-2 gap-2 flex-1">
+                      <div className="rounded border border-primary/25 bg-primary/8 p-3 flex flex-col justify-between">
+                        <div className="text-xs font-medium text-foreground/80">Map</div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse"></div>
+                          <div className="text-[10px] text-primary/70">generating</div>
+                        </div>
+                      </div>
+                      
+                      <div className="rounded border border-border bg-card p-3 flex flex-col justify-between">
+                        <div className="text-xs font-medium text-foreground/70">System</div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
+                      </div>
+                      
+                      <div className="rounded border border-border bg-card p-3 flex flex-col justify-between">
+                        <div className="text-xs font-medium text-foreground/70">Sim</div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
+                      </div>
+                      
+                      <div className="rounded border border-border/50 bg-muted/20 p-3 flex flex-col justify-between opacity-50">
+                        <div className="text-xs font-medium text-muted-foreground">Timing</div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-muted/40"></div>
                       </div>
                     </div>
-                    
-                    {/* System Card - Ready */}
-                    <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/70">System</div>
-                      <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/70"></div>
-                        <div className="w-1 h-1 rounded-full bg-primary/50"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Simulation Card - Ready */}
-                    <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/70">Sim</div>
-                      <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/70"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Timing Card - Queued */}
-                    <div className="rounded border border-border/30 bg-muted/5 p-2 flex flex-col justify-between opacity-60">
-                      <div className="text-xs font-semibold text-foreground/50">Timing</div>
-                      <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-muted/40"></div>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Central Visual with Activity Indicator */}
-                  <div className="flex items-center justify-center p-2 rounded border border-border/30 bg-gradient-to-br from-primary/5 to-secondary/3">
-                    <div className="text-xs text-muted-foreground/70 font-light">Canvas Active</div>
+                    {/* Canvas Active Indicator */}
+                    <div className="flex items-center justify-center py-3 rounded bg-primary/5 border border-primary/10">
+                      <div className="text-xs text-muted-foreground/80">Canvas active</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -137,7 +117,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How It Works - Premium Band */}
+      {/* How It Works */}
       <section className="py-16 md:py-20 bg-card/50 border-y border-border/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
@@ -241,7 +221,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section - Premium */}
+      {/* CTA Section */}
       <section className="py-16 md:py-20 bg-card/50 border-t border-border/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <div className="space-y-4">
@@ -249,11 +229,11 @@ export default function LandingPage() {
               See interactions from more than one side
             </h2>
             <p className="text-lg text-muted-foreground font-light">
-              Start your free trial. No credit card required. Get premium workspace access instantly.
+              Start your free trial. No credit card required.
             </p>
           </div>
           
-          <Button size="lg" asChild className="text-base px-10 py-7 font-semibold">
+          <Button size="lg" asChild className="text-base px-10 py-7">
             <Link href="/workspace">Start Free Trial</Link>
           </Button>
         </div>
