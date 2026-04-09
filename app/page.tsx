@@ -81,8 +81,8 @@ export default function LandingPage() {
                   <div className="flex-1 p-3 space-y-2 overflow-hidden">
                     <div className="text-xs font-semibold text-foreground/80 tracking-widest uppercase">Simulation</div>
                     <div className="space-y-1.5 text-xs">
-                      <div className="px-2 py-1.5 rounded bg-secondary/12 border border-secondary/20 text-foreground/90 leading-snug">↻ Soften lead: check-in first</div>
-                      <div className="px-2 py-1.5 rounded bg-secondary/8 border border-secondary/15 text-foreground/80 leading-snug">⊕ Lead with: I value us</div>
+                      <div className="px-2 py-1.5 rounded bg-secondary/12 border border-secondary/20 text-foreground/90 leading-snug">Soften lead: check-in first</div>
+                      <div className="px-2 py-1.5 rounded bg-secondary/8 border border-secondary/15 text-foreground/80 leading-snug">Lead with: I value us</div>
                     </div>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ export default function LandingPage() {
                   <div className="grid grid-cols-2 gap-2 flex-1">
                     {/* Map Card - Generating */}
                     <div className="rounded border border-primary/30 bg-primary/10 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-primary/90 flex items-center gap-1">◆ Map <span className="text-xs text-primary/70 font-light">gen…</span></div>
+                      <div className="text-xs font-semibold text-primary/90 flex items-center gap-1">Map <span className="text-xs text-primary/70 font-light">gen…</span></div>
                       <div className="flex gap-0.5">
                         <div className="w-1 h-1 rounded-full bg-primary/70 animate-pulse"></div>
                         <div className="w-1 h-1 rounded-full bg-primary/50 animate-pulse" style={{animationDelay: '0.1s'}}></div>
@@ -102,7 +102,7 @@ export default function LandingPage() {
                     
                     {/* System Card - Ready */}
                     <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/70">∞ System</div>
+                      <div className="text-xs font-semibold text-foreground/70">System</div>
                       <div className="flex gap-0.5">
                         <div className="w-1 h-1 rounded-full bg-primary/70"></div>
                         <div className="w-1 h-1 rounded-full bg-primary/50"></div>
@@ -111,7 +111,7 @@ export default function LandingPage() {
                     
                     {/* Simulation Card - Ready */}
                     <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/70">⊕ Sim</div>
+                      <div className="text-xs font-semibold text-foreground/70">Sim</div>
                       <div className="flex gap-0.5">
                         <div className="w-1 h-1 rounded-full bg-primary/70"></div>
                       </div>
@@ -119,7 +119,7 @@ export default function LandingPage() {
                     
                     {/* Timing Card - Queued */}
                     <div className="rounded border border-border/30 bg-muted/5 p-2 flex flex-col justify-between opacity-60">
-                      <div className="text-xs font-semibold text-foreground/50">→ Timing</div>
+                      <div className="text-xs font-semibold text-foreground/50">Timing</div>
                       <div className="flex gap-0.5">
                         <div className="w-1 h-1 rounded-full bg-muted/40"></div>
                       </div>

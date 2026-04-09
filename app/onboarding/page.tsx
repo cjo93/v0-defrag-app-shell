@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
+import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
 import { useState } from 'react'
 
 export default function OnboardingPage() {
@@ -16,13 +17,13 @@ export default function OnboardingPage() {
       content: (
         <div className="space-y-6 text-center">
           <div className="relative w-40 h-40 mx-auto">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="absolute w-40 h-40 rounded-full border border-border/20 animate-pulse"></div>
-              <div className="absolute w-32 h-32 rounded-full border border-border/30"></div>
-              <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                <span className="text-4xl font-light text-foreground/50">◆</span>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-40 h-40 rounded-full border border-border/20 animate-pulse"></div>
+                <div className="absolute w-32 h-32 rounded-full border border-border/30"></div>
+                <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
+                  <IconRelationalMap className="w-12 h-12 text-foreground/50" />
+                </div>
               </div>
-            </div>
           </div>
           <div className="space-y-4">
             <p className="text-muted-foreground font-light max-w-md mx-auto">
@@ -65,17 +66,20 @@ export default function OnboardingPage() {
       content: (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           {[
-            { icon: '◆', label: 'Relational Maps', desc: 'Visual connections and assumptions' },
-            { icon: '∞', label: 'System Views', desc: 'Family dynamics and patterns' },
-            { icon: '⊕', label: 'Simulations', desc: 'Alternative conversations' },
-            { icon: '→', label: 'Timing Analysis', desc: 'Pressure and context factors' }
-          ].map((item, idx) => (
+            { icon: IconRelationalMap, label: 'Relational Maps', desc: 'Visual connections and assumptions' },
+            { icon: IconSystemView, label: 'System Views', desc: 'Family dynamics and patterns' },
+            { icon: IconSimulations, label: 'Simulations', desc: 'Alternative conversations' },
+            { icon: IconTiming, label: 'Timing Analysis', desc: 'Pressure and context factors' }
+          ].map((item, idx) => {
+            const Icon = item.icon
+            return (
             <div key={idx} className="border border-border/40 rounded-lg p-6 bg-gradient-to-br from-card/60 to-card/20">
-              <div className="text-3xl mb-3">{item.icon}</div>
+              <Icon className="w-8 h-8 mb-3 text-foreground/70" />
               <p className="font-semibold text-foreground mb-2">{item.label}</p>
               <p className="text-sm text-muted-foreground font-light">{item.desc}</p>
             </div>
-          ))}
+          )
+          })}
         </div>
       )
     },

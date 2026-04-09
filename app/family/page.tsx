@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
+import { IconSystemView } from '@/components/icons/DefragIcons'
 
 export default function FamilyPage() {
   return (
@@ -37,7 +38,7 @@ export default function FamilyPage() {
                   <div className="absolute w-48 h-48 rounded-full border border-border/20 animate-pulse"></div>
                   <div className="absolute w-40 h-40 rounded-full border border-border/30 shadow-lg" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.1)'}}></div>
                   <div className="absolute w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <span className="text-5xl font-light text-foreground/50">∞</span>
+                    <IconSystemView className="w-16 h-16 text-foreground/50" />
                   </div>
                 </div>
               </div>

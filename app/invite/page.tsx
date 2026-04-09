@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
+import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
 
 export default function InvitePage() {
   return (
@@ -16,7 +17,7 @@ export default function InvitePage() {
             {/* Header */}
             <div className="text-center space-y-4">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40">
-                <span className="text-3xl font-light text-foreground/50">◆</span>
+                <IconRelationalMap className="w-8 h-8 text-foreground/50" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-foreground">
                 You&apos;ve been invited to Defrag
@@ -34,17 +35,20 @@ export default function InvitePage() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
-                  { icon: '◆', title: 'Relational Maps', desc: 'See how the other person connects the dots' },
-                  { icon: '∞', title: 'System Context', desc: 'Understand family and relational history' },
-                  { icon: '⊕', title: 'Simulations', desc: 'Explore alternative conversations' },
-                  { icon: '→', title: 'Timing Analysis', desc: 'Understand external pressures' }
-                ].map((item, idx) => (
+                  { icon: IconRelationalMap, title: 'Relational Maps', desc: 'See how the other person connects the dots' },
+                  { icon: IconSystemView, title: 'System Context', desc: 'Understand family and relational history' },
+                  { icon: IconSimulations, title: 'Simulations', desc: 'Explore alternative conversations' },
+                  { icon: IconTiming, title: 'Timing Analysis', desc: 'Understand external pressures' }
+                ].map((item, idx) => {
+                  const Icon = item.icon
+                  return (
                   <div key={idx} className="space-y-2">
-                    <div className="text-2xl">{item.icon}</div>
+                    <Icon className="w-6 h-6 text-foreground/70" />
                     <p className="font-semibold text-foreground">{item.title}</p>
                     <p className="text-sm text-muted-foreground font-light">{item.desc}</p>
                   </div>
-                ))}
+                )
+                })}
               </div>
             </div>
 

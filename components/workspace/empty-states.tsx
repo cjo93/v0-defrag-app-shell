@@ -2,7 +2,11 @@ export function EmptyThreadState() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
       <div className="space-y-3">
-        <div className="text-5xl text-muted-foreground/30">◆</div>
+        <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto">
+          <svg className="w-6 h-6 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
         <h3 className="text-sm font-semibold text-foreground">No conversation yet</h3>
         <p className="text-xs text-muted-foreground/70 max-w-xs font-light">Describe an interaction using the input below to generate relational analysis</p>
       </div>
@@ -14,7 +18,11 @@ export function EmptyCanvasState() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
       <div className="space-y-3">
-        <div className="text-5xl text-muted-foreground/30">→</div>
+        <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto">
+          <svg className="w-6 h-6 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7m0 0l-7 7m7-7H5" />
+          </svg>
+        </div>
         <h3 className="text-sm font-semibold text-foreground">Waiting for input</h3>
         <p className="text-xs text-muted-foreground/70 max-w-xs font-light">Artifacts will appear here once analysis begins</p>
       </div>
