@@ -11,49 +11,41 @@ const topics = [
     id: 'psychology',
     title: 'Psychological Dynamics',
     description: 'Projection, transference, and how past patterns shape current reactions',
-    icon: '🧠'
   },
   {
     id: 'coping',
     title: 'Coping & Regulation',
     description: 'Nervous system awareness and grounding strategies under pressure',
-    icon: '🌬️'
   },
   {
     id: 'attachment',
     title: 'Attachment & Trauma',
     description: 'Developmental patterns and how they influence relational triggers',
-    icon: '🔗'
   },
   {
     id: 'emotional',
     title: 'Emotional Processing',
     description: 'Validation, expression, and safe containment of difficult feelings',
-    icon: '💙'
   },
   {
     id: 'communication',
     title: 'Communication Under Pressure',
     description: 'Managing triggers and staying connected when emotions escalate',
-    icon: '💬'
   },
   {
     id: 'repair',
     title: 'Rupture & Repair',
     description: 'How to recover from conflicts and rebuild connection',
-    icon: '🔧'
   },
   {
     id: 'patterns',
     title: 'Relational Patterns',
     description: 'Pursuer-withdrawer cycles, patterns across relationships',
-    icon: '🔄'
   },
   {
     id: 'generational',
     title: 'Generational Dynamics',
     description: 'How inherited patterns shape current interactions',
-    icon: '🌳'
   },
 ]
 
