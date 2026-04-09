@@ -3,7 +3,7 @@
 import { ChatThread } from './chat-thread'
 import { BranchThread } from './branch-thread'
 import { MessageInput } from './message-input'
-import { CanvasPanel } from './canvas-panel'
+import { CanvasField } from './canvas-field'
 import { useState } from 'react'
 import { IconChat, IconField, IconBranches, IconFamily, IconBrief, IconRelationalMap, IconSystemView, IconTiming, IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
 
@@ -80,9 +80,9 @@ export function WorkspaceLayout() {
         )}
       </div>
 
-      {/* RIGHT SIDE: Dominant Multimedia Canvas */}
+      {/* RIGHT SIDE: Dominant Intelligence Canvas - Real Artifacts */}
       <div className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
-        <CanvasPanel />
+        <CanvasField />
       </div>
     </div>
   )

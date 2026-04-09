@@ -117,36 +117,87 @@ export function ChatThread() {
               </span>
               <span className="text-xs text-muted-foreground/50 font-light">{message.timestamp}</span>
             </div>
-            <div className={`px-4 py-3.5 rounded-lg border transition-all ${
-              isDefrag 
-                ? isInsight
-                  ? 'bg-primary/12 border-primary/30 text-foreground ring-1 ring-primary/10 font-medium'
-                  : 'bg-primary/8 border-primary/20 text-foreground' 
-                : 'bg-background/50 border-border/40 text-foreground/90'
-            }`}>
-              <p className={`text-sm leading-relaxed font-light ${isInsight ? 'font-medium text-primary/95' : ''}`}>
-                {message.content}
-              </p>
-              {isDefrag && message.sources && (
-                <div className="mt-3 pt-3 border-t border-border/20">
-                  <BasedOnDisclosure sources={message.sources} />
+            {/* Generative UI Surface - Intelligence Panel */}
+            {isDefrag ? (
+              <div className="space-y-3 relative group">
+                {/* Primary Insight Panel */}
+                <div className={`relative overflow-hidden transition-all duration-300 ${
+                  isInsight
+                    ? 'bg-gradient-to-br from-primary/14 via-primary/8 to-primary/6 border border-primary/30'
+                    : 'bg-gradient-to-br from-primary/10 via-primary/6 to-primary/4 border border-primary/25'
+                } rounded-xl p-5`}>
+                  {/* Subtle ambient glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  
+                  <div className="relative z-10 space-y-4">
+                    {/* System indicator */}
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/15 border border-primary/30">
+                        <span className="w-1 h-1 rounded-full bg-primary/80 animate-pulse"></span>
+                        <span className="text-[9px] font-bold text-primary/90 tracking-wider uppercase">Analyzing</span>
+                      </span>
+                      {isInsight && (
+                        <span className="text-[9px] font-semibold text-primary/60 uppercase tracking-wider">Key Pattern</span>
+                      )}
+                    </div>
+                    
+                    {/* Main insight */}
+                    <p className="text-sm leading-relaxed text-foreground/95 font-medium">
+                      {message.content}
+                    </p>
+                  </div>
                 </div>
-              )}
-            </div>
 
-            {/* Follow-up Actions - Product-Native */}
+                {/* Dynamic Signal Blocks - Structured Intelligence */}
+                {message.sources && message.sources.length > 0 && (
+                  <div className="grid grid-cols-1 gap-2 pl-4 border-l-2 border-primary/20">
+                    {message.sources.map((source, idx) => (
+                      <div 
+                        key={idx}
+                        className="p-3 rounded-lg bg-background/80 backdrop-blur-sm border border-border/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group/signal"
+                      >
+                        <div className="flex items-start gap-2.5">
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/15 border border-primary/30 flex-shrink-0 mt-0.5">
+                            <span className="w-1 h-1 rounded-full bg-primary/80"></span>
+                          </span>
+                          <div className="flex-1 space-y-1">
+                            <p className="text-xs font-bold text-foreground tracking-tight">{source.name}</p>
+                            <p className="text-[11px] text-muted-foreground/80 font-light leading-relaxed">{source.description}</p>
+                          </div>
+                        </div>
+                        
+                        {/* Expandable detail on hover/click */}
+                        <div className="mt-2 pt-2 border-t border-border/20 opacity-0 group-hover/signal:opacity-100 transition-opacity duration-200">
+                          <p className="text-[10px] text-muted-foreground/70 font-light leading-relaxed">
+                            {source.detail}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* User message - clean and simple */
+              <div className="px-4 py-3 rounded-lg bg-background/60 border border-border/30 backdrop-blur-sm">
+                <p className="text-sm leading-relaxed text-foreground/90 font-light">
+                  {message.content}
+                </p>
+              </div>
+            )}
+
+            {/* Action Modules - Interactive System Controls */}
             {isDefrag && message.followUp && (
-              <div className="flex flex-wrap gap-2 px-1">
+              <div className="flex flex-wrap gap-2 pl-4">
                 {message.followUp.map((action, idx) => (
-                  <Button
+                  <button
                     key={idx}
-                    size="sm"
-                    variant="ghost"
-                    className="text-xs h-7 px-2 text-muted-foreground hover:text-foreground hover:bg-primary/10 border border-border/40 hover:border-primary/30 transition-all"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-foreground/80 bg-background/60 backdrop-blur-sm border border-border/40 rounded-lg hover:border-primary/50 hover:bg-primary/8 hover:text-foreground transition-all duration-200 group/action"
                     onClick={() => setExpandedMessage(isExpanded && expandedMessage === message.id ? null : message.id)}
                   >
+                    <span className="w-1 h-1 rounded-full bg-primary/60 group-hover/action:bg-primary/90 transition-colors"></span>
                     {action.label}
-                  </Button>
+                  </button>
                 ))}
               </div>
             )}
