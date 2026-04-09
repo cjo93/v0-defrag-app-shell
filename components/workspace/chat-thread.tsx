@@ -80,7 +80,7 @@ const mockMessages: Message[] = [
       {
         name: 'Numerology: current cycle emphasis',
         description: 'Timing layer: endings and truth',
-        detail: 'Current period may amplify need for honesty and accountability—their defensiveness may signal they're checking if you mean it'
+        detail: "Current period may amplify need for honesty and accountability—their defensiveness may signal they're checking if you mean it"
       },
       {
         name: 'Nervous system state',
@@ -91,7 +91,7 @@ const mockMessages: Message[] = [
     followUp: [
       { label: 'Show me what this is based on', action: 'expand_sources' },
       { label: 'Practice the conversation', action: 'open_practice' },
-      { label: 'That doesn\'t sound like them', action: 'alternative_framing' },
+      { label: "That doesn't sound like them", action: 'alternative_framing' },
     ]
   },
 ]
