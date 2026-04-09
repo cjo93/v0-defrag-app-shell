@@ -1,93 +1,332 @@
 'use client'
 
 import { ChatThread } from './chat-thread'
+import { BranchThread } from './branch-thread'
 import { MessageInput } from './message-input'
-import { CanvasPanel } from './canvas-panel'
-import { Sidebar } from '@/components/layout/sidebar'
+import { CanvasField } from './canvas-field'
 import { useState } from 'react'
+import { IconChat, IconField, IconBranches, IconFamily, IconBrief, IconRelationalMap, IconSystemView, IconTiming, IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
 
-const tabs = ['Chat', 'Field', 'Branches', 'Family', 'Brief']
+const mobileDestinations = [
+  { id: 'Chat', label: 'Chat', icon: IconChat },
+  { id: 'Field', label: 'Field', icon: IconField },
+  { id: 'Branches', label: 'Branches', icon: IconBranches },
+  { id: 'Family', label: 'Family', icon: IconFamily },
+  { id: 'Brief', label: 'Brief', icon: IconBrief },
+]
 
 export function WorkspaceLayout() {
-  const [activeTab, setActiveTab] = useState('Chat')
-  const [showBranchPanel, setShowBranchPanel] = useState(false)
+  const [activeDestination, setActiveDestination] = useState('Chat')
+  const [isBranchOpen, setIsBranchOpen] = useState(false)
 
-  // Desktop layout
+  // Desktop layout: CORRECTED - left conversation zone (primary + conditional branch) + right dominant canvas
   const desktopLayout = (
-    <div className="hidden md:flex h-screen bg-background">
-      <Sidebar />
-      <div className="flex-1 flex flex-col">
-        <div className="flex flex-1 overflow-hidden">
-          <div className="flex-1 flex flex-col border-r border-border">
-            <ChatThread />
-            <MessageInput />
-          </div>
-          <CanvasPanel />
-          {showBranchPanel && (
-            <div className="w-64 border-r border-border bg-card flex flex-col p-6">
-              <h3 className="font-semibold text-foreground text-sm mb-4">Branches</h3>
-              <p className="text-xs text-muted-foreground">
-                Alternative conversation threads appear here.
-              </p>
+    <div className="hidden md:flex h-screen bg-background overflow-hidden">
+      {/* LEFT SIDE: Conversation Zone - Primary Thread + Conditional Branch */}
+      <div className={`flex border-r border-border transition-all duration-300 ${
+        isBranchOpen ? 'gap-0' : ''
+      }`}>
+        {/* Primary Thread Lane */}
+        <div className="w-96 flex flex-col bg-background min-w-0">
+          {/* Header */}
+          <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50 flex items-center justify-between">
+            <div>
+              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Interpretation</h2>
+              <p className="text-xs text-muted-foreground mt-1.5 font-light">What may be happening</p>
             </div>
-          )}
+            <button
+              onClick={() => setIsBranchOpen(!isBranchOpen)}
+              className={`flex-shrink-0 w-8 h-8 rounded border transition-all flex items-center justify-center text-sm font-semibold ${
+                isBranchOpen
+                  ? 'bg-primary/10 border-primary/30 text-primary hover:bg-primary/20'
+                  : 'border-border/40 text-muted-foreground hover:border-border/60 hover:text-foreground hover:bg-muted/10'
+              }`}
+              title={isBranchOpen ? 'Close branch thread' : 'Open branch thread'}
+            >
+              {isBranchOpen ? '−' : '+'}
+            </button>
+          </div>
+          
+          {/* Content */}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-y-auto">
+              <ChatThread />
+            </div>
+            <div className="flex-shrink-0 border-t border-border/30">
+              <MessageInput compact />
+            </div>
+          </div>
         </div>
+
+        {/* Branch Thread Lane - Conditional */}
+        {isBranchOpen && (
+          <div className="w-96 flex flex-col bg-background border-l border-border/30 min-w-0 animate-in fade-in duration-200">
+            {/* Header */}
+            <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50">
+              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Simulations</h2>
+              <p className="text-xs text-muted-foreground mt-1.5 font-light">Try another approach</p>
+            </div>
+            
+            {/* Content */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex-1 overflow-y-auto">
+                <BranchThread />
+              </div>
+              <div className="flex-shrink-0 border-t border-border/30">
+                <MessageInput compact />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* RIGHT SIDE: Dominant Intelligence Canvas - Real Artifacts */}
+      <div className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+        <CanvasField />
       </div>
     </div>
   )
 
-  // Mobile layout
+  // Mobile layout: Destination-based full-screen views (NOT a literal desktop mirror)
   const mobileLayout = (
-    <div className="md:hidden flex flex-col h-screen bg-background">
-      {/* Tab content */}
-      <div className="flex-1 overflow-y-auto">
-        {activeTab === 'Chat' && (
-          <div className="flex flex-col h-full">
-            <ChatThread />
-            <MessageInput />
+    <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
+      {/* Premium Mobile Header */}
+      <div className="flex-shrink-0 bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-xl px-5 py-4 border-b border-border/25 shadow-sm">
+        <div className="flex items-center justify-between">
+          <h1 className="text-base font-bold text-foreground tracking-tight">DEFRAG</h1>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/90 animate-pulse"></span>
+              <span className="text-[10px] font-semibold text-emerald-500/90 tracking-wide uppercase">Live</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Area - Full-Screen Destination Views */}
+      <div className="flex-1 overflow-hidden flex flex-col min-w-0">
+        {/* Chat - Primary conversational view */}
+        {activeDestination === 'Chat' && (
+          <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-background via-background to-secondary/2">
+            <div className="flex-1 overflow-y-auto px-4 py-3">
+              <ChatThread />
+            </div>
+            <div className="flex-shrink-0 border-t border-border/30 bg-background/50 backdrop-blur-sm px-4 py-3">
+              <MessageInput compact />
+            </div>
           </div>
         )}
-        {activeTab === 'Field' && (
-          <div className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground">Field</h2>
-            <p className="text-sm text-muted-foreground">Field information and context.</p>
+
+        {/* Field - Relational canvas/map view */}
+        {activeDestination === 'Field' && (
+          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">Relational Field</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Visual mapping &amp; system analysis</p>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { 
+                  icon: IconRelationalMap, 
+                  title: 'Connection map', 
+                  desc: 'Their likely emotional path & where you diverged',
+                  color: 'from-primary/15 border-primary/30' 
+                },
+                { 
+                  icon: IconSystemView, 
+                  title: 'Family system view', 
+                  desc: 'Patterns from their history shaping this reaction',
+                  color: 'from-secondary/15 border-secondary/30' 
+                },
+                { 
+                  icon: IconTiming, 
+                  title: 'Timing pressure analysis', 
+                  desc: 'External stressors intensifying sensitivity',
+                  color: 'from-amber-500/10 border-amber-500/20' 
+                },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
+                <div key={idx} className={`border rounded-lg p-4 bg-gradient-to-br ${item.color} to-transparent hover:scale-105 transition-transform cursor-pointer`}>
+                  <div className="flex items-start gap-3">
+                    <Icon className="w-6 h-6 text-foreground/70 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+              })}
+            </div>
           </div>
         )}
-        {activeTab === 'Branches' && (
-          <div className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground">Branches</h2>
-            <p className="text-sm text-muted-foreground">Alternative conversation threads.</p>
+
+        {/* Branches - Alternative framings and simulations */}
+        {activeDestination === 'Branches' && (
+          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">Simulation Branch</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Alternate paths &amp; rewritten responses</p>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { icon: IconRewrite, title: 'Rewritten: Softer lead', desc: '"I want to check something with you"' },
+                { icon: IconSimulations, title: 'Simulation: If you validate first', desc: 'They relax → become receptive' },
+                { icon: IconPerspective, title: 'Their perspective', desc: 'They see confrontation, not partnership' },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
+                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 transition-all cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <Icon className="w-5 h-5 text-secondary/80 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+              })}
+            </div>
           </div>
         )}
-        {activeTab === 'Family' && (
-          <div className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground">Family</h2>
-            <p className="text-sm text-muted-foreground">Related interactions and context.</p>
+
+        {/* Family - System relationships and context */}
+        {activeDestination === 'Family' && (
+          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
+            {/* Premium Header */}
+            <div className="flex-shrink-0 px-6 py-6 border-b border-border/25 bg-gradient-to-b from-background/80 to-background/60 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-foreground mb-1.5 tracking-tight">System View</h2>
+              <p className="text-xs text-muted-foreground/70 font-light">Family patterns &amp; relational history</p>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+              {[
+                { 
+                  icon: IconSystemView, 
+                  title: 'Repeating patterns', 
+                  desc: 'How their family taught them to defend',
+                  status: '3 identified' 
+                },
+                { 
+                  icon: IconPerspective, 
+                  title: 'Historical triggers', 
+                  desc: 'Past events that mirror this moment',
+                  status: '2 mapped' 
+                },
+                { 
+                  icon: IconTiming, 
+                  title: 'Their relational role', 
+                  desc: 'How they see themselves in families',
+                  status: 'Primary' 
+                },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
+                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/15 hover:to-secondary/8 transition-all">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 flex-1">
+                      <Icon className="w-6 h-6 text-secondary/80 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
+                        <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded bg-secondary/20 text-secondary/90 font-medium whitespace-nowrap">{item.status}</span>
+                  </div>
+                </div>
+              )
+              })}
+            </div>
           </div>
         )}
-        {activeTab === 'Brief' && (
-          <div className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground">Brief</h2>
-            <p className="text-sm text-muted-foreground">Summary and key insights.</p>
+
+        {/* Brief - Daily summary and insights */}
+        {activeDestination === 'Brief' && (
+          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
+            {/* Ambient glow */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-gradient-to-br from-primary/8 via-secondary/4 to-transparent blur-3xl"></div>
+            </div>
+            
+            <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 relative z-10">
+              <div className="relative w-40 h-40 mb-10">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
+                  <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
+                  <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
+                    <IconTiming className="w-12 h-12 text-foreground/50" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-5 w-full max-w-md">
+                <div className="space-y-2 text-center">
+                  <h2 className="text-xl font-semibold text-foreground">Daily Brief</h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                    Key insights, patterns, and suggested next steps for your relationships
+                  </p>
+                </div>
+
+                <div className="space-y-2.5">
+                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
+                    <p className="text-xs font-semibold text-primary/90 tracking-wide">→ This Week&apos;s Patterns</p>
+                    <p className="text-xs text-muted-foreground font-light mt-1.5">Recurring themes emerging across interactions</p>
+                  </div>
+                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
+                    <p className="text-xs font-semibold text-primary/90 tracking-wide">→ Next Steps</p>
+                    <p className="text-xs text-muted-foreground font-light mt-1.5">Suggested approaches for deeper understanding</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Bottom tab bar */}
-      <div className="border-t border-border bg-card flex gap-1 p-2">
-        {tabs.map((tab) => (
+      {/* Premium Bottom Navigation - First-Class Mobile Experience */}
+      <div className="flex-shrink-0 border-t border-border/30 bg-background/95 backdrop-blur-xl flex safe-area-inset-bottom shadow-[0_-2px_20px_rgba(0,0,0,0.08)]">
+        {mobileDestinations.map((dest, idx) => {
+          const IconComponent = dest.icon
+          const isActive = activeDestination === dest.id
+          return (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2 text-xs font-medium rounded transition ${
-              activeTab === tab
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:bg-secondary'
+            key={dest.id}
+            onClick={() => setActiveDestination(dest.id)}
+            className={`flex-1 flex flex-col items-center justify-center py-4 px-2 text-xs font-semibold transition-all duration-200 relative ${
+              isActive
+                ? 'text-foreground'
+                : 'text-muted-foreground/60 hover:text-foreground/80 hover:bg-muted/5'
             }`}
           >
-            {tab}
+            {/* Active indicator bar */}
+            {isActive && (
+              <span className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-transparent via-foreground to-transparent rounded-full"></span>
+            )}
+            
+            {/* Icon with active state */}
+            <div className={`relative mb-1.5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`}>
+              <IconComponent className={`w-6 h-6 transition-all ${isActive ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' : ''}`} />
+              {isActive && (
+                <span className="absolute inset-0 bg-gradient-to-br from-foreground/10 to-transparent rounded-full blur-sm"></span>
+              )}
+            </div>
+            
+            {/* Label */}
+            <span className={`leading-tight text-[11px] tracking-tight transition-all ${isActive ? 'font-bold' : 'font-medium'}`}>
+              {dest.label}
+            </span>
           </button>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

@@ -124,4 +124,21 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Premium typography scale for refined hierarchy */
+  h1 {
+    @apply text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl font-bold tracking-tight leading-tight;
+  }
+  
+  h3 {
+    @apply text-2xl font-bold tracking-tight;
+  }
+  
+  p {
+    @apply leading-relaxed;
+  }
 }
