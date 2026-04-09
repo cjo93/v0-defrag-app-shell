@@ -18,7 +18,7 @@ export function WorkspaceHeader() {
       <div className="flex items-center gap-4 min-w-0">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <div className="text-sm font-bold text-foreground tracking-wider">Defrag</div>
+          <div className="text-sm font-bold text-foreground tracking-widest">DEFRAG</div>
         </Link>
 
         {/* Workspace Switcher */}

@@ -30,11 +30,11 @@ export default function LandingPage() {
               </h1>
               
               <h2 className="text-lg md:text-2xl font-semibold text-muted-foreground text-pretty">
-                Defrag shows you what they may have heard.
+                See the moment from both sides—before it breaks.
               </h2>
               
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty font-light">
-                See interactions from more than one perspective. Defrag reveals relational context, the other person's likely reading, and paths forward.
+                Understand what changed the meaning. Defrag reveals relational context, their likely reading, and paths forward.
               </p>
             </div>
 
@@ -60,8 +60,8 @@ export default function LandingPage() {
 
               {/* Preview Header */}
               <div className="border-b border-border/30 px-5 py-3 bg-background/60 backdrop-blur-sm relative z-10">
-                <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">Defrag Workspace</h3>
-                <p className="text-xs text-muted-foreground mt-1 font-light">Relational intelligence operating system</p>
+                <h3 className="text-xs font-semibold text-foreground tracking-widest uppercase">DEFRAG Workspace</h3>
+                <p className="text-xs text-muted-foreground mt-1 font-light">Live relational analysis</p>
               </div>
               
               {/* Preview Content - LEFT THREADS + RIGHT CANVAS */}
@@ -69,72 +69,59 @@ export default function LandingPage() {
                 {/* LEFT: Two Thread Lanes Stacked */}
                 <div className="w-1/3 border-r border-border/30 flex flex-col gap-0 bg-background/40">
                   {/* Primary Thread */}
-                  <div className="flex-1 border-b border-border/20 p-2.5 space-y-1.5 overflow-hidden">
-                    <div className="text-xs font-semibold text-foreground/70 tracking-wide uppercase">Primary</div>
-                    <div className="space-y-1">
-                      <div className="h-0.5 bg-primary/50 rounded-full w-4/5"></div>
-                      <div className="h-0.5 bg-muted/30 rounded-full w-full"></div>
-                      <div className="h-0.5 bg-muted/20 rounded-full w-3/4"></div>
-                    </div>
-                    <div className="h-px bg-border/10 my-1"></div>
-                    <div className="space-y-1">
-                      <div className="h-0.5 bg-muted/30 rounded-full w-3/5"></div>
-                      <div className="h-0.5 bg-muted/20 rounded-full w-4/5"></div>
+                  <div className="flex-1 border-b border-border/20 p-3 space-y-2 overflow-hidden">
+                    <div className="text-xs font-semibold text-foreground/80 tracking-widest uppercase">Interpretation</div>
+                    <div className="space-y-1.5 text-xs">
+                      <div className="px-2 py-1.5 rounded bg-primary/12 border border-primary/20 text-foreground/90 leading-snug">You interpreted threat</div>
+                      <div className="px-2 py-1.5 rounded bg-primary/8 border border-primary/15 text-foreground/80 leading-snug">They heard it as rejection</div>
                     </div>
                   </div>
                   
                   {/* Branch Thread */}
-                  <div className="flex-1 p-2.5 space-y-1.5 overflow-hidden">
-                    <div className="text-xs font-semibold text-foreground/70 tracking-wide uppercase">Branch</div>
-                    <div className="space-y-1">
-                      <div className="h-0.5 bg-secondary/40 rounded-full w-2/3"></div>
-                      <div className="h-0.5 bg-muted/30 rounded-full w-full"></div>
-                      <div className="h-0.5 bg-muted/20 rounded-full w-3/5"></div>
-                    </div>
-                    <div className="h-px bg-border/10 my-1"></div>
-                    <div className="space-y-1">
-                      <div className="h-0.5 bg-muted/20 rounded-full w-4/5"></div>
+                  <div className="flex-1 p-3 space-y-2 overflow-hidden">
+                    <div className="text-xs font-semibold text-foreground/80 tracking-widest uppercase">Simulation</div>
+                    <div className="space-y-1.5 text-xs">
+                      <div className="px-2 py-1.5 rounded bg-secondary/12 border border-secondary/20 text-foreground/90 leading-snug">↻ Soften lead: check-in first</div>
+                      <div className="px-2 py-1.5 rounded bg-secondary/8 border border-secondary/15 text-foreground/80 leading-snug">⊕ Lead with: I value us</div>
                     </div>
                   </div>
                 </div>
                 
                 {/* RIGHT: Dominant Multimedia Canvas - Showing Artifacts */}
                 <div className="flex-1 flex flex-col p-3 gap-2 overflow-hidden">
-                  {/* Artifact Cards Grid */}
+                  {/* Artifact Cards Grid - Real Flow */}
                   <div className="grid grid-cols-2 gap-2 flex-1">
-                    {/* Map Card */}
-                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/60">◆ Map</div>
+                    {/* Map Card - Generating */}
+                    <div className="rounded border border-primary/30 bg-primary/10 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-primary/90 flex items-center gap-1">◆ Map <span className="text-xs text-primary/70 font-light">gen…</span></div>
                       <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
-                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                        <div className="w-1 h-1 rounded-full bg-primary/70 animate-pulse"></div>
+                        <div className="w-1 h-1 rounded-full bg-primary/50 animate-pulse" style={{animationDelay: '0.1s'}}></div>
                       </div>
                     </div>
                     
-                    {/* System Card */}
-                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/60">∞ System</div>
+                    {/* System Card - Ready */}
+                    <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/70">∞ System</div>
                       <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
-                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                        <div className="w-1 h-1 rounded-full bg-primary/70"></div>
+                        <div className="w-1 h-1 rounded-full bg-primary/50"></div>
                       </div>
                     </div>
                     
-                    {/* Simulation Card */}
-                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/60">⊕ Sim</div>
+                    {/* Simulation Card - Ready */}
+                    <div className="rounded border border-primary/20 bg-primary/8 p-2 flex flex-col justify-between">
+                      <div className="text-xs font-semibold text-foreground/70">⊕ Sim</div>
                       <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
-                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                        <div className="w-1 h-1 rounded-full bg-primary/70"></div>
                       </div>
                     </div>
                     
-                    {/* Timing Card */}
-                    <div className="rounded border border-border/40 bg-card/30 p-2 flex flex-col justify-between">
-                      <div className="text-xs font-semibold text-foreground/60">→ Timing</div>
+                    {/* Timing Card - Queued */}
+                    <div className="rounded border border-border/30 bg-muted/5 p-2 flex flex-col justify-between opacity-60">
+                      <div className="text-xs font-semibold text-foreground/50">→ Timing</div>
                       <div className="flex gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-primary/40"></div>
-                        <div className="w-1 h-1 rounded-full bg-secondary/30"></div>
+                        <div className="w-1 h-1 rounded-full bg-muted/40"></div>
                       </div>
                     </div>
                   </div>
