@@ -1,8 +1,23 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 export async function POST(req: Request) {
+  if (!openai || !process.env.OPENAI_API_KEY) {
+    return new Response(
+      JSON.stringify({ 
+        error: "OpenAI API key not configured",
+        message: "Text-to-speech feature requires OPENAI_API_KEY environment variable"
+      }),
+      {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
   const { text } = await req.json();
 
   const mp3 = await openai.audio.speech.create({
