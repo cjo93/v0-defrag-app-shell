@@ -60,12 +60,6 @@ export function CanvasPanel() {
           </div>
         </div>
       </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500/70 animate-pulse"></span>
-            <span>Active</span>
-          </div>
-        </div>
-      </div>
       
       {/* Canvas Content - Premium Artifact Composition */}
       <div className="flex-1 overflow-y-auto px-8 py-8 flex flex-col items-center justify-start relative z-10">
