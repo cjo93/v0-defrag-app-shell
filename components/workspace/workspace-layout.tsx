@@ -5,13 +5,14 @@ import { BranchThread } from './branch-thread'
 import { MessageInput } from './message-input'
 import { CanvasPanel } from './canvas-panel'
 import { useState } from 'react'
+import { IconChat, IconField, IconBranches, IconFamily, IconBrief, IconRelationalMap, IconSystemView, IconTiming, IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
 
 const mobileDestinations = [
-  { id: 'Chat', label: 'Chat', icon: '💬' },
-  { id: 'Field', label: 'Field', icon: '◆' },
-  { id: 'Branches', label: 'Branches', icon: '⊕' },
-  { id: 'Family', label: 'Family', icon: '∞' },
-  { id: 'Brief', label: 'Brief', icon: '→' },
+  { id: 'Chat', label: 'Chat', icon: IconChat },
+  { id: 'Field', label: 'Field', icon: IconField },
+  { id: 'Branches', label: 'Branches', icon: IconBranches },
+  { id: 'Family', label: 'Family', icon: IconFamily },
+  { id: 'Brief', label: 'Brief', icon: IconBrief },
 ]
 
 export function WorkspaceLayout() {
@@ -127,34 +128,37 @@ export function WorkspaceLayout() {
             <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
               {[
                 { 
-                  icon: '◆', 
+                  icon: IconRelationalMap, 
                   title: 'Connection map', 
                   desc: 'Their likely emotional path & where you diverged',
                   color: 'from-primary/15 border-primary/30' 
                 },
                 { 
-                  icon: '∞', 
+                  icon: IconSystemView, 
                   title: 'Family system view', 
                   desc: 'Patterns from their history shaping this reaction',
                   color: 'from-secondary/15 border-secondary/30' 
                 },
                 { 
-                  icon: '→', 
+                  icon: IconTiming, 
                   title: 'Timing pressure analysis', 
                   desc: 'External stressors intensifying sensitivity',
                   color: 'from-amber-500/10 border-amber-500/20' 
                 },
-              ].map((item, idx) => (
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
                 <div key={idx} className={`border rounded-lg p-4 bg-gradient-to-br ${item.color} to-transparent hover:scale-105 transition-transform cursor-pointer`}>
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl font-light text-foreground/70">{item.icon}</span>
+                    <Icon className="w-6 h-6 text-foreground/70 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
                       <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
                       <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 </div>
-              ))}
+              )
+              })}
             </div>
           </div>
         )}
@@ -171,20 +175,23 @@ export function WorkspaceLayout() {
             {/* Content */}
             <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
               {[
-                { icon: '↻', title: 'Rewritten: Softer lead', desc: '"I want to check something with you"' },
-                { icon: '⊕', title: 'Simulation: If you validate first', desc: 'They relax → become receptive' },
-                { icon: '◇', title: 'Their perspective', desc: 'They see confrontation, not partnership' },
-              ].map((item, idx) => (
+                { icon: IconRewrite, title: 'Rewritten: Softer lead', desc: '"I want to check something with you"' },
+                { icon: IconSimulations, title: 'Simulation: If you validate first', desc: 'They relax → become receptive' },
+                { icon: IconPerspective, title: 'Their perspective', desc: 'They see confrontation, not partnership' },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
                 <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 transition-all cursor-pointer">
                   <div className="flex items-start gap-3">
-                    <span className="text-xl font-light text-secondary/80">{item.icon}</span>
+                    <Icon className="w-5 h-5 text-secondary/80 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
                       <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
                       <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 </div>
-              ))}
+              )
+              })}
             </div>
           </div>
         )}
@@ -202,28 +209,30 @@ export function WorkspaceLayout() {
             <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
               {[
                 { 
-                  icon: '∞', 
+                  icon: IconSystemView, 
                   title: 'Repeating patterns', 
                   desc: 'How their family taught them to defend',
                   status: '3 identified' 
                 },
                 { 
-                  icon: '◇', 
+                  icon: IconPerspective, 
                   title: 'Historical triggers', 
                   desc: 'Past events that mirror this moment',
                   status: '2 mapped' 
                 },
                 { 
-                  icon: '→', 
+                  icon: IconTiming, 
                   title: 'Their relational role', 
                   desc: 'How they see themselves in families',
                   status: 'Primary' 
                 },
-              ].map((item, idx) => (
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
                 <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/15 hover:to-secondary/8 transition-all">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 flex-1">
-                      <span className="text-2xl font-light text-secondary/80">{item.icon}</span>
+                      <Icon className="w-6 h-6 text-secondary/80 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
                         <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
@@ -232,7 +241,8 @@ export function WorkspaceLayout() {
                     <span className="text-xs px-2 py-1 rounded bg-secondary/20 text-secondary/90 font-medium whitespace-nowrap">{item.status}</span>
                   </div>
                 </div>
-              ))}
+              )
+              })}
             </div>
           </div>
         )}
@@ -251,7 +261,7 @@ export function WorkspaceLayout() {
                   <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
                   <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
                   <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <span className="text-4xl font-light text-foreground/50">→</span>
+                    <IconTiming className="w-12 h-12 text-foreground/50" />
                   </div>
                 </div>
               </div>
@@ -282,7 +292,9 @@ export function WorkspaceLayout() {
 
       {/* Premium Bottom Navigation - Native iOS App Feel */}
       <div className="flex-shrink-0 border-t border-border/40 bg-background/90 backdrop-blur-lg flex safe-area-inset-bottom">
-        {mobileDestinations.map((dest, idx) => (
+        {mobileDestinations.map((dest, idx) => {
+          const IconComponent = dest.icon
+          return (
           <button
             key={dest.id}
             onClick={() => setActiveDestination(dest.id)}
@@ -292,10 +304,11 @@ export function WorkspaceLayout() {
                 : 'text-muted-foreground/70 hover:text-foreground hover:bg-muted/5'
             }`}
           >
-            <span className="text-lg mb-1.5 leading-none">{dest.icon}</span>
+            <IconComponent className="w-5 h-5 mb-1.5" />
             <span className="leading-tight text-xs tracking-tight">{dest.label}</span>
           </button>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

@@ -1,7 +1,11 @@
+'use client'
+
+import { IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
+
 interface Scenario {
   id: string
   type: 'rewrite' | 'simulation' | 'perspective'
-  icon: string
+  icon: React.ComponentType<{ className?: string }>
   title: string
   content: string
 }
@@ -10,21 +14,21 @@ const scenarios: Scenario[] = [
   {
     id: '1',
     type: 'rewrite',
-    icon: '↻',
+    icon: IconRewrite,
     title: 'Rewritten opening',
     content: '"I want to check in about something" removes threat signal, opens dialogue instead',
   },
   {
     id: '2',
     type: 'perspective',
-    icon: '◇',
+    icon: IconPerspective,
     title: 'Their interpretation layer',
     content: 'They&apos;re hearing criticism + abandonment threat. Body closes before you ask.',
   },
   {
     id: '3',
     type: 'simulation',
-    icon: '⊕',
+    icon: IconSimulations,
     title: 'Simulation: Lead with validation',
     content: 'If: "I value us" → They relax → Question lands → They listen → Collaboration possible',
   },
@@ -40,18 +44,18 @@ export function BranchThread() {
       </div>
 
       {/* Scenario Cards */}
-      {scenarios.map((scenario) => (
+      {scenarios.map((scenario) => {
+        const Icon = scenario.icon
+        return (
         <div key={scenario.id} className="space-y-1.5 animate-in fade-in-50">
           <div className="flex items-center gap-2 px-1">
-            <span className={`text-lg font-light ${
+            <Icon className={`w-5 h-5 ${
               scenario.type === 'simulation'
                 ? 'text-primary/90'
                 : scenario.type === 'rewrite'
                 ? 'text-secondary/80'
                 : 'text-muted-foreground/70'
-            }`}>
-              {scenario.icon}
-            </span>
+            }`} />
             <span className={`text-xs font-semibold tracking-wide uppercase ${
               scenario.type === 'simulation'
                 ? 'text-primary'
@@ -72,7 +76,8 @@ export function BranchThread() {
             </p>
           </div>
         </div>
-      ))}
+      )
+      })}
     </div>
   )
 }

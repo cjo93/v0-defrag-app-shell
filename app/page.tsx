@@ -25,16 +25,16 @@ export default function LandingPage() {
               </div>
               
               <h1 className="text-foreground text-pretty leading-tight">
-                <span className="block text-4xl md:text-6xl lg:text-7xl font-bold">You know what</span>
-                <span className="block text-4xl md:text-6xl lg:text-7xl font-bold">you meant.</span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl font-bold">You know what you meant.</span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-primary/80">Defrag shows you what they may have heard.</span>
               </h1>
               
-              <h2 className="text-lg md:text-2xl font-semibold text-muted-foreground text-pretty">
-                See the moment from both sides—before it breaks.
+              <h2 className="text-lg md:text-xl font-semibold text-muted-foreground text-pretty">
+                Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
               </h2>
               
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty font-light">
-                Understand what changed the meaning. Defrag reveals relational context, their likely reading, and paths forward.
+                See the interaction from more than one side before the same misunderstanding gets worse.
               </p>
             </div>
 

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
 
 export function CanvasPanel() {
   return (
@@ -81,7 +82,7 @@ export function CanvasPanel() {
               <div className="relative z-10 space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <span className="text-base font-semibold text-primary">◆</span>
+                    <IconRelationalMap className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
@@ -97,7 +98,7 @@ export function CanvasPanel() {
                   <div className="w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{animationDelay: '0.3s'}}></div>
                 </div>
               </div>
-              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none">→</div>
+              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none"><IconTiming className="w-24 h-24 opacity-10" /></div>
             </div>
 
             {/* Stage 2: System Context */}
@@ -106,7 +107,7 @@ export function CanvasPanel() {
               <div className="relative z-10 space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <span className="text-base font-semibold text-primary">∞</span>
+                    <IconSystemView className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
@@ -131,7 +132,7 @@ export function CanvasPanel() {
               <div className="relative z-10 space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <span className="text-base font-semibold text-primary">⊕</span>
+                    <IconSimulations className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
@@ -147,7 +148,7 @@ export function CanvasPanel() {
                   <div className="w-2 h-2 rounded-full bg-primary/30"></div>
                 </div>
               </div>
-              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none">→</div>
+              <div className="absolute bottom-0 right-0 text-6xl font-light text-primary/5 pointer-events-none"><IconTiming className="w-24 h-24 opacity-10" /></div>
             </div>
 
             {/* Stage 4: Timing Analysis */}
@@ -156,7 +157,7 @@ export function CanvasPanel() {
               <div className="relative z-10 space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/20 border border-primary/40 flex items-center justify-center">
-                    <span className="text-base font-semibold text-primary">→</span>
+                    <IconTiming className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
@@ -179,7 +180,7 @@ export function CanvasPanel() {
           <div className="border border-primary/40 rounded-lg bg-gradient-to-br from-primary/8 to-primary/3 p-6">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-10 h-10 rounded bg-primary/30 border border-primary/50 flex items-center justify-center">
-                <span className="text-base font-semibold text-primary">→</span>
+                <IconTiming className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
