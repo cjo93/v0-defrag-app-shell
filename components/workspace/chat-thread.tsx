@@ -40,14 +40,20 @@ const mockMessages: Message[] = [
 export function ChatThread() {
   return (
     <div className="flex-1 overflow-y-auto space-y-4 p-4">
+      {/* Engine Identity */}
+      <div className="sticky top-0 bg-background/80 backdrop-blur-sm pb-3 mb-2 border-b border-border/30">
+        <p className="text-xs font-semibold text-foreground/80 tracking-wider uppercase">Interpretation Engine</p>
+        <p className="text-xs text-muted-foreground/60 font-light mt-1">Live relational analysis thread</p>
+      </div>
+
       {mockMessages.map((message) => {
         const isDefrag = message.author === 'Defrag'
         const isInsight = message.type === 'insight'
         
         return (
-          <div key={message.id} className="space-y-1.5 animate-in fade-in-50">
-            <div className="flex items-center justify-between px-0.5">
-              <span className={`text-xs font-semibold tracking-wider ${
+          <div key={message.id} className="space-y-2 animate-in fade-in-50">
+            <div className="flex items-center justify-between px-1">
+              <span className={`text-xs font-semibold tracking-wider uppercase ${
                 isDefrag ? 'text-primary/90' : 'text-foreground/80'
               }`}>
                 {message.author}
@@ -55,14 +61,14 @@ export function ChatThread() {
               </span>
               <span className="text-xs text-muted-foreground/50 font-light">{message.timestamp}</span>
             </div>
-            <div className={`px-3.5 py-3 rounded-lg border transition-all ${
+            <div className={`px-4 py-3.5 rounded-lg border transition-all ${
               isDefrag 
                 ? isInsight
-                  ? 'bg-primary/12 border-primary/30 text-foreground ring-1 ring-primary/10'
+                  ? 'bg-primary/12 border-primary/30 text-foreground ring-1 ring-primary/10 font-medium'
                   : 'bg-primary/8 border-primary/20 text-foreground' 
                 : 'bg-background/50 border-border/40 text-foreground/90'
             }`}>
-              <p className="text-sm leading-relaxed font-light">
+              <p className={`text-sm leading-relaxed font-light ${isInsight ? 'font-medium text-primary/95' : ''}`}>
                 {message.content}
               </p>
             </div>
