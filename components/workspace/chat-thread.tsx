@@ -32,24 +32,24 @@ const mockMessages: Message[] = [
   {
     id: '2',
     author: 'Defrag',
-    content: 'They likely interpreted "we need to talk" as criticism or accusation, rather than collaborative problem-solving. Their upset reaction signals defensiveness.',
+    content: 'They likely interpreted "we need to talk" as criticism or accusation, rather than collaborative problem-solving. The phrase itself can trigger defensiveness before the conversation even starts.',
     timestamp: '2:15 PM',
     type: 'interpretation',
     sources: [
       {
-        name: 'Human Design: 4/1 profile',
-        description: 'Testing and verification tendency',
-        detail: 'May need to test ideas before trusting them—defensive response may be testing your commitment'
+        name: 'How they build trust',
+        description: 'Testing before opening up',
+        detail: 'They may need to test ideas before trusting them—defensive response could be checking if you mean well'
       },
       {
-        name: 'Attachment patterns',
-        description: 'How they build safety',
-        detail: 'They likely learned to check for reliability before opening up—may sense your frustration'
+        name: 'Safety patterns',
+        description: 'How they learned to protect themselves',
+        detail: 'They may have learned to check for reliability before opening up—could be sensing pressure in your tone'
       },
       {
-        name: 'Current timing pressure',
-        description: 'Their stress capacity',
-        detail: 'Already at threshold, making defensive interpretation more likely regardless of your intent'
+        name: 'Current stress level',
+        description: 'What they may already be carrying',
+        detail: 'If they are already at capacity, even neutral wording can feel threatening regardless of your intent'
       }
     ],
     followUp: [
@@ -73,19 +73,19 @@ const mockMessages: Message[] = [
     type: 'insight',
     sources: [
       {
-        name: 'Astrology: Saturn in 7th house transit',
-        description: 'Current relational pressure cycle',
-        detail: 'Current transit may intensify scrutiny of relationship integrity—they may be evaluating commitment more carefully'
+        name: 'Current timing',
+        description: 'What may be heightened right now',
+        detail: 'Themes around relationship integrity may be more present—they may be evaluating commitment more carefully'
       },
       {
-        name: 'Numerology: current cycle emphasis',
-        description: 'Timing layer: endings and truth',
-        detail: "Current period may amplify need for honesty and accountability—their defensiveness may signal they're checking if you mean it"
+        name: 'Pressure context',
+        description: 'What this moment may amplify',
+        detail: "Emphasis on honesty and accountability may be stronger right now—their defensiveness could signal they're checking if you mean it"
       },
       {
-        name: 'Nervous system state',
-        description: 'How they process in this moment',
-        detail: 'Validation first signals safety before problem-solving; acknowledgment of their experience shifts them toward collaboration'
+        name: 'Safety before solving',
+        description: 'How they may need to process',
+        detail: 'Validation first signals safety; acknowledgment of their experience helps them shift from reactive to collaborative'
       }
     ],
     followUp: [

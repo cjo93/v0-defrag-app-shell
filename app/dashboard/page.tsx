@@ -7,6 +7,8 @@ import { useState } from 'react'
 
 export default function DashboardPage() {
   const [showFrameworkDetails, setShowFrameworkDetails] = useState(false)
+  // In production, this would check actual user profile completion status
+  const hasCompletedBaseline = false // Set to true to see populated state
 
   return (
     <div className="flex h-screen bg-background">
@@ -36,79 +38,108 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          {/* Layer 1: Alignment Overview - Premium Profile Surface */}
-          <div className="relative p-10 rounded-2xl bg-gradient-to-br from-primary/14 via-primary/8 to-secondary/6 border border-primary/30 space-y-6 overflow-hidden group hover:border-primary/45 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
-            {/* Premium ambient effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
-            
-            <div className="relative z-10 space-y-6">
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[10px] font-bold text-primary/80 tracking-[0.12em] uppercase">Your Baseline</p>
-                  <p className="text-xs text-muted-foreground/60 font-light mt-1.5">How you show up relationally</p>
-                </div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></span>
-                  <span className="text-[10px] font-semibold text-primary/90 tracking-wide uppercase">Active</span>
-                </span>
-              </div>
-
-              {/* Main Profile - Premium Compact Display */}
-              <div className="flex items-start gap-4 p-5 rounded-xl bg-gradient-to-br from-background/60 to-background/30 backdrop-blur-sm border border-primary/15">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/15 border border-primary/40 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-primary/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground/95 leading-relaxed">
-                    Direct communicator who withdraws under pressure
-                  </p>
-                  <p className="text-xs text-muted-foreground/70 mt-2 font-light">
-                    Honesty appreciated when timed well • Goes quiet when stressed
-                  </p>
-                </div>
-              </div>
-
-              {/* Framework Disclosure */}
-              <button 
-                onClick={() => setShowFrameworkDetails(!showFrameworkDetails)}
-                className="text-xs font-semibold text-primary/70 hover:text-primary/95 transition-all flex items-center gap-2 group/btn"
-              >
-                <span className={`inline-block w-3 h-3 flex items-center justify-center transition-transform duration-200 ${showFrameworkDetails ? 'rotate-90' : ''}`}>
-                  <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
-                    <path d="M 1 1 L 5 5 L 1 9" />
-                  </svg>
-                </span>
-                <span className="tracking-wide">Framework foundations</span>
-              </button>
-
-              {/* Framework Details - Expandable */}
-              {showFrameworkDetails && (
-                <div className="space-y-2.5 pt-4 border-t border-primary/20 animate-in fade-in-50 duration-200">
-                  <div className="text-xs space-y-2.5">
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                      <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Human Design:</span>
-                      <span className="text-muted-foreground/85 font-light">Type 4/1 → Tests commitments before trusting</span>
+          {/* Layer 1: Baseline Profile - Shows completion state or populated baseline */}
+          {!hasCompletedBaseline ? (
+            /* Baseline Setup Required State */
+            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-amber-500/12 via-amber-500/6 to-amber-500/3 border border-amber-500/30 space-y-6 overflow-hidden group hover:border-amber-500/45 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/8 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
+              
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-500/15 border border-amber-500/40 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-amber-500/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 space-y-3">
+                    <div>
+                      <p className="text-lg font-bold text-foreground tracking-tight">Complete Your Baseline</p>
+                      <p className="text-sm text-muted-foreground/80 font-light mt-1">Your relational profile unlocks after setup</p>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                      <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Natal timing:</span>
-                      <span className="text-muted-foreground/85 font-light">Saturn present → Scrutinizing relationship integrity now</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                      <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Gene Keys:</span>
-                      <span className="text-muted-foreground/85 font-light">Shadow/Gift patterns → Moving toward authenticity</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                      <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Numerology:</span>
-                      <span className="text-muted-foreground/85 font-light">Current cycle → Emphasis on truth and accountability</span>
-                    </div>
+                    <p className="text-sm text-foreground/90 leading-relaxed font-light">
+                      DEFRAG builds your baseline through birth details to understand how you show up in relationships, under pressure, and in conflict. This becomes the foundation for all relational guidance.
+                    </p>
                   </div>
                 </div>
-              )}
+
+                <Link
+                  href="/onboarding"
+                  className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/20 transition-all duration-200"
+                >
+                  Complete Baseline Setup
+                </Link>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Populated Baseline State */
+            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-primary/14 via-primary/8 to-secondary/6 border border-primary/30 space-y-6 overflow-hidden group hover:border-primary/45 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
+              
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] font-bold text-primary/80 tracking-[0.12em] uppercase">Your Baseline</p>
+                    <p className="text-xs text-muted-foreground/60 font-light mt-1.5">How you show up relationally</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></span>
+                    <span className="text-[10px] font-semibold text-primary/90 tracking-wide uppercase">Active</span>
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-4 p-5 rounded-xl bg-gradient-to-br from-background/60 to-background/30 backdrop-blur-sm border border-primary/15">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/15 border border-primary/40 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-foreground/95 leading-relaxed">
+                      Direct communicator who values clarity and autonomy
+                    </p>
+                    <p className="text-xs text-muted-foreground/70 mt-2 font-light">
+                      Honesty appreciated when timed well • Needs space under stress
+                    </p>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setShowFrameworkDetails(!showFrameworkDetails)}
+                  className="text-xs font-semibold text-primary/70 hover:text-primary/95 transition-all flex items-center gap-2 group/btn"
+                >
+                  <span className={`inline-block w-3 h-3 flex items-center justify-center transition-transform duration-200 ${showFrameworkDetails ? 'rotate-90' : ''}`}>
+                    <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
+                      <path d="M 1 1 L 5 5 L 1 9" />
+                    </svg>
+                  </span>
+                  <span className="tracking-wide">What this is based on</span>
+                </button>
+
+                {showFrameworkDetails && (
+                  <div className="space-y-2.5 pt-4 border-t border-primary/20 animate-in fade-in-50 duration-200">
+                    <div className="text-xs space-y-2.5">
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
+                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Human Design:</span>
+                        <span className="text-muted-foreground/85 font-light">How you process decisions and respond to external energy</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
+                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Current timing:</span>
+                        <span className="text-muted-foreground/85 font-light">Themes around relationship integrity may be more present</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
+                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Gene Keys:</span>
+                        <span className="text-muted-foreground/85 font-light">Recurring growth patterns between reactivity and calm</span>
+                      </div>
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
+                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Numerology:</span>
+                        <span className="text-muted-foreground/85 font-light">Current cycle emphasizing accountability and honesty</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Layer 2: Active Pressure Points - Premium Dashboard System */}
           <div className="space-y-4">

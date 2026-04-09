@@ -25,14 +25,14 @@ const scenarios: Scenario[] = [
     content: '"I want to check in about something" removes threat signal, opens dialogue instead',
     sources: [
       {
-        name: 'Gene Keys: Shadow to Gift',
-        description: 'Communication safety',
-        detail: 'Threat language ("we need to talk") activates shadow—reframe moves listener toward curiosity and gift'
+        name: 'Communication safety',
+        description: 'How language creates openness',
+        detail: 'Threat language ("we need to talk") can trigger defensiveness before understanding—reframing invites curiosity instead'
       },
       {
-        name: 'Nervous system: Polyvagal response',
-        description: 'Threat detection impact',
-        detail: 'Body closes before thinking happens—defensiveness precedes comprehension until nervous system feels safe'
+        name: 'Body response',
+        description: 'What happens before thinking',
+        detail: 'The body closes before thinking happens—defensiveness precedes comprehension until they feel safe'
       }
     ]
   },
@@ -41,17 +41,17 @@ const scenarios: Scenario[] = [
     type: 'perspective',
     icon: IconPerspective,
     title: 'Their likely interpretation',
-    content: 'They&apos;re hearing criticism + abandonment threat. Body closes before you ask.',
+    content: 'They may be hearing criticism and threat. Their body may close before you finish the question.',
     sources: [
       {
         name: 'Relational history',
         description: 'Their protective patterns',
-        detail: 'Past experiences with criticism activate defense armor before they understand your intent'
+        detail: 'Past experiences with criticism can activate defense armor before they understand your intent'
       },
       {
-        name: 'Human Design: Open centers',
-        description: 'Sensitivity amplification',
-        detail: 'Open emotional center means they absorb your stress—already managing pressure increases threat detection'
+        name: 'Sensitivity to pressure',
+        description: 'What they may already be feeling',
+        detail: 'They may absorb stress from others—if already managing pressure, threat detection increases'
       }
     ]
   },
@@ -63,14 +63,14 @@ const scenarios: Scenario[] = [
     content: 'If you say "I know this is hard for you" first → They feel heard → Then the question lands → They can listen',
     sources: [
       {
-        name: 'Nervous system: Regulation window',
-        description: 'Safety signals downregulate threat',
-        detail: 'Validation signals safety—downregulates amygdala threat response, activates prefrontal cortex thinking'
+        name: 'Safety before solving',
+        description: 'How the nervous system works',
+        detail: 'Validation signals safety first—helps them shift from reactive to thinking mode before problem-solving'
       },
       {
-        name: 'Numerology: Current cycle timing',
-        description: 'Receptivity readiness',
-        detail: 'Connection before problem-solving aligns with current cycle emphasis—increases receptivity and repair likelihood'
+        name: 'What may help now',
+        description: 'Connection before correction',
+        detail: 'Leading with empathy matches what they need in this moment—increases receptivity and repair likelihood'
       }
     ]
   },
