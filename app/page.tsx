@@ -9,40 +9,40 @@ export default function LandingPage() {
       <Navbar />
       
       {/* Hero Section - Premium Cinematic */}
-      <section className="flex-1 py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="flex-1 py-12 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-secondary/5 blur-3xl"></div>
           <div className="absolute bottom-1/4 -left-40 w-80 h-80 rounded-full bg-secondary/5 blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
           {/* Left: Premium Hero Copy */}
-          <div className="space-y-8 max-w-xl">
-            <div className="space-y-6">
+          <div className="space-y-6 md:space-y-8 max-w-xl">
+            <div className="space-y-4 md:space-y-6">
               <div className="inline-block">
-                <p className="text-xs font-semibold text-primary/80 tracking-widest uppercase mb-4">Relational Intelligence</p>
+                <p className="text-xs font-semibold text-primary/80 tracking-widest uppercase mb-3">Relational Intelligence</p>
               </div>
               
               <h1 className="text-foreground text-pretty leading-tight">
-                <span className="block text-5xl md:text-6xl lg:text-7xl font-bold">You know what</span>
-                <span className="block text-5xl md:text-6xl lg:text-7xl font-bold">you meant.</span>
+                <span className="block text-4xl md:text-6xl lg:text-7xl font-bold">You know what</span>
+                <span className="block text-4xl md:text-6xl lg:text-7xl font-bold">you meant.</span>
               </h1>
               
-              <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground text-pretty">
+              <h2 className="text-lg md:text-2xl font-semibold text-muted-foreground text-pretty">
                 Defrag shows you what they may have heard.
               </h2>
               
-              <p className="text-lg text-muted-foreground leading-relaxed text-pretty font-light">
-                See interactions from more than one perspective before misunderstandings multiply. Defrag reveals relational context, the other person's likely reading, and paths forward that actually work.
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty font-light">
+                See interactions from more than one perspective. Defrag reveals relational context, the other person's likely reading, and paths forward.
               </p>
             </div>
 
-            <p className="text-sm text-muted-foreground/80 italic font-light leading-relaxed">
-              Dynamic AI-driven workspace. Relational maps. System perspectives. Simulations. Better communication starts here.
+            <p className="text-xs md:text-sm text-muted-foreground/80 italic font-light leading-relaxed">
+              Dynamic AI workspace. Relational maps. System perspectives. Simulations.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 md:pt-6">
               <Button size="lg" asChild className="text-base px-8 py-6 font-semibold">
                 <Link href="/workspace">Start Workspace</Link>
               </Button>

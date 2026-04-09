@@ -59,88 +59,92 @@ export function CanvasPanel() {
             </div>
           </div>
 
-          {/* Artifact Preview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-4">
+          {/* Artifact Preview Cards - More Dynamic */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-6">
             {/* Map Artifact */}
-            <div className="group relative rounded-lg border border-border/40 bg-card/40 hover:bg-card/60 backdrop-blur-sm transition-all duration-300 p-4 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-5 overflow-hidden cursor-pointer hover:border-primary/40">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2">
-                  <div className="w-8 h-8 rounded bg-primary/20 border border-primary/30 flex items-center justify-center">
-                    <span className="text-xs font-semibold text-primary">◆</span>
+                <div className="inline-flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded bg-gradient-to-br from-primary/40 to-primary/20 border border-primary/40 flex items-center justify-center group-hover:from-primary/60 group-hover:to-primary/30 transition-all">
+                    <span className="text-sm font-bold text-primary">◆</span>
                   </div>
                   <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Relational Map</p>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed font-light">
                   Visual diagram of connections, assumptions, and where understanding may break down
                 </p>
-                <div className="flex gap-1 pt-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-secondary/30"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-muted/20"></div>
+                <div className="flex gap-1.5 pt-2">
+                  <div className="w-2 h-2 rounded-full bg-primary/60 group-hover:animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-secondary/40 group-hover:animate-pulse" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 rounded-full bg-muted/30 group-hover:animate-pulse" style={{animationDelay: '0.2s'}}></div>
                 </div>
               </div>
             </div>
 
             {/* System Artifact */}
-            <div className="group relative rounded-lg border border-border/40 bg-card/40 hover:bg-card/60 backdrop-blur-sm transition-all duration-300 p-4 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-5 overflow-hidden cursor-pointer hover:border-primary/40">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2">
-                  <div className="w-8 h-8 rounded bg-primary/20 border border-primary/30 flex items-center justify-center">
-                    <span className="text-xs font-semibold text-primary">∞</span>
+                <div className="inline-flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded bg-gradient-to-br from-primary/40 to-primary/20 border border-primary/40 flex items-center justify-center group-hover:from-primary/60 group-hover:to-primary/30 transition-all">
+                    <span className="text-sm font-bold text-primary">∞</span>
                   </div>
                   <p className="text-xs font-semibold text-foreground tracking-wide uppercase">System View</p>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed font-light">
                   Family dynamics, history, and relational patterns that shape how they interpret the moment
                 </p>
-                <div className="flex gap-1 pt-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-secondary/30"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-muted/20"></div>
+                <div className="flex gap-1.5 pt-2">
+                  <div className="w-2 h-2 rounded-full bg-primary/60 group-hover:animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-secondary/40 group-hover:animate-pulse" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 rounded-full bg-muted/30 group-hover:animate-pulse" style={{animationDelay: '0.2s'}}></div>
                 </div>
               </div>
             </div>
 
             {/* Simulation Artifact */}
-            <div className="group relative rounded-lg border border-border/40 bg-card/40 hover:bg-card/60 backdrop-blur-sm transition-all duration-300 p-4 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-5 overflow-hidden cursor-pointer hover:border-primary/40">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2">
-                  <div className="w-8 h-8 rounded bg-primary/20 border border-primary/30 flex items-center justify-center">
-                    <span className="text-xs font-semibold text-primary">⊕</span>
+                <div className="inline-flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded bg-gradient-to-br from-primary/40 to-primary/20 border border-primary/40 flex items-center justify-center group-hover:from-primary/60 group-hover:to-primary/30 transition-all">
+                    <span className="text-sm font-bold text-primary">⊕</span>
                   </div>
                   <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Simulations</p>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed font-light">
                   Alternative conversations, rewritten responses, and other-side framings that could land better
                 </p>
-                <div className="flex gap-1 pt-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-secondary/30"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-muted/20"></div>
+                <div className="flex gap-1.5 pt-2">
+                  <div className="w-2 h-2 rounded-full bg-primary/60 group-hover:animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-secondary/40 group-hover:animate-pulse" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 rounded-full bg-muted/30 group-hover:animate-pulse" style={{animationDelay: '0.2s'}}></div>
                 </div>
               </div>
             </div>
 
             {/* Timing Artifact */}
-            <div className="group relative rounded-lg border border-border/40 bg-card/40 hover:bg-card/60 backdrop-blur-sm transition-all duration-300 p-4 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group relative rounded-lg border border-border/50 bg-gradient-to-br from-card/60 to-card/20 hover:from-card/80 hover:to-card/40 backdrop-blur-md transition-all duration-300 p-5 overflow-hidden cursor-pointer hover:border-primary/40">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2">
-                  <div className="w-8 h-8 rounded bg-primary/20 border border-primary/30 flex items-center justify-center">
-                    <span className="text-xs font-semibold text-primary">→</span>
+                <div className="inline-flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded bg-gradient-to-br from-primary/40 to-primary/20 border border-primary/40 flex items-center justify-center group-hover:from-primary/60 group-hover:to-primary/30 transition-all">
+                    <span className="text-sm font-bold text-primary">→</span>
                   </div>
                   <p className="text-xs font-semibold text-foreground tracking-wide uppercase">Timing View</p>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed font-light">
                   External factors, emotional states, and pressure dynamics intensifying misunderstanding
                 </p>
-                <div className="flex gap-1 pt-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-secondary/30"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-muted/20"></div>
+                <div className="flex gap-1.5 pt-2">
+                  <div className="w-2 h-2 rounded-full bg-primary/60 group-hover:animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-secondary/40 group-hover:animate-pulse" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 rounded-full bg-muted/30 group-hover:animate-pulse" style={{animationDelay: '0.2s'}}></div>
                 </div>
               </div>
             </div>
