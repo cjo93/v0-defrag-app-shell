@@ -1,312 +1,311 @@
 'use client'
 
 import { Sidebar } from '@/components/layout/sidebar'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useState } from 'react'
 
+type DashboardMode = 'locked' | 'active'
+
+const dashboardMode: DashboardMode = 'locked'
+
+const pressureSignals = [
+  {
+    title: 'Fatigue sharpens tone',
+    detail: 'Directness rises late day.',
+    status: 'High',
+  },
+  {
+    title: 'Withdrawal reads as distance',
+    detail: 'Silence still lands as rejection.',
+    status: 'Active',
+  },
+  {
+    title: 'Criticism sensitivity is elevated',
+    detail: 'Stress makes corrective language hit harder.',
+    status: 'Watch',
+  },
+]
+
+const activeThreads = [
+  {
+    title: 'Primary relationship',
+    note: 'Repair window looks better tonight.',
+    state: 'Needs care',
+  },
+  {
+    title: 'Family context',
+    note: 'Inherited honesty pressure is active.',
+    state: 'Background',
+  },
+  {
+    title: 'Recent workspace',
+    note: 'Misread urgency is still unresolved.',
+    state: 'Open',
+  },
+]
+
+const nextMoves = [
+  'Reassurance before content.',
+  'Choose a lower-pressure window.',
+  'Run the validation-first branch.',
+]
+
 export default function DashboardPage() {
   const [showFrameworkDetails, setShowFrameworkDetails] = useState(false)
-  // In production, this would check actual user profile completion status
-  const hasCompletedBaseline = false // Set to true to see populated state
+  const hasCompletedBaseline = dashboardMode === 'active'
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#0f1012] text-stone-100">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="border-b border-border bg-card px-8 py-6 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/">Home</Link>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/settings">Settings</Link>
-            </Button>
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-10">
-          {/* Welcome section */}
-          <div className="space-y-1.5">
-            <h2 className="text-2xl font-bold text-foreground tracking-tight">Welcome back</h2>
-            <p className="text-muted-foreground/70 text-sm font-light">
-              Your relational command center
-            </p>
-          </div>
-
-          {/* Layer 1: Baseline Profile - Shows completion state or populated baseline */}
-          {!hasCompletedBaseline ? (
-            /* Baseline Setup Required State */
-            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-amber-500/12 via-amber-500/6 to-amber-500/3 border border-amber-500/30 space-y-6 overflow-hidden group hover:border-amber-500/45 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/8 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
-              
-              <div className="relative z-10 space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-500/15 border border-amber-500/40 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-amber-500/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 space-y-3">
-                    <div>
-                      <p className="text-lg font-bold text-foreground tracking-tight">Complete Your Baseline</p>
-                      <p className="text-sm text-muted-foreground/80 font-light mt-1">Your relational profile unlocks after setup</p>
-                    </div>
-                    <p className="text-sm text-foreground/90 leading-relaxed font-light">
-                      DEFRAG builds your baseline through birth details to understand how you show up in relationships, under pressure, and in conflict. This becomes the foundation for all relational guidance.
-                    </p>
-                  </div>
-                </div>
-
-                <Link
-                  href="/onboarding"
-                  className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/20 transition-all duration-200"
-                >
-                  Complete Baseline Setup
-                </Link>
-              </div>
-            </div>
-          ) : (
-            /* Populated Baseline State */
-            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-primary/14 via-primary/8 to-secondary/6 border border-primary/30 space-y-6 overflow-hidden group hover:border-primary/45 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
-              
-              <div className="relative z-10 space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] font-bold text-primary/80 tracking-[0.12em] uppercase">Your Baseline</p>
-                    <p className="text-xs text-muted-foreground/60 font-light mt-1.5">How you show up relationally</p>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></span>
-                    <span className="text-[10px] font-semibold text-primary/90 tracking-wide uppercase">Active</span>
-                  </span>
-                </div>
-
-                <div className="flex items-start gap-4 p-5 rounded-xl bg-gradient-to-br from-background/60 to-background/30 backdrop-blur-sm border border-primary/15">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/15 border border-primary/40 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-primary/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-foreground/95 leading-relaxed">
-                      Direct communicator who values clarity and autonomy
-                    </p>
-                    <p className="text-xs text-muted-foreground/70 mt-2 font-light">
-                      Honesty appreciated when timed well • Needs space under stress
-                    </p>
-                  </div>
-                </div>
-
-                <button 
-                  onClick={() => setShowFrameworkDetails(!showFrameworkDetails)}
-                  className="text-xs font-semibold text-primary/70 hover:text-primary/95 transition-all flex items-center gap-2 group/btn"
-                >
-                  <span className={`inline-block w-3 h-3 flex items-center justify-center transition-transform duration-200 ${showFrameworkDetails ? 'rotate-90' : ''}`}>
-                    <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 6 10">
-                      <path d="M 1 1 L 5 5 L 1 9" />
-                    </svg>
-                  </span>
-                  <span className="tracking-wide">What this is based on</span>
-                </button>
-
-                {showFrameworkDetails && (
-                  <div className="space-y-2.5 pt-4 border-t border-primary/20 animate-in fade-in-50 duration-200">
-                    <div className="text-xs space-y-2.5">
-                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Human Design:</span>
-                        <span className="text-muted-foreground/85 font-light">How you process decisions and respond to external energy</span>
-                      </div>
-                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Current timing:</span>
-                        <span className="text-muted-foreground/85 font-light">Themes around relationship integrity may be more present</span>
-                      </div>
-                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Gene Keys:</span>
-                        <span className="text-muted-foreground/85 font-light">Recurring growth patterns between reactivity and calm</span>
-                      </div>
-                      <div className="flex items-start gap-3 p-3 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/10">
-                        <span className="font-semibold text-foreground/85 min-w-28 flex-shrink-0">Numerology:</span>
-                        <span className="text-muted-foreground/85 font-light">Current cycle emphasizing accountability and honesty</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Layer 2: Active Pressure Points - Premium Dashboard System */}
-          <div className="space-y-4">
-            <div>
-              <p className="text-base font-bold text-foreground tracking-tight">Active Pressure Points</p>
-              <p className="text-xs text-muted-foreground/60 font-light mt-1">What&apos;s present in your relational field right now</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Pressure Point 1 */}
-              <div className="p-5 rounded-xl bg-gradient-to-br from-amber-500/12 to-amber-500/6 border border-amber-500/30 hover:border-amber-500/45 hover:shadow-lg hover:shadow-amber-500/10 transition-all group cursor-pointer">
-                <div className="flex items-start gap-3.5">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/35 to-amber-500/20 border border-amber-500/40 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <span className="w-2 h-2 rounded-full bg-amber-500/90 animate-pulse"></span>
-                  </span>
-                  <div className="space-y-1.5 flex-1">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Fatigue Effect</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Directness amplifies when tired</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pressure Point 2 */}
-              <div className="p-5 rounded-xl bg-gradient-to-br from-red-500/12 to-red-500/6 border border-red-500/30 hover:border-red-500/45 hover:shadow-lg hover:shadow-red-500/10 transition-all group cursor-pointer">
-                <div className="flex items-start gap-3.5">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-red-500/35 to-red-500/20 border border-red-500/40 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <span className="w-2 h-2 rounded-full bg-red-500/90 animate-pulse"></span>
-                  </span>
-                  <div className="space-y-1.5 flex-1">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Withdrawal Cycle</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Going quiet signals rejection</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pressure Point 3 */}
-              <div className="p-5 rounded-xl bg-gradient-to-br from-blue-500/12 to-blue-500/6 border border-blue-500/30 hover:border-blue-500/45 hover:shadow-lg hover:shadow-blue-500/10 transition-all group cursor-pointer">
-                <div className="flex items-start gap-3.5">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/35 to-blue-500/20 border border-blue-500/40 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <span className="w-2 h-2 rounded-full bg-blue-500/90 animate-pulse"></span>
-                  </span>
-                  <div className="space-y-1.5 flex-1">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Criticism Sensitivity</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Triggered when stressed</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Layer 3: Who/Where Needs Care - Relational Focus */}
-          <div className="space-y-4">
-            <div>
-              <p className="text-base font-bold text-foreground tracking-tight">Who/Where Needs Care</p>
-              <p className="text-xs text-muted-foreground/60 font-light mt-1">Active relationships and focus areas</p>
+      <div className="flex flex-1 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(120,92,46,0.18),_transparent_24%),radial-gradient(circle_at_78%_18%,_rgba(74,111,118,0.18),_transparent_24%),linear-gradient(180deg,_#101113_0%,_#0d0e10_100%)]">
+        <header className="border-b border-white/8 bg-[#101214]/88 px-5 py-5 backdrop-blur-md md:px-8 xl:px-10">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-2">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-stone-500">Relational command center</p>
+              <h1 className="text-3xl font-semibold tracking-tight text-stone-50">Dashboard</h1>
+              <p className="max-w-2xl text-sm leading-6 text-stone-400">
+                Baseline, live pressure, and the next move worth making.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-6 rounded-xl bg-gradient-to-br from-card via-card/95 to-card/90 border border-border/50 hover:border-primary/40 hover:shadow-lg transition-all group cursor-pointer">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-bold text-foreground tracking-tight">Primary Relationship</p>
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-500/25 border border-emerald-500/40 group-hover:scale-110 transition-transform">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground/80 font-light">Active alignment work needed</p>
-              </div>
-
-              <div className="p-6 rounded-xl bg-gradient-to-br from-card via-card/95 to-card/90 border border-border/50 hover:border-amber-500/40 hover:shadow-lg transition-all group cursor-pointer">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-bold text-foreground tracking-tight">Family Context</p>
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-amber-500/25 border border-amber-500/40 group-hover:scale-110 transition-transform">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground/80 font-light">Inherited patterns present</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Layer 4: What May Help Next - Premium Actionable Steps */}
-          <div className="space-y-4">
-            <div>
-              <p className="text-base font-bold text-foreground tracking-tight">What May Help Next</p>
-              <p className="text-xs text-muted-foreground/60 font-light mt-1">Suggested next steps based on current state</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 rounded-xl bg-gradient-to-br from-primary/10 to-primary/6 border border-primary/30 hover:border-primary/45 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-primary/20 border border-primary/35 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <svg className="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Good timing for connection</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Early morning + lower stress</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-xl bg-gradient-to-br from-primary/10 to-primary/6 border border-primary/30 hover:border-primary/45 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-primary/20 border border-primary/35 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <svg className="w-3.5 h-3.5 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Grounding first</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">10 min pause before hard talks</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-xl bg-gradient-to-br from-secondary/12 to-secondary/6 border border-secondary/30 hover:border-secondary/45 hover:shadow-lg hover:shadow-secondary/5 transition-all cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-secondary/20 border border-secondary/35 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <svg className="w-3.5 h-3.5 text-secondary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Practice validation language</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Signal safety before solving</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-xl bg-gradient-to-br from-secondary/12 to-secondary/6 border border-secondary/30 hover:border-secondary/45 hover:shadow-lg hover:shadow-secondary/5 transition-all cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-secondary/20 border border-secondary/35 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <svg className="w-3.5 h-3.5 text-secondary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-xs font-bold text-foreground tracking-wide">Map family patterns</p>
-                    <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">Explore inherited scripts</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Action Cards */}
-          <div className="space-y-5 pt-4">
-            <h3 className="text-base font-bold text-foreground tracking-tight">Get Started</h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link 
+            <div className="flex flex-wrap gap-3">
+              <Link
                 href="/workspace"
-                className="inline-flex items-center justify-center h-14 px-8 text-sm font-bold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/20 transition-all duration-200"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-stone-100 px-6 text-sm font-semibold text-slate-950 transition hover:bg-white"
               >
                 Open Workspace
               </Link>
-
               <Link
                 href="/learn"
-                className="inline-flex items-center justify-center h-14 px-8 text-sm font-bold text-foreground bg-transparent border-2 border-foreground/20 rounded-xl hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-200"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
               >
-                Explore Frameworks
+                Learn
               </Link>
             </div>
           </div>
-        </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto px-5 py-5 md:px-8 md:py-6 xl:px-10 xl:py-8">
+          <div className="space-y-6">
+            <section className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+              {!hasCompletedBaseline ? (
+                <div className="relative overflow-hidden rounded-[30px] border border-amber-300/12 bg-[linear-gradient(145deg,rgba(32,27,19,0.96),rgba(19,20,22,0.94))] p-6 sm:p-8">
+                  <div className="absolute left-[-30px] top-[-40px] h-36 w-36 rounded-full bg-amber-300/10 blur-3xl" />
+                  <div className="absolute right-[-40px] bottom-[-60px] h-40 w-40 rounded-full bg-sky-300/8 blur-3xl" />
+
+                  <div className="relative space-y-6">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="space-y-2">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-100/70">Locked baseline state</p>
+                        <h2 className="max-w-2xl text-3xl font-semibold tracking-tight text-stone-50">
+                          Complete your baseline so Defrag can separate your pattern from this moment’s pressure.
+                        </h2>
+                        <p className="max-w-xl text-sm leading-6 text-stone-300">
+                          Without it, the dashboard stays in setup mode and the workspace has less signal to work with.
+                        </p>
+                      </div>
+
+                      <div className="rounded-full border border-amber-300/15 bg-amber-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-100/80">
+                        Baseline locked
+                      </div>
+                    </div>
+
+                    <div className="grid gap-3 md:grid-cols-3">
+                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">What it unlocks</p>
+                        <p className="mt-2 text-sm leading-6 text-stone-200">Conflict style, pressure pattern, and stronger repair cues.</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">What stays private</p>
+                        <p className="mt-2 text-sm leading-6 text-stone-200">Raw birth data stays hidden. Defrag works from synthesized patterning.</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Current state</p>
+                        <p className="mt-2 text-sm leading-6 text-stone-200">You are seeing the dashboard shell, not the fully active command surface.</p>
+                      </div>
+                    </div>
+
+                    <Link
+                      href="/onboarding"
+                      className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-6 text-sm font-semibold text-slate-950 transition hover:bg-white"
+                    >
+                      Complete Baseline Setup
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative overflow-hidden rounded-[30px] border border-emerald-300/12 bg-[linear-gradient(145deg,rgba(18,21,22,0.96),rgba(15,16,18,0.96))] p-6 sm:p-8">
+                  <div className="absolute right-[-20px] top-[-20px] h-32 w-32 rounded-full bg-emerald-300/10 blur-3xl" />
+                  <div className="relative space-y-5">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Active baseline state</p>
+                        <h2 className="mt-2 max-w-2xl text-3xl font-semibold tracking-tight text-stone-50">
+                          Direct communicator who needs timing and room to stay soft.
+                        </h2>
+                      </div>
+                      <div className="rounded-full border border-emerald-300/15 bg-emerald-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-100/80">
+                        Active baseline
+                      </div>
+                    </div>
+
+                    <p className="max-w-2xl text-sm leading-6 text-stone-300">
+                      Honesty is a strength here. Under strain, it can land harder than you intend.
+                    </p>
+
+                    <button
+                      onClick={() => setShowFrameworkDetails(!showFrameworkDetails)}
+                      className="text-sm font-semibold text-stone-200 transition hover:text-white"
+                    >
+                      {showFrameworkDetails ? 'Hide basis' : 'Show basis'}
+                    </button>
+
+                    {showFrameworkDetails && (
+                      <div className="grid gap-3 md:grid-cols-2">
+                        {[
+                          ['Human Design', 'Decision style and pressure response.'],
+                          ['Current timing', 'Relational integrity is louder right now.'],
+                          ['Gene Keys', 'Growth patterns around honesty and calm.'],
+                          ['Numerology', 'A cycle emphasizing accountability.'],
+                        ].map(([title, body]) => (
+                          <div key={title} className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                            <p className="text-sm font-semibold text-stone-100">{title}</p>
+                            <p className="mt-1 text-sm leading-6 text-stone-300">{body}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(17,18,20,0.98),rgba(13,14,16,0.96))] p-6 sm:p-8">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,_rgba(81,140,152,0.18),_transparent_24%),radial-gradient(circle_at_18%_16%,_rgba(207,171,101,0.18),_transparent_22%)]" />
+                <div className="relative space-y-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Right now</p>
+                      <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-50">The field wants less pressure and a cleaner opening.</h2>
+                    </div>
+                    <div className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-100/80 animate-pulse">
+                      Live
+                    </div>
+                  </div>
+
+                  <div className="rounded-[24px] border border-white/8 bg-white/[0.04] p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-500">Current recommendation</p>
+                      <span className="inline-flex items-center gap-2 text-[11px] text-stone-400">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                        Updating
+                      </span>
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      {nextMoves.map((move, index) => (
+                        <div key={move} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-[#101113] p-3">
+                          <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/10 text-[11px] font-semibold text-stone-200">
+                            {index + 1}
+                          </span>
+                          <p className="text-sm leading-6 text-stone-200">{move}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Primary action</p>
+                      <Link
+                        href="/workspace"
+                        className="mt-3 inline-flex h-11 w-full items-center justify-center rounded-full bg-stone-100 px-5 text-sm font-semibold text-slate-950 transition hover:bg-white"
+                      >
+                        Resume live workspace
+                      </Link>
+                    </div>
+                    <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Field state</p>
+                      <p className="mt-3 text-sm leading-6 text-stone-200">Validation-first branch is outperforming direct problem entry.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr] xl:grid-cols-[0.72fr_1fr_0.78fr]">
+              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6">
+                <div className="mb-4 flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Pressure radar</p>
+                    <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-50">Active pressure</h3>
+                  </div>
+                  <span className="text-xs text-stone-500">Recent signal</span>
+                </div>
+
+                <div className="space-y-3">
+                  {pressureSignals.map((signal) => (
+                    <div key={signal.title} className="rounded-2xl border border-white/8 bg-[#101113] p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-stone-100">{signal.title}</p>
+                          <p className="mt-1 text-sm leading-6 text-stone-400">{signal.detail}</p>
+                        </div>
+                        <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-400">
+                          {signal.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6">
+                <div className="mb-4 flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Who and where</p>
+                    <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-50">Open relational threads</h3>
+                  </div>
+                  <span className="text-xs text-stone-500">Triage first</span>
+                </div>
+
+                <div className="space-y-3">
+                  {activeThreads.map((thread) => (
+                    <div key={thread.title} className="grid gap-3 rounded-2xl border border-white/8 bg-[#101113] p-4 md:grid-cols-[1fr_auto] md:items-center">
+                      <div>
+                        <p className="text-sm font-semibold text-stone-100">{thread.title}</p>
+                        <p className="mt-1 text-sm leading-6 text-stone-400">{thread.note}</p>
+                      </div>
+                      <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-400">
+                        {thread.state}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6 lg:col-span-2 xl:col-span-1">
+                <div className="mb-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Suggested move</p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-50">What may help next</h3>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-1">
+                  {[
+                    ['Best window', 'After decompression.'],
+                    ['Opening cue', 'Reassure before content.'],
+                    ['Best branch', 'Validation then request.'],
+                    ['Learn next', 'Review safety language.'],
+                  ].map(([label, value]) => (
+                    <div key={label} className="rounded-2xl border border-white/8 bg-[#101113] p-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-500">{label}</p>
+                      <p className="mt-2 text-sm leading-6 text-stone-200">{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
       </div>
     </div>
   )
