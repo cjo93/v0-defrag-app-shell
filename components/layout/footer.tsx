@@ -23,79 +23,66 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-border/40 bg-card/40 backdrop-blur-sm mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-12">
-          {/* About */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">About</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
+    <footer className="border-t border-slate-900/10 bg-[#ece4d6] text-slate-900">
+      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr_0.9fr]">
+          <div className="space-y-5">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Defrag</p>
+              <h3 className="mt-3 max-w-sm text-3xl font-semibold tracking-tight text-slate-950">
+                See the moment from more than one side before it hardens.
+              </h3>
+            </div>
+            <p className="max-w-md text-sm leading-7 text-slate-700">
+              Defrag reveals relational context, pressure, and repair paths so meaning does not keep breaking in the same place.
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border/50 bg-background/40 px-3 py-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">DEFRAG</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+              DEFRAG live workspace
             </div>
           </div>
 
-          {/* How It Works */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">How It Works</h4>
-            <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition">Learn more</Link></li>
-              <li><Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition">See pricing</Link></li>
-              <li><Link href="/workspace" className="text-sm text-muted-foreground hover:text-foreground transition">Try workspace</Link></li>
-              <li><Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition">Educational resources</Link></li>
-              <li><Link href="/invite" className="text-sm text-muted-foreground hover:text-foreground transition">Invite flow</Link></li>
-            </ul>
+          <div className="space-y-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Navigate</p>
+            <div className="space-y-2 text-sm text-slate-700">
+              <Link href="/workspace" className="block transition hover:text-slate-950">Workspace</Link>
+              <Link href="/dashboard" className="block transition hover:text-slate-950">Dashboard</Link>
+              <Link href="/learn" className="block transition hover:text-slate-950">Educational layer</Link>
+              <Link href="/invite" className="block transition hover:text-slate-950">Invite overlay</Link>
+              <Link href="/onboarding" className="block transition hover:text-slate-950">Build baseline</Link>
+            </div>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">Contact</h4>
-            <div className="space-y-3">
-              <div>
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40"
-                />
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Message..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40 resize-none h-20"
-                />
-              </div>
-              <Button
-                onClick={handleSubmit}
-                size="sm"
-                disabled={submitted}
-                className="w-full text-xs"
-              >
-                {submitted ? 'Sent' : 'Send'}
-              </Button>
-              <p className="text-xs text-muted-foreground/60 font-light">
-                Private feedback channel for product support
-              </p>
+          <div className="space-y-4 rounded-[28px] border border-slate-900/10 bg-white/55 p-5 backdrop-blur-sm">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Private feedback</p>
+              <p className="mt-2 text-sm leading-6 text-slate-700">Use this channel for product questions, invite concerns, or privacy requests.</p>
             </div>
+            <Input
+              type="email"
+              placeholder="Your email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="border-slate-900/10 bg-white/80 text-slate-900 placeholder:text-slate-400"
+            />
+            <Textarea
+              placeholder="Message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              className="h-24 resize-none border-slate-900/10 bg-white/80 text-slate-900 placeholder:text-slate-400"
+            />
+            <Button onClick={handleSubmit} disabled={submitted} className="h-11 rounded-full bg-slate-950 text-sm font-semibold text-stone-50 hover:bg-slate-800">
+              {submitted ? 'Sent' : 'Send'}
+            </Button>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground/60">&copy; 2026 Defrag. All rights reserved.</p>
-            <div className="text-xs text-muted-foreground/60">
-              <Link href="/login" className="hover:text-foreground transition">Login</Link>
-              <span className="mx-2">•</span>
-              <Link href="/signup" className="hover:text-foreground transition">Signup</Link>
-              <span className="mx-2">•</span>
-              <Link href="/settings" className="hover:text-foreground transition">Settings</Link>
-            </div>
+        <div className="mt-12 flex flex-col gap-3 border-t border-slate-900/10 pt-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
+          <p>© 2026 Defrag. All rights reserved.</p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/login" className="transition hover:text-slate-950">Login</Link>
+            <Link href="/signup" className="transition hover:text-slate-950">Signup</Link>
+            <Link href="/settings" className="transition hover:text-slate-950">Settings</Link>
           </div>
         </div>
       </div>

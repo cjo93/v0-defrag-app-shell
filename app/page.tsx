@@ -1,302 +1,284 @@
-import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
 
+const heroSignals = [
+  'Interpretation stays visible while the field updates.',
+  'Artifacts keep state instead of resetting the moment.',
+  'Branches show what may land before you say it.',
+]
+
+const narrativeSteps = [
+  {
+    eyebrow: 'Capture',
+    title: 'Bring in the exact moment.',
+    body: 'Drop in the words, the pressure, and what you thought you were saying.',
+  },
+  {
+    eyebrow: 'See',
+    title: 'Watch the meaning split.',
+    body: 'Defrag maps threat, care, history, and timing in parallel.',
+  },
+  {
+    eyebrow: 'Respond',
+    title: 'Choose the cleaner next move.',
+    body: 'Practice a branch or move toward repair with more signal.',
+  },
+]
+
+const productPlanes = [
+  {
+    title: 'Relational field',
+    body: 'A live canvas for intent, impact, and pressure.',
+  },
+  {
+    title: 'Simulation branch',
+    body: 'Alternate framings without losing the source thread.',
+  },
+  {
+    title: 'Baseline memory',
+    body: 'Patterns and context that keep compounding over time.',
+  },
+]
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-[#0d0e10] text-stone-100">
       <Navbar />
-      
-      {/* Hero Section */}
-      <section className="flex-1 py-24 md:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Premium ambient background with liquid glass feel */}
-        <div className="absolute inset-0 opacity-40 pointer-events-none">
-          <div className="absolute top-[30%] right-[25%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-primary/12 via-primary/6 to-transparent blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-secondary/8 to-transparent blur-3xl"></div>
-        </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-16 lg:gap-20 items-center relative z-10">
-          {/* Left: Premium Hero Copy */}
-          <div className="space-y-10 max-w-2xl">
-            <div className="space-y-8">
-              <h1 className="text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-foreground leading-[1.1] tracking-[-0.02em] text-pretty">
-                You know what you meant.{' '}
-                <span className="bg-gradient-to-br from-foreground via-foreground/95 to-foreground/80 bg-clip-text text-transparent">
-                  Defrag shows you what they may have heard.
-                </span>
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-muted-foreground/90 leading-relaxed font-light text-pretty max-w-xl">
-                Defrag helps you see how the other person may be reading the moment, why they may be reacting that way, and what kind of response is more likely to help.
-              </p>
-              
-              <p className="text-base md:text-lg text-muted-foreground/70 font-light text-pretty max-w-lg">
-                See the interaction from more than one side before the same misunderstanding gets worse.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              <Link 
-                href="/workspace"
-                className="group relative inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-background bg-foreground rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-foreground/25"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground/95 to-foreground/90 transition-opacity group-hover:opacity-90"></div>
-                <span className="relative">Open Workspace</span>
-              </Link>
-              
-              <Link
-                href="/pricing"
-                className="inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-foreground bg-transparent border-2 border-foreground/20 rounded-lg hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-200"
-              >
-                See Pricing
-              </Link>
-            </div>
+      <main className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(199,160,92,0.18),_transparent_26%),radial-gradient(circle_at_80%_16%,_rgba(72,117,125,0.16),_transparent_24%),linear-gradient(180deg,_#101113_0%,_#0b0c0e_100%)]">
+        <section className="relative isolate border-b border-white/8">
+          <div className="absolute inset-0 opacity-50">
+            <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
+            <div className="absolute inset-y-0 left-[7%] w-px bg-white/5" />
+            <div className="absolute inset-y-0 right-[7%] w-px bg-white/5" />
           </div>
 
-          {/* Right: Workspace Preview - Live Product Slice */}
-          <div className="hidden lg:flex justify-center lg:justify-end">
-            <div className="w-full max-w-2xl bg-background/95 backdrop-blur-xl border border-border/50 rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.12)] hover:shadow-[0_12px_60px_rgba(0,0,0,0.16)] flex flex-col relative group transition-all duration-500">
-              {/* Premium glow effect */}
-              <div className="absolute -inset-[1px] bg-gradient-to-br from-primary/20 via-primary/5 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl blur-xl pointer-events-none"></div>
-              
-              {/* Preview Header */}
-              <div className="relative z-10 border-b border-border/30 px-5 py-3.5 bg-gradient-to-r from-card/90 via-card/80 to-card/70 backdrop-blur-sm">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></span>
-                    <span className="text-[11px] font-semibold text-foreground/90 tracking-wide uppercase">Workspace</span>
+          <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1440px] grid-cols-1 gap-10 px-4 pb-10 pt-8 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(560px,1fr)] lg:px-10 lg:pb-14 lg:pt-10">
+            <div className="relative flex flex-col justify-between gap-10 lg:py-10">
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
+                  <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
+                  DEFRAG relational intelligence
+                </div>
+
+                <div className="max-w-xl space-y-5">
+                  <p className="text-sm font-medium uppercase tracking-[0.28em] text-stone-500">Defrag for high-stakes moments</p>
+                  <h1 className="text-[3rem] font-semibold leading-[0.94] tracking-[-0.05em] text-stone-50 sm:text-[4.4rem] lg:text-[5.7rem]">
+                    DEFRAG shows the meaning shift before the conversation breaks.
+                  </h1>
+                  <p className="max-w-lg text-base leading-7 text-stone-300 sm:text-lg">
+                    See how the moment may be landing for them, what pressure is shaping it, and what response is most likely to reopen contact.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/workspace"
+                    className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 transition hover:translate-y-[-1px] hover:bg-white"
+                  >
+                    Open Workspace
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-8 text-sm font-semibold text-stone-100 backdrop-blur-sm transition hover:bg-white/[0.08]"
+                  >
+                    View Command Center
+                  </Link>
+                </div>
+              </div>
+
+              <div className="grid gap-4 border-t border-white/8 pt-6 sm:grid-cols-3">
+                {heroSignals.map((signal) => (
+                  <div key={signal} className="space-y-2">
+                    <div className="h-px w-10 bg-white/12" />
+                    <p className="text-sm leading-6 text-stone-400">{signal}</p>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-border/40"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-border/40"></span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-border/40"></span>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative min-h-[640px] overflow-hidden rounded-[34px] border border-white/10 bg-[#111315] text-stone-100 shadow-[0_40px_120px_rgba(0,0,0,0.42)]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,_rgba(223,191,123,0.22),_transparent_18%),radial-gradient(circle_at_74%_16%,_rgba(98,137,145,0.2),_transparent_24%),linear-gradient(180deg,_rgba(255,255,255,0.04),_transparent_36%)]" />
+              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/8 to-transparent" />
+
+              <div className="relative flex h-full flex-col">
+                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Live workspace</p>
+                    <p className="mt-1 text-sm font-medium text-stone-100">Misread intent / repair path</p>
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-200">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                    Field active
+                  </div>
+                </div>
+
+                <div className="grid flex-1 grid-cols-1 lg:grid-cols-[310px_1fr]">
+                  <div className="border-b border-white/10 bg-white/[0.03] lg:border-b-0 lg:border-r lg:border-white/10">
+                    <div className="space-y-5 p-5">
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Interpretation</p>
+                        <p className="mt-3 text-sm leading-6 text-stone-100">
+                          Urgency may have landed as criticism before your care became visible.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-amber-300/15 bg-amber-200/10 p-4">
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/80">Pressure note</p>
+                        <p className="mt-3 text-sm leading-6 text-stone-200">
+                          Stress was already high, so the opening read like threat.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-[#17191c] p-4">
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Safer branch</p>
+                        <p className="mt-3 text-sm leading-6 text-stone-100">
+                          Reassure first, then ask for a quieter window.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative p-4 sm:p-6">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(223,191,123,0.14),_transparent_34%)]" />
+                    <div className="relative grid h-full grid-rows-[auto_1fr_auto] gap-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Cinematic field</p>
+                          <h2 className="mt-1 text-xl font-semibold tracking-tight text-stone-50">Intent, stress, and history are pulling the same line apart.</h2>
+                        </div>
+                        <div className="flex gap-2 text-[11px] uppercase tracking-[0.18em] text-stone-300">
+                          <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1">Map live</span>
+                          <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1">3 branches</span>
+                        </div>
+                      </div>
+
+                      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))]">
+                        <div className="absolute left-[18%] top-[20%] h-28 w-28 rounded-full border border-amber-200/25 bg-amber-200/10 blur-[1px]" />
+                        <div className="absolute right-[18%] top-[24%] h-24 w-24 rounded-full border border-sky-200/25 bg-sky-200/10 blur-[1px]" />
+                        <div className="absolute bottom-[18%] left-[34%] h-36 w-36 rounded-full border border-white/10 bg-white/[0.04]" />
+                        <div className="absolute left-[26%] top-[32%] h-px w-[34%] rotate-[10deg] bg-gradient-to-r from-amber-200/60 to-transparent" />
+                        <div className="absolute left-[44%] top-[44%] h-px w-[26%] -rotate-[28deg] bg-gradient-to-r from-white/50 to-transparent" />
+                        <div className="absolute left-[33%] top-[57%] h-px w-[18%] rotate-[34deg] bg-gradient-to-r from-sky-200/55 to-transparent" />
+
+                        <div className="absolute left-[11%] top-[14%] max-w-[180px] rounded-2xl border border-white/10 bg-[#181b1f]/90 p-3 shadow-2xl">
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Intent</p>
+                          <p className="mt-2 text-sm text-stone-100">You meant: clear this up before it festers.</p>
+                        </div>
+                        <div className="absolute right-[7%] top-[18%] max-w-[200px] rounded-2xl border border-white/10 bg-[#181b1f]/90 p-3 shadow-2xl">
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Likely read</p>
+                          <p className="mt-2 text-sm text-stone-100">They heard: I am in trouble again.</p>
+                        </div>
+                        <div className="absolute bottom-[10%] left-[18%] max-w-[260px] rounded-2xl border border-emerald-300/20 bg-emerald-300/10 p-4 shadow-2xl">
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-emerald-100/85">Repair opening</p>
+                          <p className="mt-2 text-sm leading-6 text-stone-100">
+                            “I’m not trying to come at you. I want to understand what this felt like on your side.”
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {productPlanes.map((plane) => (
+                          <div key={plane.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                            <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">{plane.title}</p>
+                            <p className="mt-2 text-sm leading-6 text-stone-300">{plane.body}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              {/* Preview Content: Live Workspace Layout */}
-              <div className="flex-1 flex overflow-hidden min-h-[480px] relative z-10">
-                {/* Left: Conversation Lanes */}
-                <div className="w-[42%] border-r border-border/30 flex flex-col bg-gradient-to-b from-background/95 to-background/80">
-                  {/* Interpretation Lane */}
-                  <div className="flex-1 border-b border-border/20 p-4 space-y-2.5">
-                    <div className="text-[10px] font-bold text-primary/70 uppercase tracking-[0.08em] mb-2">Interpretation</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="border-b border-white/8 bg-[#0d0e10]">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-10">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-start">
+              <div className="space-y-4">
+                <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">How Defrag works</p>
+                <h2 className="max-w-md text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl">
+                  A relational operating surface, not another chat window.
+                </h2>
+                <p className="max-w-md text-base leading-7 text-stone-400">
+                  The workspace keeps intent, impact, and repair in view at the same time.
+                </p>
+              </div>
+
+              <div className="space-y-8">
+                {narrativeSteps.map((step, index) => (
+                  <div key={step.title} className="grid gap-4 border-t border-white/8 pt-5 sm:grid-cols-[72px_1fr]">
+                    <div className="text-sm font-semibold uppercase tracking-[0.26em] text-stone-500">
+                      0{index + 1} {step.eyebrow}
+                    </div>
                     <div className="space-y-2">
-                      <div className="px-3.5 py-3 rounded-lg bg-gradient-to-br from-primary/14 to-primary/7 border border-primary/30 text-xs text-foreground/95 leading-relaxed font-medium shadow-sm">
-                        They may read criticism where you meant help
-                      </div>
-                      <div className="px-3.5 py-3 rounded-lg bg-primary/6 border border-primary/15 text-xs text-foreground/85 leading-relaxed">
-                        Timing felt abrupt during their stress
-                      </div>
+                      <h3 className="text-2xl font-semibold tracking-tight text-stone-50">{step.title}</h3>
+                      <p className="max-w-xl text-base leading-7 text-stone-400">{step.body}</p>
                     </div>
                   </div>
-                  
-                  {/* Simulation Lane */}
-                  <div className="flex-1 p-4 space-y-2.5">
-                    <div className="text-[10px] font-bold text-secondary/70 uppercase tracking-[0.08em] mb-2">Try Another Approach</div>
-                    <div className="space-y-2">
-                      <div className="px-3.5 py-3 rounded-lg bg-gradient-to-br from-secondary/14 to-secondary/7 border border-secondary/30 text-xs text-foreground/95 leading-relaxed font-medium shadow-sm">
-                        Lead with validation: "I know this is hard..."
-                      </div>
-                      <div className="px-3.5 py-3 rounded-lg bg-secondary/6 border border-secondary/15 text-xs text-foreground/85 leading-relaxed">
-                        Safety signal → receptivity opens
-                      </div>
-                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#0b0c0e]">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-10">
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.92fr]">
+              <div className="rounded-[28px] border border-white/8 bg-white/[0.03] p-8 backdrop-blur-sm">
+                <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">What Defrag generates</p>
+                <div className="mt-8 grid gap-8 sm:grid-cols-2">
+                  <div>
+                    <h3 className="text-xl font-semibold text-stone-50">Interpretive map</h3>
+                    <p className="mt-2 text-base leading-7 text-stone-400">
+                      A visual field of meaning, defense, and missed signal.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-stone-50">System context</h3>
+                    <p className="mt-2 text-base leading-7 text-stone-400">
+                      Family role, stress pattern, and relational history.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-stone-50">Branch behavior</h3>
+                    <p className="mt-2 text-base leading-7 text-stone-400">
+                      Alternate openings and likely outcomes.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-stone-50">Next move</h3>
+                    <p className="mt-2 text-base leading-7 text-stone-400">
+                      One cleaner response and one better window.
+                    </p>
                   </div>
                 </div>
-                
-                {/* Right: Relational Field - Dominant Canvas */}
-                <div className="flex-1 p-5 bg-gradient-to-br from-background/60 via-background/40 to-background/30 flex flex-col gap-3.5 relative overflow-hidden">
-                  {/* Subtle inner glow */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/3 via-transparent to-secondary/2 pointer-events-none"></div>
-                  
-                  {/* Artifact Grid */}
-                  <div className="grid grid-cols-2 gap-2.5 flex-1 relative z-10">
-                    {/* Active Map Artifact */}
-                    <div className="rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/18 via-primary/10 to-primary/6 p-4 flex flex-col justify-between hover:border-primary/60 hover:from-primary/24 hover:shadow-lg hover:shadow-primary/10 transition-all cursor-pointer group/artifact">
-                      <div className="space-y-1">
-                        <div className="text-xs font-bold text-primary/95 tracking-wide">Map</div>
-                        <div className="text-[10px] text-primary/60 font-medium">Relational path</div>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></div>
-                        <div className="text-[9px] text-primary/70 font-semibold uppercase tracking-wide">Live</div>
-                      </div>
-                    </div>
-                    
-                    {/* System Artifact */}
-                    <div className="rounded-xl border border-border/30 bg-gradient-to-br from-card/80 to-card/60 p-4 flex flex-col justify-between hover:border-primary/40 hover:bg-gradient-to-br hover:from-primary/12 hover:to-primary/6 transition-all cursor-pointer">
-                      <div className="space-y-1">
-                        <div className="text-xs font-bold text-foreground/80 tracking-wide">System</div>
-                        <div className="text-[10px] text-muted-foreground/60 font-medium">Family context</div>
-                      </div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 mt-3"></div>
-                    </div>
-                    
-                    {/* Simulation Artifact */}
-                    <div className="rounded-xl border border-border/30 bg-gradient-to-br from-card/80 to-card/60 p-4 flex flex-col justify-between hover:border-secondary/40 hover:bg-gradient-to-br hover:from-secondary/12 hover:to-secondary/6 transition-all cursor-pointer">
-                      <div className="space-y-1">
-                        <div className="text-xs font-bold text-foreground/80 tracking-wide">Sim</div>
-                        <div className="text-[10px] text-muted-foreground/60 font-medium">Practice run</div>
-                      </div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/70 mt-3"></div>
-                    </div>
-                    
-                    {/* Timing Artifact */}
-                    <div className="rounded-xl border border-border/20 bg-card/40 p-4 flex flex-col justify-between opacity-50 hover:opacity-70 transition-opacity">
-                      <div className="space-y-1">
-                        <div className="text-xs font-bold text-muted-foreground/70 tracking-wide">Timing</div>
-                        <div className="text-[10px] text-muted-foreground/50 font-medium">Pressure view</div>
-                      </div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-muted/30 mt-3"></div>
-                    </div>
-                  </div>
+              </div>
 
-                  {/* Canvas Status Bar */}
-                  <div className="flex items-center justify-between px-4 py-2.5 rounded-lg bg-gradient-to-r from-primary/10 via-primary/6 to-secondary/8 border border-primary/20 backdrop-blur-sm relative z-10">
-                    <div className="flex items-center gap-2">
-                      <span className="inline-block w-1 h-1 rounded-full bg-emerald-500/90 animate-pulse"></span>
-                      <div className="text-[11px] text-foreground/80 font-semibold tracking-wide">Field active</div>
-                    </div>
-                    <div className="text-[10px] text-muted-foreground/60 font-medium">4 artifacts</div>
-                  </div>
+              <div className="flex flex-col justify-between rounded-[28px] border border-white/8 bg-[linear-gradient(160deg,rgba(17,18,20,0.96),rgba(10,11,12,0.98))] p-8 text-stone-100">
+                <div>
+                  <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">Built for the moment after impact</p>
+                  <h2 className="mt-4 text-4xl font-semibold tracking-tight text-stone-50">
+                    See the other side before you repeat the same wound.
+                  </h2>
+                </div>
+
+                <div className="mt-10 space-y-4">
+                  <p className="text-base leading-7 text-stone-300">
+                    Defrag is strongest when something already feels off and the usual explanation no longer helps.
+                  </p>
+                  <Link
+                    href="/onboarding"
+                    className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 transition hover:bg-white"
+                  >
+                    Build Your Baseline
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-16 md:py-20 bg-card/50 border-y border-border/30">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              How Defrag Works
-            </h2>
-            <p className="text-muted-foreground text-lg font-light">
-              Three steps to breakthrough understanding
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="space-y-4">
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/30">
-                <span className="text-sm font-bold text-primary">1</span>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">
-                Describe the moment
-              </h3>
-              <p className="text-base text-muted-foreground leading-relaxed font-light">
-                Share what happened, what you meant to say, and the context around the interaction.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/30">
-                <span className="text-sm font-bold text-primary">2</span>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">
-                See their perspective
-              </h3>
-              <p className="text-base text-muted-foreground leading-relaxed font-light">
-                Defrag generates relational analysis showing how they may be reading your words and actions in that moment.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 border border-primary/30">
-                <span className="text-sm font-bold text-primary">3</span>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">
-                Explore paths forward
-              </h3>
-              <p className="text-base text-muted-foreground leading-relaxed font-light">
-                Get clear suggestions for what to say or do that's more likely to deepen understanding instead of conflict.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What Defrag Shows You */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              What Defrag Generates
-            </h2>
-            <p className="text-muted-foreground text-lg font-light">
-              AI-powered outputs for deeper understanding
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="space-y-4 border-l-2 border-primary/40 pl-6">
-              <h3 className="text-lg font-semibold text-foreground">
-                Relational maps
-              </h3>
-              <p className="text-base text-muted-foreground font-light">
-                Visual diagrams showing how the other person may be connecting the dots, what they may be assuming, and where understanding might break down.
-              </p>
-            </div>
-
-            <div className="space-y-4 border-l-2 border-primary/40 pl-6">
-              <h3 className="text-lg font-semibold text-foreground">
-                System perspectives
-              </h3>
-              <p className="text-base text-muted-foreground font-light">
-                Family and relational context that shapes how someone interprets the moment—their history, fears, values, and what matters to them.
-              </p>
-            </div>
-
-            <div className="space-y-4 border-l-2 border-primary/40 pl-6">
-              <h3 className="text-lg font-semibold text-foreground">
-                Simulations & rewrites
-              </h3>
-              <p className="text-base text-muted-foreground font-light">
-                Alternative conversations—what you might have said, how they might respond, different framings that could land better.
-              </p>
-            </div>
-
-            <div className="space-y-4 border-l-2 border-primary/40 pl-6">
-              <h3 className="text-lg font-semibold text-foreground">
-                Timing & pressure views
-              </h3>
-              <p className="text-base text-muted-foreground font-light">
-                Analysis of external factors, emotional states, and timing that may be intensifying misunderstanding in this specific moment.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 md:py-24 bg-gradient-to-b from-card/40 via-card/60 to-card/80 border-t border-border/30 relative overflow-hidden">
-        {/* Ambient depth */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/8 to-secondary/4 blur-3xl"></div>
-        </div>
-        
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10 relative z-10">
-          <div className="space-y-5">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight text-balance">
-              See interactions from more than one side
-            </h2>
-            <p className="text-xl text-muted-foreground/80 font-light text-balance">
-              Start working with Defrag today
-            </p>
-          </div>
-          
-          <Link
-            href="/workspace"
-            className="inline-flex items-center justify-center px-12 py-6 text-lg font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-foreground/20 transition-all duration-300"
-          >
-            Open Workspace
-          </Link>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -1,38 +1,35 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 
 export function Navbar() {
   return (
-    <nav className="border-b border-border/50 bg-card/80 backdrop-blur-md sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="font-semibold text-lg tracking-tight text-foreground hover:text-primary/90 transition-colors">
-            DEFRAG
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Product
-            </Link>
-            <Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Learn
-            </Link>
-            <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
-            </Link>
-            <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Dashboard
-            </Link>
-          </div>
+    <nav className="sticky top-0 z-40 border-b border-slate-900/10 bg-[#f3f0e8]/85 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-10">
+        <Link href="/" className="text-lg font-semibold tracking-[-0.02em] text-slate-950 transition hover:text-slate-700">
+          DEFRAG
+        </Link>
 
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild className="text-sm hover:bg-muted/10">
-              <Link href="/login">Sign In</Link>
-            </Button>
-            <Button size="sm" asChild className="text-sm font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/95 hover:to-primary/85 shadow-sm hover:shadow-md transition-all">
-              <Link href="/onboarding">Get Started</Link>
-            </Button>
-          </div>
+        <div className="hidden items-center gap-8 md:flex">
+          <Link href="/" className="text-sm text-slate-600 transition hover:text-slate-950">
+            Product
+          </Link>
+          <Link href="/learn" className="text-sm text-slate-600 transition hover:text-slate-950">
+            Learn
+          </Link>
+          <Link href="/dashboard" className="text-sm text-slate-600 transition hover:text-slate-950">
+            Dashboard
+          </Link>
+          <Link href="/invite" className="text-sm text-slate-600 transition hover:text-slate-950">
+            Invite
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Link href="/login" className="inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-slate-700 transition hover:bg-white/60 hover:text-slate-950">
+            Sign In
+          </Link>
+          <Link href="/onboarding" className="inline-flex h-10 items-center justify-center rounded-full bg-slate-950 px-5 text-sm font-semibold text-stone-50 transition hover:bg-slate-800">
+            Get Started
+          </Link>
         </div>
       </div>
     </nav>
