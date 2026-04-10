@@ -74,6 +74,52 @@ const frameworkLayers = [
   },
 ]
 
+type DashboardMode = 'locked' | 'active'
+
+const dashboardMode: DashboardMode = 'locked'
+
+const pressureSignals = [
+  {
+    title: 'Fatigue sharpens tone',
+    detail: 'Directness rises late day.',
+    status: 'High',
+  },
+  {
+    title: 'Withdrawal reads as distance',
+    detail: 'Silence still lands as rejection.',
+    status: 'Active',
+  },
+  {
+    title: 'Criticism sensitivity is elevated',
+    detail: 'Stress makes corrective language hit harder.',
+    status: 'Watch',
+  },
+]
+
+const activeThreads = [
+  {
+    title: 'Primary relationship',
+    note: 'Repair window looks better tonight.',
+    state: 'Needs care',
+  },
+  {
+    title: 'Family context',
+    note: 'Inherited honesty pressure is active.',
+    state: 'Background',
+  },
+  {
+    title: 'Recent workspace',
+    note: 'Misread urgency is still unresolved.',
+    state: 'Open',
+  },
+]
+
+const nextMoves = [
+  'Reassurance before content.',
+  'Choose a lower-pressure window.',
+  'Run the validation-first branch.',
+]
+
 export default function DashboardPage() {
   const [showFrameworkDetails, setShowFrameworkDetails] = useState(false)
   const hasCompletedBaseline = false
@@ -232,6 +278,7 @@ export default function DashboardPage() {
                       </Link>
                     ))}
                   </div>
+                  <span className="text-xs text-stone-500">Triage first</span>
                 </div>
 
                 <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-5 backdrop-blur sm:p-6">
@@ -266,7 +313,7 @@ export default function DashboardPage() {
               </div>
             </section>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )

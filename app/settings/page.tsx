@@ -22,6 +22,8 @@ const settingsSections = [
 ]
 
 export default function SettingsPage() {
+  const [showFrameworks, setShowFrameworks] = useState(false)
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.14),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.08),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-5">

@@ -1,14 +1,17 @@
 'use client'
 
+import type { ComponentType } from 'react'
+
 import { BasedOnDisclosure } from './based-on-disclosure'
 import { IconPerspective, IconRewrite, IconSimulations } from '@/components/icons/DefragIcons'
 
 interface Scenario {
   id: string
   type: 'rewrite' | 'simulation' | 'perspective'
-  icon: React.ComponentType<{ className?: string }>
+  icon: ComponentType<{ className?: string }>
   title: string
   content: string
+  outcome: string
   sources?: {
     name: string
     description: string

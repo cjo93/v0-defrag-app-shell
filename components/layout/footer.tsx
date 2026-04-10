@@ -31,6 +31,10 @@ export function Footer() {
             <p className="text-sm leading-7 text-white/62">
               Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
             </p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+              DEFRAG live workspace
+            </div>
           </div>
 
           <div>
@@ -69,6 +73,22 @@ export function Footer() {
               </Button>
               <p className="text-xs font-light text-white/34">Sends to chadowen93@gmail.com</p>
             </div>
+            <Input
+              type="email"
+              placeholder="Your email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="border-slate-900/10 bg-white/80 text-slate-900 placeholder:text-slate-400"
+            />
+            <Textarea
+              placeholder="Message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              className="h-24 resize-none border-slate-900/10 bg-white/80 text-slate-900 placeholder:text-slate-400"
+            />
+            <Button onClick={handleSubmit} disabled={submitted} className="h-11 rounded-full bg-slate-950 text-sm font-semibold text-stone-50 hover:bg-slate-800">
+              {submitted ? 'Sent' : 'Send'}
+            </Button>
           </div>
         </div>
 

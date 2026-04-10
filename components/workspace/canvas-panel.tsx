@@ -339,6 +339,8 @@ export function CanvasPanel() {
                   </div>
                 </div>
               </div>
+              <p className="mt-4 text-sm leading-6 text-stone-300">{selected.insight}</p>
+              <p className="mt-4 rounded-2xl border border-white/8 bg-[#141516] p-4 text-sm leading-6 text-stone-200">{selected.detail}</p>
             </div>
           </div>
         </div>

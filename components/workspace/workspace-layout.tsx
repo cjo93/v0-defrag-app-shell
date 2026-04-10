@@ -139,8 +139,6 @@ export function WorkspaceLayout() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38">Field</p>
               <p className="mt-2 text-sm text-white/76">Track pressure, pattern, and next move together.</p>
             </div>
-          </div>
-        </div>
 
         <div className="flex min-h-0 flex-1">
           <div className={`grid min-h-0 flex-1 transition-[grid-template-columns] duration-300 ${isBranchOpen ? 'grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)]' : 'grid-cols-[minmax(0,1fr)]'}`}>
