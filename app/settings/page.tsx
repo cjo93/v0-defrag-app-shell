@@ -1,143 +1,89 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Navbar } from '@/components/layout/navbar'
-import { Footer } from '@/components/layout/footer'
-import { useState } from 'react'
+
+const settingsSections = [
+  {
+    title: 'Profile',
+    description: 'Keep your core account details and display preferences easy to review.',
+  },
+  {
+    title: 'Framework preferences',
+    description: 'Choose which symbolic layers stay available behind the scenes.',
+  },
+  {
+    title: 'Privacy and data',
+    description: 'Control what Defrag keeps, what it uses to improve, and what stays strictly personal.',
+  },
+  {
+    title: 'Workspace defaults',
+    description: 'Set how much context you want visible when you open the field.',
+  },
+]
 
 export default function SettingsPage() {
   const [showFrameworks, setShowFrameworks] = useState(false)
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Navbar />
-      
-      <main className="flex-1 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          {/* Header */}
-          <div className="mb-12 md:mb-16 flex items-center justify-between">
-            <div>
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">DEFRAG Preferences</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">Settings</h1>
-              <p className="text-lg text-muted-foreground font-light">
-                Customize your Defrag experience with clear privacy and workspace controls
-              </p>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.14),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.08),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Settings</p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-[-0.05em] text-white/92 sm:text-4xl">Tune Defrag without breaking the calm.</h1>
+          </div>
+          <Link href="/dashboard" className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/72 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+            Back
+          </Link>
+        </div>
+
+        <section className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Overview</p>
+            <div className="mt-5 grid gap-3">
+              {settingsSections.map((section) => (
+                <div key={section.title} className="rounded-2xl border border-white/8 bg-black/18 p-4">
+                  <p className="text-base font-semibold text-white/88">{section.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/62">{section.description}</p>
+                </div>
+              ))}
             </div>
-            <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </Link>
           </div>
 
-          {/* Settings Sections */}
-          <div className="space-y-8">
-            {/* Profile Settings */}
-            <section className="border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
-              <h2 className="text-2xl font-semibold text-foreground mb-6">Profile</h2>
-              <div className="space-y-6">
-                <div>
-                  <label className="text-sm font-semibold text-foreground block mb-2">Email</label>
-                  <input type="email" value="user@example.com" disabled className="w-full px-4 py-2 rounded border border-border/40 bg-background/50 text-foreground text-sm" />
-                </div>
-                <div>
-                  <label className="text-sm font-semibold text-foreground block mb-2">Display Name</label>
-                  <input type="text" placeholder="Your name" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm" />
-                </div>
-                <Button>Save Changes</Button>
-              </div>
-            </section>
-
-            {/* Framework Preferences */}
-            <section className="border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
-              <h2 className="text-2xl font-semibold text-foreground mb-4">Framework Preferences</h2>
-              <p className="text-sm text-muted-foreground font-light mb-4">
-                Framework references are optional and always secondary to plain-language guidance.
-              </p>
-              <button
-                onClick={() => setShowFrameworks(!showFrameworks)}
-                className="inline-flex items-center gap-2 text-xs font-semibold text-primary/80 hover:text-primary"
-              >
-                <span className={`inline-block w-3 h-3 transition-transform ${showFrameworks ? 'rotate-90' : ''}`}>▶</span>
-                {showFrameworks ? 'Hide framework controls' : 'Show framework controls'}
-              </button>
-              <div className={`space-y-3 overflow-hidden transition-all ${showFrameworks ? 'max-h-64 mt-4' : 'max-h-0'}`}>
-                {['Astrology', 'Human Design', 'Numerology', 'I Ching'].map((fw, idx) => (
-                  <label key={idx} className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked={idx === 0} className="w-4 h-4 rounded border-border/40" />
-                    <span className="text-sm font-medium text-foreground">{fw}</span>
-                  </label>
+          <div className="space-y-4">
+            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Quick controls</p>
+              <div className="mt-5 grid gap-3">
+                {[
+                  'Email and display name',
+                  'Frameworks shown in analysis',
+                  'Weekly brief delivery',
+                  'Branch lane default behavior',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/68">
+                    {item}
+                  </div>
                 ))}
               </div>
-            </section>
+            </div>
 
-            {/* Privacy & Data */}
-            <section className="border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
-              <h2 className="text-2xl font-semibold text-foreground mb-6">Privacy & Data</h2>
-              <div className="space-y-4">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" defaultChecked className="w-4 h-4 rounded border-border/40" />
-                  <span className="text-sm font-medium text-foreground">Allow Defrag to improve with my data</span>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" defaultChecked className="w-4 h-4 rounded border-border/40" />
-                  <span className="text-sm font-medium text-foreground">Email me weekly briefs</span>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded border-border/40" />
-                  <span className="text-sm font-medium text-foreground">Send me insights about my patterns</span>
-                </label>
+            <div className="rounded-[1.8rem] border border-red-400/16 bg-gradient-to-br from-red-400/10 via-red-400/4 to-black/16 p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Careful actions</p>
+              <div className="mt-5 space-y-3">
+                {[
+                  'Export your data',
+                  'Clear session history',
+                  'Remove private material permanently',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/68">
+                    {item}
+                  </div>
+                ))}
               </div>
-            </section>
-
-            {/* Workspace Settings */}
-            <section className="border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
-              <h2 className="text-2xl font-semibold text-foreground mb-6">Workspace</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-semibold text-foreground block mb-2">Default Analysis Depth</label>
-                  <select className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm">
-                    <option>Standard (relational maps + simulations)</option>
-                    <option>Deep (includes family systems)</option>
-                    <option>Advanced (with frameworks)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-sm font-semibold text-foreground block mb-2">Thread Behavior</label>
-                  <select className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm">
-                    <option>Show branch thread by default</option>
-                    <option>Hide branch thread by default</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-
-            {/* Danger Zone */}
-            <section className="border border-red-500/30 rounded-lg p-8 bg-red-500/5">
-              <h2 className="text-2xl font-semibold text-foreground mb-6">Danger Zone</h2>
-              <div className="space-y-4">
-                <p className="text-sm text-muted-foreground font-light">
-                  These actions cannot be undone. Proceed with caution.
-                </p>
-                <div className="flex gap-2">
-                  <Button variant="outline" className="text-red-600 border-red-500/40 hover:bg-red-500/10">
-                    Export My Data
-                  </Button>
-                  <Button variant="outline" className="text-red-600 border-red-500/40 hover:bg-red-500/10">
-                    Delete All Sessions
-                  </Button>
-                </div>
-              </div>
-            </section>
+            </div>
           </div>
-        </div>
-      </main>
-
-      <Footer />
+        </section>
+      </div>
     </div>
   )
 }

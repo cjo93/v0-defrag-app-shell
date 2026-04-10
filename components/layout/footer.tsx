@@ -23,18 +23,13 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-slate-900/10 bg-[#ece4d6] text-slate-900">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-10">
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr_0.9fr]">
-          <div className="space-y-5">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Defrag</p>
-              <h3 className="mt-3 max-w-sm text-3xl font-semibold tracking-tight text-slate-950">
-                See the moment from more than one side before it hardens.
-              </h3>
-            </div>
-            <p className="max-w-md text-sm leading-7 text-slate-700">
-              Defrag reveals relational context, pressure, and repair paths so meaning does not keep breaking in the same place.
+    <footer className="mt-20 border-t border-white/8 bg-[#070911] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">About</h4>
+            <p className="text-sm leading-7 text-white/62">
+              Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
@@ -42,21 +37,41 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="space-y-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Navigate</p>
-            <div className="space-y-2 text-sm text-slate-700">
-              <Link href="/workspace" className="block transition hover:text-slate-950">Workspace</Link>
-              <Link href="/dashboard" className="block transition hover:text-slate-950">Dashboard</Link>
-              <Link href="/learn" className="block transition hover:text-slate-950">Educational layer</Link>
-              <Link href="/invite" className="block transition hover:text-slate-950">Invite overlay</Link>
-              <Link href="/onboarding" className="block transition hover:text-slate-950">Build baseline</Link>
-            </div>
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">How It Works</h4>
+            <ul className="space-y-2">
+              <li><Link href="/#how-it-works" className="text-sm text-white/58 transition hover:text-white/86">Learn more</Link></li>
+              <li><Link href="/pricing" className="text-sm text-white/58 transition hover:text-white/86">See pricing</Link></li>
+              <li><Link href="/workspace" className="text-sm text-white/58 transition hover:text-white/86">Try workspace</Link></li>
+              <li><Link href="/learn" className="text-sm text-white/58 transition hover:text-white/86">Educational layer</Link></li>
+            </ul>
           </div>
 
-          <div className="space-y-4 rounded-[28px] border border-slate-900/10 bg-white/55 p-5 backdrop-blur-sm">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500">Private feedback</p>
-              <p className="mt-2 text-sm leading-6 text-slate-700">Use this channel for product questions, invite concerns, or privacy requests.</p>
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">Contact</h4>
+            <div className="space-y-3">
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
+              />
+              <Textarea
+                placeholder="How can Defrag help?"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="h-24 resize-none border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
+              />
+              <Button
+                onClick={handleSubmit}
+                size="sm"
+                disabled={submitted}
+                className="w-full rounded-full bg-white text-xs font-semibold text-black hover:bg-white/92"
+              >
+                {submitted ? 'Sent' : 'Send'}
+              </Button>
+              <p className="text-xs font-light text-white/34">Sends to chadowen93@gmail.com</p>
             </div>
             <Input
               type="email"
@@ -77,12 +92,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-slate-900/10 pt-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Defrag. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/login" className="transition hover:text-slate-950">Login</Link>
-            <Link href="/signup" className="transition hover:text-slate-950">Signup</Link>
-            <Link href="/settings" className="transition hover:text-slate-950">Settings</Link>
+        <div className="border-t border-white/8 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <p className="text-xs text-white/34">&copy; 2026 Defrag. All rights reserved.</p>
+            <div className="text-xs text-white/34">
+              <Link href="/login" className="transition hover:text-white/80">Login</Link>
+              <span className="mx-2">•</span>
+              <Link href="/signup" className="transition hover:text-white/80">Signup</Link>
+            </div>
           </div>
         </div>
       </div>

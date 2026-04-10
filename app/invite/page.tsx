@@ -1,103 +1,84 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Navbar } from '@/components/layout/navbar'
-import { Footer } from '@/components/layout/footer'
-import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
 
 export default function InvitePage() {
+  const [relationship, setRelationship] = useState('Partner')
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Navbar />
-      
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div className="w-full max-w-2xl">
-          <div className="space-y-8 border border-border/40 rounded-lg p-8 md:p-12 bg-gradient-to-br from-card/60 to-card/20">
-            {/* Header */}
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40">
-                <IconRelationalMap className="w-8 h-8 text-foreground/50" />
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                You&apos;ve been invited to Defrag
-              </h1>
-              <p className="text-lg text-muted-foreground font-light max-w-md mx-auto">
-                Someone wants to work through a relational moment more clearly. See how their experience may differ from yours.
-              </p>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/40 px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">Private invite overlay</span>
-              </div>
-            </div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.14),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.08),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Invite and privacy</p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-[-0.05em] text-white/92 sm:text-4xl">Invite someone in without losing clarity or trust.</h1>
+          </div>
+          <Link href="/dashboard" className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/72 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+            Back
+          </Link>
+        </div>
 
-            {/* About Section */}
-            <div className="space-y-6 border-t border-border/30 pt-8">
-              <h2 className="text-2xl font-semibold text-foreground">What is Defrag?</h2>
-              <p className="text-muted-foreground leading-relaxed font-light">
-                Defrag is a relational intelligence operating system. It helps people understand interactions from more than one perspective—revealing what the other person may be experiencing when communication breaks down.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  { icon: IconRelationalMap, title: 'Relational Maps', desc: 'See how the other person connects the dots' },
-                  { icon: IconSystemView, title: 'System Context', desc: 'Understand family and relational history' },
-                  { icon: IconSimulations, title: 'Simulations', desc: 'Explore alternative conversations' },
-                  { icon: IconTiming, title: 'Timing Analysis', desc: 'Understand external pressures' }
-                ].map((item, idx) => {
-                  const Icon = item.icon
-                  return (
-                  <div key={idx} className="space-y-2">
-                    <Icon className="w-6 h-6 text-foreground/70" />
-                    <p className="font-semibold text-foreground">{item.title}</p>
-                    <p className="text-sm text-muted-foreground font-light">{item.desc}</p>
-                  </div>
-                )
-                })}
+        <section className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Relationship overlay</p>
+            <div className="mt-5 space-y-4">
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-white/82">Who are you inviting?</label>
+                <select
+                  value={relationship}
+                  onChange={(e) => setRelationship(e.target.value)}
+                  className="w-full rounded-2xl border border-white/10 bg-black/18 px-4 py-3 text-sm text-white outline-none"
+                >
+                  <option>Partner</option>
+                  <option>Family member</option>
+                  <option>Friend</option>
+                  <option>Co-parent</option>
+                  <option>Collaborator</option>
+                </select>
               </div>
-            </div>
 
-            {/* Privacy Notice */}
-            <div className="border-t border-border/30 pt-8 space-y-4">
-              <h3 className="font-semibold text-foreground">Your Privacy</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed font-light">
-                You control what you share. This invite is personalized and private. Only share information you&apos;re comfortable with. All analysis stays confidential between you and the person who invited you.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="rounded-lg border border-border/30 bg-background/40 px-4 py-3">
-                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Shared</p>
-                  <p className="text-xs text-foreground/85 mt-1">Moment context and responses you choose to share</p>
-                </div>
-                <div className="rounded-lg border border-border/30 bg-background/40 px-4 py-3">
-                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Not shared</p>
-                  <p className="text-xs text-foreground/85 mt-1">Raw birth details and private baseline data</p>
-                </div>
+              <div className="rounded-2xl border border-white/8 bg-black/18 p-4">
+                <p className="text-sm font-semibold text-white/86">What they see</p>
+                <p className="mt-2 text-sm leading-6 text-white/62">
+                  A focused, respectful view of the shared moment, the invitation context, and any overlay you choose to share.
+                </p>
               </div>
-            </div>
 
-            {/* Action */}
-            <div className="border-t border-border/30 pt-8 space-y-4">
-              <Link href="/signup" className="block">
-                <Button className="w-full">Accept Invite and Join</Button>
-              </Link>
-              <p className="text-xs text-center text-muted-foreground font-light">
-                You&apos;ll create a free Defrag account to start
-              </p>
-            </div>
-
-            {/* Questions */}
-            <div className="border-t border-border/30 pt-8 text-center space-y-2">
-              <p className="text-sm text-muted-foreground font-light">
-                Not sure if this is for you? Have questions?
-              </p>
-              <a href="mailto:chadowen93@gmail.com" className="text-primary hover:underline font-medium">
-                Get in touch
-              </a>
+              <div className="rounded-2xl border border-white/8 bg-black/18 p-4">
+                <p className="text-sm font-semibold text-white/86">What stays private</p>
+                <p className="mt-2 text-sm leading-6 text-white/62">
+                  Your full workspace history, hidden notes, and any layers you have not explicitly included in the invite.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
 
-      <Footer />
+          <div className="rounded-[1.8rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Trust signals</p>
+            <div className="mt-5 grid gap-3">
+              {[
+                'The invite flow should feel calm, explicit, and reversible.',
+                'Privacy language stays plain: what is shared, what is hidden, and who can see it.',
+                'Relationship overlays should add context, not create confusion or expose more than intended.',
+              ].map((item) => (
+                <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/72">
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <button className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92">
+                Generate invite link
+              </button>
+              <button className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                Preview shared view
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   )
 }

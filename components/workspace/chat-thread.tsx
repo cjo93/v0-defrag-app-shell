@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { BasedOnDisclosure } from './based-on-disclosure'
 
 interface Message {
   id: string
@@ -31,25 +32,33 @@ const mockMessages: Message[] = [
     id: '2',
     author: 'Defrag',
     content:
-      'They likely interpreted “we need to talk” as criticism or accusation rather than collaboration. The phrase may have triggered defense before the topic itself arrived.',
+      'They may have heard “we need to talk” as pressure before they heard your care. That can make their body brace before the conversation actually starts.',
     timestamp: '2:15 PM',
     type: 'interpretation',
     sources: [
       {
-        name: 'Trust pattern',
-        description: 'They test safety before they open.',
-        detail: 'A defensive response may be a check for whether you are coming toward them or at them.',
+        name: 'How they build trust',
+        description: 'Testing before opening up',
+        detail:
+          'They may need to test ideas before trusting them, so a defensive response could be checking whether you are safe to engage with.',
       },
       {
-        name: 'Stress load',
-        description: 'Capacity already looked thin.',
-        detail: 'When someone is already strained, even neutral wording can arrive as threat.',
+        name: 'Safety patterns',
+        description: 'How they learned to protect themselves',
+        detail:
+          'They may have learned to scan for reliability before opening up, which can make even neutral pressure feel sharper than you intended.',
+      },
+      {
+        name: 'Current stress level',
+        description: 'What they may already be carrying',
+        detail:
+          'If they are already at capacity, even a practical opening can sound threatening regardless of your actual intention.',
       },
     ],
     followUp: [
-      { label: 'Why this read?', action: 'expand_sources' },
-      { label: 'Show better opening', action: 'show_simulations' },
-      { label: 'Map the split', action: 'expand_detail' },
+      { label: 'Show the signal', action: 'expand_sources' },
+      { label: 'Try a softer opening', action: 'show_simulations' },
+      { label: 'Walk it through', action: 'expand_detail' },
     ],
   },
   {
@@ -63,108 +72,138 @@ const mockMessages: Message[] = [
     id: '4',
     author: 'Defrag',
     content:
-      'Leading with validation before the issue can move them from bracing to listening. It signals that you see their experience, not only the problem you want to solve.',
+      'Yes. Leading with validation first can shift the moment from defensive to collaborative because it signals that you see them before you try to solve the issue.',
     timestamp: '2:17 PM',
     type: 'insight',
     sources: [
       {
-        name: 'Safety before solving',
-        description: 'Regulation supports collaboration.',
-        detail: 'Validation first helps the nervous system stand down enough for actual conversation.',
+        name: 'Current timing',
+        description: 'What may be heightened right now',
+        detail:
+          'Themes around relationship integrity may be more active right now, so they may be testing whether your tone matches your care.',
       },
       {
-        name: 'Timing',
-        description: 'Relational integrity feels louder right now.',
-        detail: 'They may be checking whether your approach is care or criticism more than usual.',
+        name: 'Pressure context',
+        description: 'What this moment may amplify',
+        detail:
+          'When accountability is already in the air, defensiveness can be less about disagreement and more about checking whether they are safe.',
+      },
+      {
+        name: 'Safety before solving',
+        description: 'How they may need to process',
+        detail:
+          'Validation first signals enough safety for them to move out of reaction and into collaboration.',
       },
     ],
     followUp: [
-      { label: 'Practice this branch', action: 'open_practice' },
-      { label: 'What supports this?', action: 'expand_sources' },
-      { label: 'Offer another angle', action: 'alternative_framing' },
+      { label: 'What is this reading?', action: 'expand_sources' },
+      { label: 'Practice the wording', action: 'open_practice' },
+      { label: 'Offer another frame', action: 'alternative_framing' },
     ],
   },
 ]
+
+const actionLabels: Record<string, string> = {
+  expand_sources: 'Signal trace',
+  show_simulations: 'Branch lane',
+  expand_detail: 'Deeper read',
+  open_practice: 'Practice',
+  alternative_framing: 'Alternate frame',
+}
 
 export function ChatThread() {
   const [expandedMessage, setExpandedMessage] = useState<string | null>('4')
 
   return (
-    <div className="space-y-5 p-4">
-      {mockMessages.map((message) => {
-        const isDefrag = message.author === 'Defrag'
-        const isExpanded = expandedMessage === message.id
+    <div className="flex-1 overflow-y-auto px-3 py-3.5 sm:px-4 sm:py-5">
+      <div className="mx-auto max-w-2xl space-y-4 sm:space-y-5">
+        {mockMessages.map((message) => {
+          const isDefrag = message.author === 'Defrag'
+          const isInsight = message.type === 'insight'
+          const isExpanded = expandedMessage === message.id
 
-        return (
-          <div key={message.id} className="space-y-3">
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-2">
-                <span className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${isDefrag ? 'text-stone-400' : 'text-stone-500'}`}>
-                  {message.author}
-                </span>
-                {message.type === 'insight' && (
-                  <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-200">
-                    Key pattern
+          return (
+            <div key={message.id} className="animate-in fade-in-50 space-y-2">
+              <div className="flex items-center justify-between gap-3 px-1">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                      isDefrag ? 'text-white/42' : 'text-white/34'
+                    }`}
+                  >
+                    {message.author}
                   </span>
-                )}
+                  {isInsight && (
+                    <span className="rounded-full border border-primary/16 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/85">
+                      Key read
+                    </span>
+                  )}
+                </div>
+                <span className="text-[11px] font-medium text-white/28">{message.timestamp}</span>
               </div>
-              <span className="text-[11px] text-stone-600">{message.timestamp}</span>
+
+              {isDefrag ? (
+                <div
+                  className={`overflow-hidden rounded-[1.55rem] border p-4 shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-colors sm:p-5 ${
+                    isInsight
+                      ? 'border-primary/20 bg-gradient-to-br from-primary/12 via-primary/6 to-black/20'
+                      : 'border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-black/16'
+                  }`}
+                >
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${
+                          isInsight
+                            ? 'border-primary/18 bg-primary/10 text-primary/85'
+                            : 'border-white/10 bg-white/[0.05] text-white/52'
+                        }`}
+                      >
+                        <span className={`h-1.5 w-1.5 rounded-full ${isInsight ? 'bg-primary' : 'bg-emerald-300'} shadow-[0_0_10px_rgba(255,255,255,0.35)]`} />
+                        {isInsight ? 'What may help next' : 'What they may be reacting to'}
+                      </span>
+                    </div>
+
+                    <p className="text-[15px] leading-7 text-white/84 sm:text-base">{message.content}</p>
+
+                    {message.followUp && (
+                      <div className="flex flex-wrap gap-2">
+                        {message.followUp.map((item) => (
+                          <button
+                            key={item.label}
+                            onClick={() => setExpandedMessage((current) => (current === message.id ? null : message.id))}
+                            className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.045] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                          >
+                            <span className="text-[10px] uppercase tracking-[0.16em] text-white/38">
+                              {actionLabels[item.action] ?? 'Next'}
+                            </span>
+                            <span className="ml-2">{item.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {message.sources && (
+                      <BasedOnDisclosure
+                        compactLabel="Signals in view"
+                        expanded={isExpanded}
+                        onToggle={() =>
+                          setExpandedMessage((current) => (current === message.id ? null : message.id))
+                        }
+                        sources={message.sources}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="ml-auto max-w-[94%] rounded-[1.35rem] border border-white/10 bg-white/[0.05] px-4 py-3.5 text-[15px] leading-7 text-white/78 sm:max-w-[80%] sm:rounded-[1.45rem]">
+                  {message.content}
+                </div>
+              )}
             </div>
-
-            {isDefrag ? (
-              <div className="overflow-hidden rounded-[24px] border border-white/8 bg-white/[0.04]">
-                <div className="border-b border-white/8 px-4 py-3">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-500">
-                    {message.type === 'insight' ? 'Active interpretation' : 'Working read'}
-                  </p>
-                </div>
-                <div className="space-y-4 p-4">
-                  <p className="text-sm leading-7 text-stone-100">{message.content}</p>
-
-                  {message.sources && (
-                    <div className="space-y-2">
-                      {message.sources.map((source) => (
-                        <button
-                          key={source.name}
-                          onClick={() => setExpandedMessage(isExpanded ? null : message.id)}
-                          className="block w-full rounded-2xl border border-white/8 bg-[#141516] p-3 text-left transition hover:bg-white/[0.04]"
-                        >
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <p className="text-sm font-semibold text-stone-200">{source.name}</p>
-                              <p className="mt-1 text-xs leading-5 text-stone-500">{source.description}</p>
-                            </div>
-                            <span className="text-xs text-stone-600">{isExpanded ? 'Hide' : 'Open'}</span>
-                          </div>
-                          {isExpanded && <p className="mt-3 text-sm leading-6 text-stone-300">{source.detail}</p>}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {message.followUp && (
-                    <div className="flex flex-wrap gap-2">
-                      {message.followUp.map((action) => (
-                        <button
-                          key={action.label}
-                          onClick={() => setExpandedMessage(isExpanded ? null : message.id)}
-                          className="rounded-full border border-white/8 bg-[#141516] px-3 py-2 text-xs font-semibold text-stone-300 transition hover:bg-white/[0.05]"
-                        >
-                          {action.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="rounded-[22px] border border-white/8 bg-[#121314] p-4">
-                <p className="text-sm leading-7 text-stone-200">{message.content}</p>
-              </div>
-            )}
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </div>
   )
 }

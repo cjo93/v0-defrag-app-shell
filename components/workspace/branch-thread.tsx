@@ -3,7 +3,7 @@
 import type { ComponentType } from 'react'
 
 import { BasedOnDisclosure } from './based-on-disclosure'
-import { IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
+import { IconPerspective, IconRewrite, IconSimulations } from '@/components/icons/DefragIcons'
 
 interface Scenario {
   id: string
@@ -24,14 +24,21 @@ const scenarios: Scenario[] = [
     id: '1',
     type: 'rewrite',
     icon: IconRewrite,
-    title: 'Rewrite the opening',
-    content: '“I want to check in about something” lowers threat and keeps the invitation open.',
-    outcome: 'Best for re-entry when their body is already braced.',
+    title: 'Softer opening',
+    content:
+      '“I want to check in about something” lowers the threat signal and gives the conversation a calmer first step.',
     sources: [
       {
         name: 'Communication safety',
-        description: 'Wording changes nervous system response.',
-        detail: 'Threat-coded language can trigger defense before meaning arrives.',
+        description: 'How language creates openness',
+        detail:
+          'Threat-coded language can trigger defensiveness before understanding, while a softer opening leaves more room for curiosity.',
+      },
+      {
+        name: 'Body response',
+        description: 'What happens before thinking',
+        detail:
+          'The nervous system often closes before reflection begins, so wording that feels safer buys you more listening room.',
       },
     ],
   },
@@ -39,14 +46,21 @@ const scenarios: Scenario[] = [
     id: '2',
     type: 'perspective',
     icon: IconPerspective,
-    title: 'How they may hear the original',
-    content: 'They may hear “we need to talk” as a warning that they have already failed.',
-    outcome: 'Explains the fast close-down and the sharp tone shift.',
+    title: 'Their likely read',
+    content:
+      'They may be hearing criticism first. If that happens, their body can brace before they fully understand what you mean.',
     sources: [
       {
         name: 'Relational history',
-        description: 'Old criticism primes current interpretation.',
-        detail: 'Past evaluative dynamics can make neutral phrases feel loaded.',
+        description: 'Their protective patterns',
+        detail:
+          'Past experiences with criticism can activate protection quickly, especially when the opening feels sudden or loaded.',
+      },
+      {
+        name: 'Sensitivity to pressure',
+        description: 'What they may already be feeling',
+        detail:
+          'If they are already carrying stress, even practical language can sound more confrontational than you intended.',
       },
     ],
   },
@@ -54,58 +68,83 @@ const scenarios: Scenario[] = [
     id: '3',
     type: 'simulation',
     icon: IconSimulations,
-    title: 'Validation-first branch',
-    content: '“I know this has felt heavy. I’m not trying to corner you. Can we look at it together?”',
-    outcome: 'Most likely branch to keep both people in contact.',
+    title: 'Validation-first path',
+    content:
+      'If you start with “I know this is hard for you,” they are more likely to feel seen first and stay present for the rest of the conversation.',
     sources: [
       {
         name: 'Safety before solving',
-        description: 'Connection first, then problem-solving.',
-        detail: 'Validation lowers defense and increases the odds that the request will actually be heard.',
+        description: 'How the nervous system works',
+        detail:
+          'Validation can create enough safety for them to stay collaborative instead of shifting into reaction.',
+      },
+      {
+        name: 'What may help now',
+        description: 'Connection before correction',
+        detail:
+          'A first move that feels empathic often changes the entire shape of the conversation.',
       },
     ],
   },
 ]
 
+const scenarioTone = {
+  rewrite: 'border-white/10 bg-white/[0.045]',
+  perspective: 'border-secondary/16 bg-gradient-to-br from-secondary/10 via-secondary/5 to-black/18',
+  simulation: 'border-primary/18 bg-gradient-to-br from-primary/12 via-primary/6 to-black/18',
+}
+
 export function BranchThread() {
   return (
-    <div className="space-y-4 p-4">
-      <div className="sticky top-0 z-10 rounded-[22px] border border-white/8 bg-[#141516]/95 p-4 backdrop-blur-sm">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Branch state</p>
-        <h3 className="mt-1 text-base font-medium text-stone-100">Compare the original moment against safer alternate paths.</h3>
-      </div>
+    <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4 sm:py-5">
+      <div className="mx-auto max-w-xl space-y-4">
+        <div className="sticky top-0 z-10 rounded-[1.4rem] border border-white/8 bg-[#0b0d14]/92 px-4 py-3 backdrop-blur-xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Branch lane</p>
+          <p className="mt-1 text-sm text-white/72">Alternate ways this moment could land.</p>
+        </div>
 
-      {scenarios.map((scenario, index) => {
-        const Icon = scenario.icon
+        {scenarios.map((scenario) => {
+          const Icon = scenario.icon
 
-        return (
-          <div key={scenario.id} className="overflow-hidden rounded-[24px] border border-white/8 bg-white/[0.04]">
-            <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-[#141516]">
-                  <Icon className="h-4 w-4 text-stone-200" />
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Branch 0{index + 1}</p>
-                  <p className="text-sm font-medium text-stone-100">{scenario.title}</p>
+          return (
+            <div
+              key={scenario.id}
+              className={`overflow-hidden rounded-[1.5rem] border p-4 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-5 ${scenarioTone[scenario.type]}`}
+            >
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/82">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">
+                      {scenario.type === 'simulation'
+                        ? 'Practice path'
+                        : scenario.type === 'rewrite'
+                          ? 'Rewrite'
+                          : 'Perspective'}
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-white/90">{scenario.title}</p>
+                  </div>
                 </div>
-              </div>
-              <span className="text-[11px] uppercase tracking-[0.18em] text-stone-500">
-                {scenario.type === 'rewrite' ? 'Language' : scenario.type === 'perspective' ? 'Read' : 'Simulation'}
-              </span>
-            </div>
 
-            <div className="space-y-4 p-4">
-              <p className="text-sm leading-7 text-stone-100">{scenario.content}</p>
-              <div className="rounded-2xl border border-white/8 bg-[#141516] p-4">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Likely effect</p>
-                <p className="mt-2 text-sm leading-6 text-stone-200">{scenario.outcome}</p>
+                <p className="text-[15px] leading-7 text-white/82 sm:text-base">{scenario.content}</p>
+
+                <div className="flex flex-wrap gap-2">
+                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                    Try this wording
+                  </button>
+                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                    Compare to primary lane
+                  </button>
+                </div>
+
+                {scenario.sources && <BasedOnDisclosure compactLabel="Why this path may land better" sources={scenario.sources} />}
               </div>
-              {scenario.sources && <BasedOnDisclosure sources={scenario.sources} />}
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </div>
   )
 }
