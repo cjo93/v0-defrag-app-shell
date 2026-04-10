@@ -21,6 +21,10 @@ export default function BriefsPage() {
           {/* Header */}
           <div className="mb-12 md:mb-16 flex items-center justify-between">
             <div className="flex-1">
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">Live relational brief</span>
+              </div>
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">
                 Daily Briefs
               </h1>
@@ -41,6 +45,13 @@ export default function BriefsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </Link>
+            </div>
+          </div>
+
+          <div className="mb-6 rounded-xl border border-primary/25 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10 px-5 py-3">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-foreground/85">Today&apos;s field: higher pressure in conflict moments, stronger window for repair tonight</p>
+              <Link href="/workspace" className="text-xs font-semibold text-primary hover:text-primary/80 whitespace-nowrap">Open workspace</Link>
             </div>
           </div>
 
