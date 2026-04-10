@@ -1,37 +1,55 @@
+import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = process.env.OPENAI_API_KEY 
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-  : null;
+function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey || apiKey === "your_openai_api_key_here") {
+    return null;
+  }
+
+  return new OpenAI({ apiKey });
+}
 
 export async function POST(req: Request) {
-  if (!openai || !process.env.OPENAI_API_KEY) {
-    return new Response(
-      JSON.stringify({ 
-        error: "OpenAI API key not configured",
-        message: "Text-to-speech feature requires OPENAI_API_KEY environment variable"
-      }),
+  const openai = getOpenAIClient();
+
+  if (!openai) {
+    return NextResponse.json(
       {
-        status: 503,
-        headers: { "Content-Type": "application/json" },
-      }
+        error:
+          "OpenAI is not configured yet. Add OPENAI_API_KEY to enable audio generation.",
+      },
+      { status: 503 }
     );
   }
 
-  const { text } = await req.json();
+  try {
+    const body = await req.json();
+    const input =
+      body?.text ||
+      body?.input ||
+      "Audio overview is not available yet.";
 
-  const mp3 = await openai.audio.speech.create({
-    model: process.env.OPENAI_TTS_MODEL || "gpt-4o-mini-tts",
-    voice: "alloy",
-    input: text,
-  });
+    const speech = await openai.audio.speech.create({
+      model: "gpt-4o-mini-tts",
+      voice: "alloy",
+      input,
+    });
 
-  const audioBuffer = Buffer.from(await mp3.arrayBuffer());
+    const buffer = Buffer.from(await speech.arrayBuffer());
 
-  return new Response(audioBuffer, {
-    headers: {
-      "Content-Type": "audio/mpeg",
-      "Cache-Control": "no-store",
-    },
-  });
+    return new NextResponse(buffer, {
+      headers: {
+        "Content-Type": "audio/mpeg",
+        "Content-Length": String(buffer.length),
+        "Cache-Control": "no-store",
+      },
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Failed to generate audio.";
+
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

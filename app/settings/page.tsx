@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
+import { useState } from 'react'
 
 export default function SettingsPage() {
+  const [showFrameworks, setShowFrameworks] = useState(false)
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
@@ -15,11 +18,13 @@ export default function SettingsPage() {
           {/* Header */}
           <div className="mb-12 md:mb-16 flex items-center justify-between">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">
-                Settings
-              </h1>
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">DEFRAG Preferences</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">Settings</h1>
               <p className="text-lg text-muted-foreground font-light">
-                Customize your Defrag experience
+                Customize your Defrag experience with clear privacy and workspace controls
               </p>
             </div>
             <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -49,11 +54,18 @@ export default function SettingsPage() {
 
             {/* Framework Preferences */}
             <section className="border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
-              <h2 className="text-2xl font-semibold text-foreground mb-6">Framework Preferences</h2>
-              <div className="space-y-4">
-                <p className="text-sm text-muted-foreground font-light mb-6">
-                  Select which symbolic frameworks to enable in your workspace analysis
-                </p>
+              <h2 className="text-2xl font-semibold text-foreground mb-4">Framework Preferences</h2>
+              <p className="text-sm text-muted-foreground font-light mb-4">
+                Framework references are optional and always secondary to plain-language guidance.
+              </p>
+              <button
+                onClick={() => setShowFrameworks(!showFrameworks)}
+                className="inline-flex items-center gap-2 text-xs font-semibold text-primary/80 hover:text-primary"
+              >
+                <span className={`inline-block w-3 h-3 transition-transform ${showFrameworks ? 'rotate-90' : ''}`}>▶</span>
+                {showFrameworks ? 'Hide framework controls' : 'Show framework controls'}
+              </button>
+              <div className={`space-y-3 overflow-hidden transition-all ${showFrameworks ? 'max-h-64 mt-4' : 'max-h-0'}`}>
                 {['Astrology', 'Human Design', 'Numerology', 'I Ching'].map((fw, idx) => (
                   <label key={idx} className="flex items-center gap-3 cursor-pointer">
                     <input type="checkbox" defaultChecked={idx === 0} className="w-4 h-4 rounded border-border/40" />

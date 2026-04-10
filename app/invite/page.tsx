@@ -25,6 +25,10 @@ export default function InvitePage() {
               <p className="text-lg text-muted-foreground font-light max-w-md mx-auto">
                 Someone wants to work through a relational moment more clearly. See how their experience may differ from yours.
               </p>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/40 px-3 py-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">Private invite overlay</span>
+              </div>
             </div>
 
             {/* About Section */}
@@ -58,12 +62,22 @@ export default function InvitePage() {
               <p className="text-sm text-muted-foreground leading-relaxed font-light">
                 You control what you share. This invite is personalized and private. Only share information you&apos;re comfortable with. All analysis stays confidential between you and the person who invited you.
               </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="rounded-lg border border-border/30 bg-background/40 px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Shared</p>
+                  <p className="text-xs text-foreground/85 mt-1">Moment context and responses you choose to share</p>
+                </div>
+                <div className="rounded-lg border border-border/30 bg-background/40 px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Not shared</p>
+                  <p className="text-xs text-foreground/85 mt-1">Raw birth details and private baseline data</p>
+                </div>
+              </div>
             </div>
 
             {/* Action */}
             <div className="border-t border-border/30 pt-8 space-y-4">
               <Link href="/signup" className="block">
-                <Button className="w-full">Accept & Join</Button>
+                <Button className="w-full">Accept Invite and Join</Button>
               </Link>
               <p className="text-xs text-center text-muted-foreground font-light">
                 You&apos;ll create a free Defrag account to start
