@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
-import { IconRelationalMap, IconSystemView, IconSimulations, IconTiming } from '@/components/icons/DefragIcons'
+import { IconRelationalMap, IconSimulations, IconSystemView, IconTiming } from '@/components/icons/DefragIcons'
 
 const artifacts = [
   {
@@ -181,7 +181,7 @@ export function CanvasPanel() {
             </div>
           </div>
 
-          <div className="grid gap-5 xl:grid-cols-[0.78fr_1.22fr]">
+          <div className="grid gap-5 xl:grid-cols-[0.74fr_1.26fr]">
             <div className="space-y-3">
               {artifacts.map((artifact) => {
                 const Icon = artifact.icon
@@ -223,7 +223,7 @@ export function CanvasPanel() {
                         </div>
 
                         <p className="mt-3 text-sm leading-6 text-white/68">{artifact.description}</p>
-                        <div className="mt-4 flex items-center gap-2">
+                        <div className="mt-4 flex flex-wrap items-center gap-2">
                           <span
                             className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${
                               isSelected ? artifactTone.chip : 'border-white/10 bg-white/[0.04] text-white/52'
@@ -232,6 +232,11 @@ export function CanvasPanel() {
                             <span className="h-1.5 w-1.5 rounded-full bg-current opacity-90" />
                             {artifact.pulse}
                           </span>
+                          {isSelected && (
+                            <span className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
+                              Focused
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -286,7 +291,7 @@ export function CanvasPanel() {
                   </div>
 
                   <div className="rounded-[1.5rem] border border-white/8 bg-black/18 p-5">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Multimedia shell</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Support surfaces</p>
                     <div className="mt-4 space-y-3">
                       <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
                         <div className="flex items-center justify-between gap-3">
@@ -338,9 +343,19 @@ export function CanvasPanel() {
                     </Link>
                   </div>
                 </div>
+
+                <div className="rounded-[1.55rem] border border-white/8 bg-gradient-to-r from-white/[0.05] to-white/[0.02] p-4 sm:p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Field status</p>
+                      <p className="mt-2 text-sm text-white/74">The selected surface stays prominent while the rest of the field remains readable.</p>
+                    </div>
+                    <span className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.chip}`}>
+                      {activeArtifact.pulse}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <p className="mt-4 text-sm leading-6 text-stone-300">{selected.insight}</p>
-              <p className="mt-4 rounded-2xl border border-white/8 bg-[#141516] p-4 text-sm leading-6 text-stone-200">{selected.detail}</p>
             </div>
           </div>
         </div>

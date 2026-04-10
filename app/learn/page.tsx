@@ -54,6 +54,19 @@ export default function LearnPage() {
           </div>
 
           <div className="space-y-4">
+            <div className="rounded-[1.9rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">How to use this layer</p>
+              <div className="mt-5 grid gap-3">
+                {[
+                  'Open it when you need extra language, not when you need more noise.',
+                  'Use it to support the field, then move back into the workspace.',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/68">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="rounded-[1.9rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Audio shell</p>
               <div className="mt-5 rounded-2xl border border-white/8 bg-black/18 p-4">

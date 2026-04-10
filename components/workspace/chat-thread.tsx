@@ -126,11 +126,7 @@ export function ChatThread() {
             <div key={message.id} className="animate-in fade-in-50 space-y-2">
               <div className="flex items-center justify-between gap-3 px-1">
                 <div className="flex items-center gap-2">
-                  <span
-                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                      isDefrag ? 'text-white/42' : 'text-white/34'
-                    }`}
-                  >
+                  <span className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isDefrag ? 'text-white/42' : 'text-white/34'}`}>
                     {message.author}
                   </span>
                   {isInsight && (
@@ -144,7 +140,7 @@ export function ChatThread() {
 
               {isDefrag ? (
                 <div
-                  className={`overflow-hidden rounded-[1.55rem] border p-4 shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-colors sm:p-5 ${
+                  className={`overflow-hidden rounded-[1.6rem] border p-4 shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-colors sm:p-5 ${
                     isInsight
                       ? 'border-primary/20 bg-gradient-to-br from-primary/12 via-primary/6 to-black/20'
                       : 'border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-black/16'
@@ -187,16 +183,14 @@ export function ChatThread() {
                       <BasedOnDisclosure
                         compactLabel="Signals in view"
                         expanded={isExpanded}
-                        onToggle={() =>
-                          setExpandedMessage((current) => (current === message.id ? null : message.id))
-                        }
+                        onToggle={() => setExpandedMessage((current) => (current === message.id ? null : message.id))}
                         sources={message.sources}
                       />
                     )}
                   </div>
                 </div>
               ) : (
-                <div className="ml-auto max-w-[94%] rounded-[1.35rem] border border-white/10 bg-white/[0.05] px-4 py-3.5 text-[15px] leading-7 text-white/78 sm:max-w-[80%] sm:rounded-[1.45rem]">
+                <div className="ml-auto max-w-[94%] rounded-[1.45rem] border border-white/10 bg-white/[0.05] px-4 py-3.5 text-[15px] leading-7 text-white/78 sm:max-w-[80%]">
                   {message.content}
                 </div>
               )}

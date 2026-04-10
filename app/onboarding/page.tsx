@@ -47,7 +47,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.16),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.08),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl space-y-5">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Baseline onboarding</p>
@@ -59,7 +59,19 @@ export default function OnboardingPage() {
         </div>
 
         {step === 'welcome' && (
-          <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-4">
+            <div className="grid gap-3 md:grid-cols-3">
+              {[
+                'Plain-language baseline setup',
+                'Privacy and trust kept visible',
+                'Built to feel calm on iPhone too',
+              ].map((item) => (
+                <div key={item} className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] px-4 py-4 text-sm text-white/68 backdrop-blur">
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-[1.9rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur xl:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Start here</p>
               <h2 className="mt-4 max-w-[12ch] text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-5xl">
@@ -99,6 +111,7 @@ export default function OnboardingPage() {
                 ))}
               </div>
             </div>
+          </div>
           </div>
         )}
 

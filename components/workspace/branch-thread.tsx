@@ -11,7 +11,6 @@ interface Scenario {
   icon: ComponentType<{ className?: string }>
   title: string
   content: string
-  outcome: string
   sources?: {
     name: string
     description: string
@@ -118,11 +117,7 @@ export function BranchThread() {
                   </div>
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">
-                      {scenario.type === 'simulation'
-                        ? 'Practice path'
-                        : scenario.type === 'rewrite'
-                          ? 'Rewrite'
-                          : 'Perspective'}
+                      {scenario.type === 'simulation' ? 'Practice path' : scenario.type === 'rewrite' ? 'Rewrite' : 'Perspective'}
                     </p>
                     <p className="mt-1 text-base font-semibold text-white/90">{scenario.title}</p>
                   </div>

@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { ChatThread } from './chat-thread'
 import { BranchThread } from './branch-thread'
-import { MessageInput } from './message-input'
 import { CanvasPanel } from './canvas-panel'
+import { ChatThread } from './chat-thread'
+import { MessageInput } from './message-input'
 import {
   IconBranches,
   IconBrief,
@@ -25,7 +25,7 @@ const mobileDestinations = [
   { id: 'Branches', label: 'Branches', icon: IconBranches },
   { id: 'Family', label: 'System', icon: IconFamily },
   { id: 'Brief', label: 'Brief', icon: IconBrief },
-]
+] as const
 
 const fieldCards = [
   {
@@ -94,14 +94,14 @@ const briefItems = [
 ]
 
 export function WorkspaceLayout() {
-  const [activeDestination, setActiveDestination] = useState('Chat')
+  const [activeDestination, setActiveDestination] = useState<(typeof mobileDestinations)[number]['id']>('Chat')
   const [isBranchOpen, setIsBranchOpen] = useState(true)
 
   const desktopLayout = (
-    <div className="hidden h-screen overflow-hidden bg-[#04050a] text-foreground md:flex">
+    <div className="relative hidden h-screen overflow-hidden bg-[#04050a] text-foreground md:flex">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_80%_18%,rgba(94,234,212,0.06),transparent_22%)]" />
 
-      <div className="relative flex w-[min(48vw,920px)] min-w-[760px] flex-col border-r border-white/8 bg-[#070911]/92 backdrop-blur-xl">
+      <div className="relative flex min-w-[720px] max-w-[820px] flex-1 flex-col border-r border-white/8 bg-[#070911]/92 backdrop-blur-xl xl:max-w-[900px]">
         <div className="border-b border-white/8 px-6 py-4">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -139,37 +139,34 @@ export function WorkspaceLayout() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38">Field</p>
               <p className="mt-2 text-sm text-white/76">Track pressure, pattern, and next move together.</p>
             </div>
+          </div>
+        </div>
 
-        <div className="flex min-h-0 flex-1">
-          <div className={`grid min-h-0 flex-1 transition-[grid-template-columns] duration-300 ${isBranchOpen ? 'grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)]' : 'grid-cols-[minmax(0,1fr)]'}`}>
-            <div className="flex min-h-0 flex-col border-r border-white/8 bg-gradient-to-b from-white/[0.03] to-transparent">
+        <div className={`grid min-h-0 flex-1 transition-[grid-template-columns] duration-300 ${isBranchOpen ? 'grid-cols-[minmax(0,1fr)_minmax(280px,0.86fr)]' : 'grid-cols-[minmax(0,1fr)]'}`}>
+          <div className="flex min-h-0 flex-col border-r border-white/8 bg-gradient-to-b from-white/[0.03] to-transparent">
+            <div className="border-b border-white/8 px-5 py-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Primary lane</p>
+              <p className="mt-1 text-sm text-white/72">What may be happening in the moment</p>
+            </div>
+            <div className="min-h-0 flex-1 overflow-hidden">
+              <ChatThread />
+            </div>
+            <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
+              <MessageInput compact />
+            </div>
+          </div>
+
+          {isBranchOpen && (
+            <div className="flex min-h-0 flex-col bg-gradient-to-b from-white/[0.02] to-transparent">
               <div className="border-b border-white/8 px-5 py-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Primary lane</p>
-                <p className="mt-1 text-sm text-white/72">What may be happening in the moment</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Branch lane</p>
+                <p className="mt-1 text-sm text-white/72">Try alternate framings before you speak</p>
               </div>
               <div className="min-h-0 flex-1 overflow-hidden">
-                <ChatThread />
-              </div>
-              <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
-                <MessageInput compact />
+                <BranchThread />
               </div>
             </div>
-
-            {isBranchOpen && (
-              <div className="flex min-h-0 flex-col bg-gradient-to-b from-white/[0.02] to-transparent">
-                <div className="border-b border-white/8 px-5 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Branch lane</p>
-                  <p className="mt-1 text-sm text-white/72">Try alternate framings before you speak</p>
-                </div>
-                <div className="min-h-0 flex-1 overflow-hidden">
-                  <BranchThread />
-                </div>
-                <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
-                  <MessageInput compact />
-                </div>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
 
@@ -215,7 +212,7 @@ export function WorkspaceLayout() {
             <div className="space-y-3">
               <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Field status</p>
-                <p className="mt-2 text-sm leading-6 text-white/74">The field keeps pattern, pressure, and next step together so the moment stays readable on mobile.</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">Keep pattern, pressure, and next step together so the moment stays readable on mobile.</p>
               </div>
               {fieldCards.map((card) => {
                 const Icon = card.icon
@@ -330,9 +327,7 @@ export function WorkspaceLayout() {
                 key={destination.id}
                 onClick={() => setActiveDestination(destination.id)}
                 className={`flex flex-1 flex-col items-center justify-center gap-1 px-2 py-3 text-[11px] font-semibold transition-colors ${
-                  isActive
-                    ? 'text-white'
-                    : 'text-white/46 hover:text-white/72'
+                  isActive ? 'text-white' : 'text-white/46 hover:text-white/72'
                 }`}
               >
                 <span

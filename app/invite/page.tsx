@@ -51,6 +51,13 @@ export default function InvitePage() {
                   Your full workspace history, hidden notes, and any layers you have not explicitly included in the invite.
                 </p>
               </div>
+
+              <div className="rounded-2xl border border-white/8 bg-black/18 p-4">
+                <p className="text-sm font-semibold text-white/86">Tone of the shared view</p>
+                <p className="mt-2 text-sm leading-6 text-white/62">
+                  The invite should feel respectful and explicit, not clinical or ambiguous about what is being shared.
+                </p>
+              </div>
             </div>
           </div>
 
