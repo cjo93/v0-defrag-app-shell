@@ -54,8 +54,9 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Add message..."
+            aria-label="Message input"
             className="bg-background border-border/40 text-foreground text-xs font-light placeholder:text-muted-foreground/40"
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
                 handleSend()
@@ -68,6 +69,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
             variant={isVoiceActive ? "default" : "ghost"}
             className="px-2 h-8 text-muted-foreground hover:text-foreground"
             title="Voice input"
+            aria-pressed={isVoiceActive}
           >
             <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
@@ -110,8 +112,9 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Describe a moment..."
+          aria-label="Describe a moment"
           className="bg-background border-border/40 text-foreground text-sm font-light placeholder:text-muted-foreground/50"
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
               handleSend()
@@ -124,6 +127,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
           variant={isVoiceActive ? "default" : "ghost"}
           className="px-2 text-muted-foreground hover:text-foreground"
           title="Voice input (beta)"
+          aria-pressed={isVoiceActive}
         >
           <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
@@ -137,7 +141,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
       {/* Supporting Text + Framework Expansion */}
       <div className="flex items-center justify-between px-1">
         <p className="text-xs text-muted-foreground/60 font-light">
-          Defrag shows relational context and other perspectives
+          Defrag shows relational context in plain language
         </p>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

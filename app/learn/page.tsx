@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { TopicCard } from '@/components/learn/topic-card'
@@ -113,15 +112,22 @@ export default function LearnPage() {
             <div className="inline-block mb-5">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/25">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/80 animate-pulse"></span>
-                <span className="text-[10px] font-bold text-primary/90 tracking-[0.12em] uppercase">Educational Frameworks</span>
+                <span className="text-[10px] font-bold text-primary/90 tracking-[0.12em] uppercase">Educational Layer</span>
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 text-balance leading-[1.08] tracking-tight">
               Understanding Relational Dynamics
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground/80 font-light max-w-2xl leading-relaxed text-pretty">
-              Explore the frameworks that shape how we show up in relationships. Visual-first, scannable, designed to deepen self-understanding.
+              Explore short, visual explainers connected to real workspace moments. Tap a topic to open concise context, examples, and next actions.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Timing', 'Pressure', 'Meaning split', 'Repair', 'Safety language'].map((tag) => (
+                <span key={tag} className="inline-flex items-center rounded-full border border-border/50 bg-card/50 px-3 py-1 text-[11px] text-foreground/75">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Topics Grid */}
@@ -140,9 +146,20 @@ export default function LearnPage() {
 
           {/* Premium Footer & CTA */}
           <div className="border-t border-border/30 pt-12 space-y-8 mt-8">
-            <p className="text-base text-muted-foreground/85 leading-relaxed max-w-3xl font-light">
-              These concepts come alive in context. Bring a specific moment to the workspace, and you'll see how these dynamics show up in real conversations—family patterns, attachment responses, timing pressures, and what might actually help.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="rounded-lg border border-border/30 bg-card/50 p-4">
+                <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Connect</p>
+                <p className="text-sm text-foreground/85 mt-1">Open a workspace topic from a real moment.</p>
+              </div>
+              <div className="rounded-lg border border-border/30 bg-card/50 p-4">
+                <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Understand</p>
+                <p className="text-sm text-foreground/85 mt-1">See pressure, pattern, and timing in plain language.</p>
+              </div>
+              <div className="rounded-lg border border-border/30 bg-card/50 p-4">
+                <p className="text-[10px] uppercase tracking-wide text-muted-foreground/70">Apply</p>
+                <p className="text-sm text-foreground/85 mt-1">Return to workspace with clearer next steps.</p>
+              </div>
+            </div>
             
             <div className="p-8 rounded-2xl bg-gradient-to-br from-card via-card/95 to-card/90 border border-border/40 space-y-4">
               <p className="text-[10px] font-bold text-foreground/80 uppercase tracking-[0.12em]">Disclaimer</p>

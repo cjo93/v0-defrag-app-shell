@@ -83,6 +83,13 @@ export function BranchThread() {
       <div className="sticky top-0 bg-background/80 backdrop-blur-sm pb-3 mb-2 border-b border-border/30">
         <p className="text-xs font-semibold text-foreground/80 tracking-wider uppercase">Try another approach</p>
         <p className="text-xs text-muted-foreground/60 font-light mt-1">Alternative ways to land this conversation</p>
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {['Acknowledge', 'You', 'Them', 'Dynamic', 'Timing', 'Next'].map((step) => (
+            <span key={step} className="inline-flex items-center rounded-full border border-border/40 bg-background/70 px-2 py-0.5 text-[10px] text-muted-foreground/80">
+              {step}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Scenario Cards */}
@@ -113,6 +120,9 @@ export function BranchThread() {
               ? 'bg-primary/12 border-primary/30 ring-1 ring-primary/10'
               : 'bg-secondary/10 border-secondary/30'
           }`}>
+            <div className="mb-2 inline-flex items-center rounded-full border border-border/30 bg-background/40 px-2 py-0.5 text-[10px] font-medium text-foreground/70">
+              {scenario.type === 'rewrite' ? 'What to say' : scenario.type === 'perspective' ? 'How they may hear it' : 'Likely outcome'}
+            </div>
             <p className="text-sm leading-relaxed font-light text-foreground">
               {scenario.content}
             </p>

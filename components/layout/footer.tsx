@@ -32,6 +32,10 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border/50 bg-background/40 px-3 py-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground/75">DEFRAG</span>
+            </div>
           </div>
 
           {/* How It Works */}
@@ -42,6 +46,7 @@ export function Footer() {
               <li><Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition">See pricing</Link></li>
               <li><Link href="/workspace" className="text-sm text-muted-foreground hover:text-foreground transition">Try workspace</Link></li>
               <li><Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition">Educational resources</Link></li>
+              <li><Link href="/invite" className="text-sm text-muted-foreground hover:text-foreground transition">Invite flow</Link></li>
             </ul>
           </div>
 
@@ -75,7 +80,7 @@ export function Footer() {
                 {submitted ? 'Sent' : 'Send'}
               </Button>
               <p className="text-xs text-muted-foreground/60 font-light">
-                Sends to chadowen93@gmail.com
+                Private feedback channel for product support
               </p>
             </div>
           </div>
@@ -88,6 +93,8 @@ export function Footer() {
               <Link href="/login" className="hover:text-foreground transition">Login</Link>
               <span className="mx-2">•</span>
               <Link href="/signup" className="hover:text-foreground transition">Signup</Link>
+              <span className="mx-2">•</span>
+              <Link href="/settings" className="hover:text-foreground transition">Settings</Link>
             </div>
           </div>
         </div>

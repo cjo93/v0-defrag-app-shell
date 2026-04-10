@@ -14,6 +14,9 @@ export function Navbar() {
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Product
             </Link>
+            <Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Learn
+            </Link>
             <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>
@@ -24,10 +27,10 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild className="text-sm hover:bg-muted/10">
-              <Link href="/dashboard">Sign In</Link>
+              <Link href="/login">Sign In</Link>
             </Button>
             <Button size="sm" asChild className="text-sm font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/95 hover:to-primary/85 shadow-sm hover:shadow-md transition-all">
-              <Link href="/dashboard">Get Started</Link>
+              <Link href="/onboarding">Get Started</Link>
             </Button>
           </div>
         </div>
