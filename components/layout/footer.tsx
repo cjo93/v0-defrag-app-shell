@@ -23,71 +23,62 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-border/40 bg-card/40 backdrop-blur-sm mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-12">
-          {/* About */}
+    <footer className="mt-20 border-t border-white/8 bg-[#070911] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
           <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">About</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">About</h4>
+            <p className="text-sm leading-7 text-white/62">
               Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
             </p>
           </div>
 
-          {/* How It Works */}
           <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">How It Works</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">How It Works</h4>
             <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition">Learn more</Link></li>
-              <li><Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition">See pricing</Link></li>
-              <li><Link href="/workspace" className="text-sm text-muted-foreground hover:text-foreground transition">Try workspace</Link></li>
-              <li><Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition">Educational resources</Link></li>
+              <li><Link href="/#how-it-works" className="text-sm text-white/58 transition hover:text-white/86">Learn more</Link></li>
+              <li><Link href="/pricing" className="text-sm text-white/58 transition hover:text-white/86">See pricing</Link></li>
+              <li><Link href="/workspace" className="text-sm text-white/58 transition hover:text-white/86">Try workspace</Link></li>
+              <li><Link href="/learn" className="text-sm text-white/58 transition hover:text-white/86">Educational layer</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">Contact</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">Contact</h4>
             <div className="space-y-3">
-              <div>
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40"
-                />
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Message..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40 resize-none h-20"
-                />
-              </div>
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
+              />
+              <Textarea
+                placeholder="How can Defrag help?"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="h-24 resize-none border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
+              />
               <Button
                 onClick={handleSubmit}
                 size="sm"
                 disabled={submitted}
-                className="w-full text-xs"
+                className="w-full rounded-full bg-white text-xs font-semibold text-black hover:bg-white/92"
               >
                 {submitted ? 'Sent' : 'Send'}
               </Button>
-              <p className="text-xs text-muted-foreground/60 font-light">
-                Sends to chadowen93@gmail.com
-              </p>
+              <p className="text-xs font-light text-white/34">Sends to chadowen93@gmail.com</p>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground/60">&copy; 2026 Defrag. All rights reserved.</p>
-            <div className="text-xs text-muted-foreground/60">
-              <Link href="/login" className="hover:text-foreground transition">Login</Link>
+        <div className="border-t border-white/8 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <p className="text-xs text-white/34">&copy; 2026 Defrag. All rights reserved.</p>
+            <div className="text-xs text-white/34">
+              <Link href="/login" className="transition hover:text-white/80">Login</Link>
               <span className="mx-2">•</span>
-              <Link href="/signup" className="hover:text-foreground transition">Signup</Link>
+              <Link href="/signup" className="transition hover:text-white/80">Signup</Link>
             </div>
           </div>
         </div>

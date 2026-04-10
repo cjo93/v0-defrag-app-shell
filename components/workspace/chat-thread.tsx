@@ -1,8 +1,7 @@
 'use client'
 
-import { BasedOnDisclosure } from './based-on-disclosure'
-import { Button } from '@/components/ui/button'
 import { useState } from 'react'
+import { BasedOnDisclosure } from './based-on-disclosure'
 
 interface Message {
   id: string
@@ -32,31 +31,35 @@ const mockMessages: Message[] = [
   {
     id: '2',
     author: 'Defrag',
-    content: 'They likely interpreted "we need to talk" as criticism or accusation, rather than collaborative problem-solving. The phrase itself can trigger defensiveness before the conversation even starts.',
+    content:
+      'They may have heard “we need to talk” as pressure before they heard your care. That can make their body brace before the conversation actually starts.',
     timestamp: '2:15 PM',
     type: 'interpretation',
     sources: [
       {
         name: 'How they build trust',
         description: 'Testing before opening up',
-        detail: 'They may need to test ideas before trusting them—defensive response could be checking if you mean well'
+        detail:
+          'They may need to test ideas before trusting them, so a defensive response could be checking whether you are safe to engage with.',
       },
       {
         name: 'Safety patterns',
         description: 'How they learned to protect themselves',
-        detail: 'They may have learned to check for reliability before opening up—could be sensing pressure in your tone'
+        detail:
+          'They may have learned to scan for reliability before opening up, which can make even neutral pressure feel sharper than you intended.',
       },
       {
         name: 'Current stress level',
         description: 'What they may already be carrying',
-        detail: 'If they are already at capacity, even neutral wording can feel threatening regardless of your intent'
-      }
+        detail:
+          'If they are already at capacity, even a practical opening can sound threatening regardless of your actual intention.',
+      },
     ],
     followUp: [
-      { label: 'What makes you say that?', action: 'expand_sources' },
-      { label: 'Try another approach', action: 'show_simulations' },
-      { label: 'Walk me through this', action: 'expand_detail' },
-    ]
+      { label: 'Show the signal', action: 'expand_sources' },
+      { label: 'Try a softer opening', action: 'show_simulations' },
+      { label: 'Walk it through', action: 'expand_detail' },
+    ],
   },
   {
     id: '3',
@@ -68,142 +71,139 @@ const mockMessages: Message[] = [
   {
     id: '4',
     author: 'Defrag',
-    content: 'Leading with validation ("I know this is hard for you") before presenting the issue can shift them from defensive to collaborative. This signals you see them, not just the problem.',
+    content:
+      'Yes. Leading with validation first can shift the moment from defensive to collaborative because it signals that you see them before you try to solve the issue.',
     timestamp: '2:17 PM',
     type: 'insight',
     sources: [
       {
         name: 'Current timing',
         description: 'What may be heightened right now',
-        detail: 'Themes around relationship integrity may be more present—they may be evaluating commitment more carefully'
+        detail:
+          'Themes around relationship integrity may be more active right now, so they may be testing whether your tone matches your care.',
       },
       {
         name: 'Pressure context',
         description: 'What this moment may amplify',
-        detail: "Emphasis on honesty and accountability may be stronger right now—their defensiveness could signal they're checking if you mean it"
+        detail:
+          'When accountability is already in the air, defensiveness can be less about disagreement and more about checking whether they are safe.',
       },
       {
         name: 'Safety before solving',
         description: 'How they may need to process',
-        detail: 'Validation first signals safety; acknowledgment of their experience helps them shift from reactive to collaborative'
-      }
+        detail:
+          'Validation first signals enough safety for them to move out of reaction and into collaboration.',
+      },
     ],
     followUp: [
-      { label: 'Show me what this is based on', action: 'expand_sources' },
-      { label: 'Practice the conversation', action: 'open_practice' },
-      { label: "That doesn't sound like them", action: 'alternative_framing' },
-    ]
+      { label: 'What is this reading?', action: 'expand_sources' },
+      { label: 'Practice the wording', action: 'open_practice' },
+      { label: 'Offer another frame', action: 'alternative_framing' },
+    ],
   },
 ]
 
+const actionLabels: Record<string, string> = {
+  expand_sources: 'Signal trace',
+  show_simulations: 'Branch lane',
+  expand_detail: 'Deeper read',
+  open_practice: 'Practice',
+  alternative_framing: 'Alternate frame',
+}
+
 export function ChatThread() {
-  const [expandedMessage, setExpandedMessage] = useState<string | null>(null)
+  const [expandedMessage, setExpandedMessage] = useState<string | null>('4')
 
   return (
-    <div className="flex-1 overflow-y-auto space-y-4 p-4">
-      {mockMessages.map((message) => {
-        const isDefrag = message.author === 'Defrag'
-        const isInsight = message.type === 'insight'
-        const isExpanded = expandedMessage === message.id
-        
-        return (
-          <div key={message.id} className="space-y-2 animate-in fade-in-50">
-            <div className="flex items-center justify-between px-1">
-              <span className={`text-xs font-semibold tracking-wider uppercase ${
-                isDefrag ? 'text-primary/90' : 'text-foreground/80'
-              }`}>
-                {message.author}
-                {isInsight && <span className="ml-2 text-xs font-light text-primary/70">• Key insight</span>}
-              </span>
-              <span className="text-xs text-muted-foreground/50 font-light">{message.timestamp}</span>
-            </div>
-            {/* Generative UI Surface - Intelligence Panel */}
-            {isDefrag ? (
-              <div className="space-y-3 relative group">
-                {/* Primary Insight Panel */}
-                <div className={`relative overflow-hidden transition-all duration-300 ${
-                  isInsight
-                    ? 'bg-gradient-to-br from-primary/14 via-primary/8 to-primary/6 border border-primary/30'
-                    : 'bg-gradient-to-br from-primary/10 via-primary/6 to-primary/4 border border-primary/25'
-                } rounded-xl p-5`}>
-                  {/* Subtle ambient glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                  
-                  <div className="relative z-10 space-y-4">
-                    {/* System indicator */}
-                    <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/15 border border-primary/30">
-                        <span className="w-1 h-1 rounded-full bg-primary/80 animate-pulse"></span>
-                        <span className="text-[9px] font-bold text-primary/90 tracking-wider uppercase">Analyzing</span>
+    <div className="flex-1 overflow-y-auto px-3 py-3.5 sm:px-4 sm:py-5">
+      <div className="mx-auto max-w-2xl space-y-4 sm:space-y-5">
+        {mockMessages.map((message) => {
+          const isDefrag = message.author === 'Defrag'
+          const isInsight = message.type === 'insight'
+          const isExpanded = expandedMessage === message.id
+
+          return (
+            <div key={message.id} className="animate-in fade-in-50 space-y-2">
+              <div className="flex items-center justify-between gap-3 px-1">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                      isDefrag ? 'text-white/42' : 'text-white/34'
+                    }`}
+                  >
+                    {message.author}
+                  </span>
+                  {isInsight && (
+                    <span className="rounded-full border border-primary/16 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/85">
+                      Key read
+                    </span>
+                  )}
+                </div>
+                <span className="text-[11px] font-medium text-white/28">{message.timestamp}</span>
+              </div>
+
+              {isDefrag ? (
+                <div
+                  className={`overflow-hidden rounded-[1.55rem] border p-4 shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-colors sm:p-5 ${
+                    isInsight
+                      ? 'border-primary/20 bg-gradient-to-br from-primary/12 via-primary/6 to-black/20'
+                      : 'border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-black/16'
+                  }`}
+                >
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${
+                          isInsight
+                            ? 'border-primary/18 bg-primary/10 text-primary/85'
+                            : 'border-white/10 bg-white/[0.05] text-white/52'
+                        }`}
+                      >
+                        <span className={`h-1.5 w-1.5 rounded-full ${isInsight ? 'bg-primary' : 'bg-emerald-300'} shadow-[0_0_10px_rgba(255,255,255,0.35)]`} />
+                        {isInsight ? 'What may help next' : 'What they may be reacting to'}
                       </span>
-                      {isInsight && (
-                        <span className="text-[9px] font-semibold text-primary/60 uppercase tracking-wider">Key Pattern</span>
-                      )}
                     </div>
-                    
-                    {/* Main insight */}
-                    <p className="text-sm leading-relaxed text-foreground/95 font-medium">
-                      {message.content}
-                    </p>
+
+                    <p className="text-[15px] leading-7 text-white/84 sm:text-base">{message.content}</p>
+
+                    {message.followUp && (
+                      <div className="flex flex-wrap gap-2">
+                        {message.followUp.map((item) => (
+                          <button
+                            key={item.label}
+                            onClick={() => setExpandedMessage((current) => (current === message.id ? null : message.id))}
+                            className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.045] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                          >
+                            <span className="text-[10px] uppercase tracking-[0.16em] text-white/38">
+                              {actionLabels[item.action] ?? 'Next'}
+                            </span>
+                            <span className="ml-2">{item.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {message.sources && (
+                      <BasedOnDisclosure
+                        compactLabel="Signals in view"
+                        expanded={isExpanded}
+                        onToggle={() =>
+                          setExpandedMessage((current) => (current === message.id ? null : message.id))
+                        }
+                        sources={message.sources}
+                      />
+                    )}
                   </div>
                 </div>
-
-                {/* Dynamic Signal Blocks - Structured Intelligence */}
-                {message.sources && message.sources.length > 0 && (
-                  <div className="grid grid-cols-1 gap-2 pl-4 border-l-2 border-primary/20">
-                    {message.sources.map((source, idx) => (
-                      <div 
-                        key={idx}
-                        className="p-3 rounded-lg bg-background/80 backdrop-blur-sm border border-border/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group/signal"
-                      >
-                        <div className="flex items-start gap-2.5">
-                          <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/15 border border-primary/30 flex-shrink-0 mt-0.5">
-                            <span className="w-1 h-1 rounded-full bg-primary/80"></span>
-                          </span>
-                          <div className="flex-1 space-y-1">
-                            <p className="text-xs font-bold text-foreground tracking-tight">{source.name}</p>
-                            <p className="text-[11px] text-muted-foreground/80 font-light leading-relaxed">{source.description}</p>
-                          </div>
-                        </div>
-                        
-                        {/* Expandable detail on hover/click */}
-                        <div className="mt-2 pt-2 border-t border-border/20 opacity-0 group-hover/signal:opacity-100 transition-opacity duration-200">
-                          <p className="text-[10px] text-muted-foreground/70 font-light leading-relaxed">
-                            {source.detail}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              /* User message - clean and simple */
-              <div className="px-4 py-3 rounded-lg bg-background/60 border border-border/30 backdrop-blur-sm">
-                <p className="text-sm leading-relaxed text-foreground/90 font-light">
+              ) : (
+                <div className="ml-auto max-w-[94%] rounded-[1.35rem] border border-white/10 bg-white/[0.05] px-4 py-3.5 text-[15px] leading-7 text-white/78 sm:max-w-[80%] sm:rounded-[1.45rem]">
                   {message.content}
-                </p>
-              </div>
-            )}
-
-            {/* Action Modules - Interactive System Controls */}
-            {isDefrag && message.followUp && (
-              <div className="flex flex-wrap gap-2 pl-4">
-                {message.followUp.map((action, idx) => (
-                  <button
-                    key={idx}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-foreground/80 bg-background/60 backdrop-blur-sm border border-border/40 rounded-lg hover:border-primary/50 hover:bg-primary/8 hover:text-foreground transition-all duration-200 group/action"
-                    onClick={() => setExpandedMessage(isExpanded && expandedMessage === message.id ? null : message.id)}
-                  >
-                    <span className="w-1 h-1 rounded-full bg-primary/60 group-hover/action:bg-primary/90 transition-colors"></span>
-                    {action.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )
-      })}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

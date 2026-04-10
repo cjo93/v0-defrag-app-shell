@@ -1,314 +1,356 @@
 'use client'
 
+import { useState } from 'react'
 import { ChatThread } from './chat-thread'
 import { BranchThread } from './branch-thread'
 import { MessageInput } from './message-input'
 import { CanvasPanel } from './canvas-panel'
-import { useState } from 'react'
-import { IconChat, IconField, IconBranches, IconFamily, IconBrief, IconRelationalMap, IconSystemView, IconTiming, IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
+import {
+  IconBranches,
+  IconBrief,
+  IconChat,
+  IconFamily,
+  IconField,
+  IconPerspective,
+  IconRelationalMap,
+  IconRewrite,
+  IconSimulations,
+  IconSystemView,
+  IconTiming,
+} from '@/components/icons/DefragIcons'
 
 const mobileDestinations = [
   { id: 'Chat', label: 'Chat', icon: IconChat },
   { id: 'Field', label: 'Field', icon: IconField },
   { id: 'Branches', label: 'Branches', icon: IconBranches },
-  { id: 'Family', label: 'Family', icon: IconFamily },
+  { id: 'Family', label: 'System', icon: IconFamily },
   { id: 'Brief', label: 'Brief', icon: IconBrief },
+]
+
+const fieldCards = [
+  {
+    title: 'Relational map',
+    description: 'See where intention drifted, what they may have heard, and where the opening can soften.',
+    icon: IconRelationalMap,
+    tone: 'from-primary/14 via-primary/6 to-transparent border-primary/18',
+  },
+  {
+    title: 'System view',
+    description: 'Keep family pattern context visible so the reaction feels readable instead of random.',
+    icon: IconSystemView,
+    tone: 'from-secondary/14 via-secondary/6 to-transparent border-secondary/18',
+  },
+  {
+    title: 'Timing pressure',
+    description: 'Surface load, urgency, and readiness before you decide how hard to push the moment.',
+    icon: IconTiming,
+    tone: 'from-amber-400/12 via-amber-400/6 to-transparent border-amber-400/16',
+  },
+]
+
+const branchCards = [
+  {
+    title: 'Softer lead',
+    description: '“I want to understand what this felt like for you.”',
+    icon: IconRewrite,
+  },
+  {
+    title: 'Validation first',
+    description: 'Signals care before problem-solving so the conversation can stay collaborative.',
+    icon: IconSimulations,
+  },
+  {
+    title: 'Perspective shift',
+    description: 'Reframe the moment from pressure to repair before choosing your next sentence.',
+    icon: IconPerspective,
+  },
+]
+
+const familyCards = [
+  {
+    title: 'Protection pattern',
+    description: 'They may protect first and explain later when they sense blame.',
+    status: 'Primary',
+    icon: IconSystemView,
+  },
+  {
+    title: 'Historical trigger',
+    description: 'Direct openings may echo older moments of criticism or sudden correction.',
+    status: '2 mapped',
+    icon: IconPerspective,
+  },
+  {
+    title: 'Timing sensitivity',
+    description: 'Late, overloaded moments increase how sharply they read pressure.',
+    status: 'High',
+    icon: IconTiming,
+  },
+]
+
+const briefItems = [
+  'Right now the field shows urgency getting mistaken for blame.',
+  'Validation-first language remains the strongest repair move.',
+  'Tomorrow morning looks cleaner than pushing harder tonight.',
 ]
 
 export function WorkspaceLayout() {
   const [activeDestination, setActiveDestination] = useState('Chat')
-  const [isBranchOpen, setIsBranchOpen] = useState(false)
+  const [isBranchOpen, setIsBranchOpen] = useState(true)
 
-  // Desktop layout: CORRECTED - left conversation zone (primary + conditional branch) + right dominant canvas
   const desktopLayout = (
-    <div className="hidden md:flex h-screen bg-background overflow-hidden">
-      {/* LEFT SIDE: Conversation Zone - Primary Thread + Conditional Branch */}
-      <div className={`flex border-r border-border transition-all duration-300 ${
-        isBranchOpen ? 'gap-0' : ''
-      }`}>
-        {/* Primary Thread Lane */}
-        <div className="w-96 flex flex-col bg-background min-w-0">
-          {/* Header */}
-          <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50 flex items-center justify-between">
+    <div className="hidden h-screen overflow-hidden bg-[#04050a] text-foreground md:flex">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_80%_18%,rgba(94,234,212,0.06),transparent_22%)]" />
+
+      <div className="relative flex w-[min(48vw,920px)] min-w-[760px] flex-col border-r border-white/8 bg-[#070911]/92 backdrop-blur-xl">
+        <div className="border-b border-white/8 px-6 py-4">
+          <div className="flex items-center justify-between gap-4">
             <div>
-              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Interpretation</h2>
-              <p className="text-xs text-muted-foreground mt-1.5 font-light">What may be happening</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">DEFRAG workspace</p>
+              <h1 className="mt-1 text-lg font-semibold text-white/90">Conversation repair field</h1>
             </div>
-            <button
-              onClick={() => setIsBranchOpen(!isBranchOpen)}
-              className={`flex-shrink-0 w-8 h-8 rounded border transition-all flex items-center justify-center text-sm font-semibold ${
-                isBranchOpen
-                  ? 'bg-primary/10 border-primary/30 text-primary hover:bg-primary/20'
-                  : 'border-border/40 text-muted-foreground hover:border-border/60 hover:text-foreground hover:bg-muted/10'
-              }`}
-              title={isBranchOpen ? 'Close branch thread' : 'Open branch thread'}
-            >
-              {isBranchOpen ? '−' : '+'}
-            </button>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200/90">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,0.9)]" />
+                Live
+              </span>
+              <button
+                onClick={() => setIsBranchOpen((value) => !value)}
+                className={`inline-flex h-10 items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors ${
+                  isBranchOpen
+                    ? 'border-primary/18 bg-primary/12 text-primary/90 hover:bg-primary/16'
+                    : 'border-white/10 bg-white/[0.04] text-white/74 hover:border-white/16 hover:bg-white/[0.08] hover:text-white'
+                }`}
+              >
+                {isBranchOpen ? 'Hide branch lane' : 'Open branch lane'}
+              </button>
+            </div>
           </div>
-          
-          {/* Content */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex-1 overflow-y-auto">
-              <ChatThread />
+
+          <div className="mt-4 grid gap-3 xl:grid-cols-3">
+            <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38">Interpretation</p>
+              <p className="mt-2 text-sm text-white/76">Keep what they may be hearing visible.</p>
             </div>
-            <div className="flex-shrink-0 border-t border-border/30">
-              <MessageInput compact />
+            <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38">Simulation</p>
+              <p className="mt-2 text-sm text-white/76">Open alternate paths without leaving the moment.</p>
+            </div>
+            <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38">Field</p>
+              <p className="mt-2 text-sm text-white/76">Track pressure, pattern, and next move together.</p>
             </div>
           </div>
         </div>
 
-        {/* Branch Thread Lane - Conditional */}
-        {isBranchOpen && (
-          <div className="w-96 flex flex-col bg-background border-l border-border/30 min-w-0 animate-in fade-in duration-200">
-            {/* Header */}
-            <div className="flex-shrink-0 border-b border-border/30 px-6 py-4 bg-background/50">
-              <h2 className="text-xs font-semibold text-foreground tracking-widest uppercase">Simulations</h2>
-              <p className="text-xs text-muted-foreground mt-1.5 font-light">Try another approach</p>
-            </div>
-            
-            {/* Content */}
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 overflow-y-auto">
-                <BranchThread />
+        <div className="flex min-h-0 flex-1">
+          <div className={`grid min-h-0 flex-1 transition-[grid-template-columns] duration-300 ${isBranchOpen ? 'grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)]' : 'grid-cols-[minmax(0,1fr)]'}`}>
+            <div className="flex min-h-0 flex-col border-r border-white/8 bg-gradient-to-b from-white/[0.03] to-transparent">
+              <div className="border-b border-white/8 px-5 py-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Primary lane</p>
+                <p className="mt-1 text-sm text-white/72">What may be happening in the moment</p>
               </div>
-              <div className="flex-shrink-0 border-t border-border/30">
+              <div className="min-h-0 flex-1 overflow-hidden">
+                <ChatThread />
+              </div>
+              <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
                 <MessageInput compact />
               </div>
             </div>
+
+            {isBranchOpen && (
+              <div className="flex min-h-0 flex-col bg-gradient-to-b from-white/[0.02] to-transparent">
+                <div className="border-b border-white/8 px-5 py-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Branch lane</p>
+                  <p className="mt-1 text-sm text-white/72">Try alternate framings before you speak</p>
+                </div>
+                <div className="min-h-0 flex-1 overflow-hidden">
+                  <BranchThread />
+                </div>
+                <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
+                  <MessageInput compact />
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
-      {/* RIGHT SIDE: Dominant Multimedia Canvas */}
-      <div className="flex-1 flex flex-col min-w-0 bg-background overflow-hidden">
+      <div className="relative min-w-0 flex-1 overflow-hidden">
         <CanvasPanel />
       </div>
     </div>
   )
 
-  // Mobile layout: Destination-based full-screen views (NOT a literal desktop mirror)
   const mobileLayout = (
-    <div className="md:hidden flex flex-col h-screen bg-background overflow-hidden">
-      {/* Premium Status Bar Area */}
-      <div className="flex-shrink-0 bg-gradient-to-b from-background to-background/50 backdrop-blur-sm px-4 py-3.5 border-b border-border/30">
-        <div className="flex items-center justify-between">
-          <h1 className="text-sm font-semibold text-foreground tracking-wider">Defrag</h1>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/70 animate-pulse"></span>
-            <span>Live</span>
+    <div className="flex h-screen flex-col overflow-hidden bg-[#05060a] text-foreground md:hidden">
+      <div className="border-b border-white/8 bg-[#0a0c13]/96 px-4 py-3.5 backdrop-blur-xl">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">DEFRAG</p>
+            <h1 className="mt-1 text-base font-semibold text-white/88">Live workspace</h1>
           </div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/90">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,0.9)]" />
+            Live
+          </span>
         </div>
       </div>
 
-      {/* Content Area - Full-Screen Destination Views */}
-      <div className="flex-1 overflow-hidden flex flex-col min-w-0">
-        {/* Chat - Primary conversational view */}
+      <div className="min-h-0 flex-1 overflow-hidden">
         {activeDestination === 'Chat' && (
-          <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-background via-background to-secondary/2">
-            <div className="flex-1 overflow-y-auto px-4 py-3">
+          <div className="flex h-full flex-col bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_34%),linear-gradient(180deg,#06070d_0%,#070911_100%)]">
+            <div className="border-b border-white/8 px-4 py-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Primary lane</p>
+              <p className="mt-1 text-sm text-white/72">Keep the live interpretation visible while you reply.</p>
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
               <ChatThread />
             </div>
-            <div className="flex-shrink-0 border-t border-border/30 bg-background/50 backdrop-blur-sm px-4 py-3">
+            <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3">
               <MessageInput compact />
             </div>
           </div>
         )}
 
-        {/* Field - Relational canvas/map view */}
         {activeDestination === 'Field' && (
-          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">Relational Field</h2>
-              <p className="text-xs text-muted-foreground font-light">Visual mapping &amp; system analysis</p>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-              {[
-                { 
-                  icon: IconRelationalMap, 
-                  title: 'Connection map', 
-                  desc: 'Their likely emotional path & where you diverged',
-                  color: 'from-primary/15 border-primary/30' 
-                },
-                { 
-                  icon: IconSystemView, 
-                  title: 'Family system view', 
-                  desc: 'Patterns from their history shaping this reaction',
-                  color: 'from-secondary/15 border-secondary/30' 
-                },
-                { 
-                  icon: IconTiming, 
-                  title: 'Timing pressure analysis', 
-                  desc: 'External stressors intensifying sensitivity',
-                  color: 'from-amber-500/10 border-amber-500/20' 
-                },
-              ].map((item, idx) => {
-                const Icon = item.icon
+          <div className="h-full overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.14),transparent_34%),linear-gradient(180deg,#06070d_0%,#070911_100%)] px-4 py-3.5">
+            <div className="space-y-3">
+              <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Field status</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">The field keeps pattern, pressure, and next step together so the moment stays readable on mobile.</p>
+              </div>
+              {fieldCards.map((card) => {
+                const Icon = card.icon
                 return (
-                <div key={idx} className={`border rounded-lg p-4 bg-gradient-to-br ${item.color} to-transparent hover:scale-105 transition-transform cursor-pointer`}>
-                  <div className="flex items-start gap-3">
-                    <Icon className="w-6 h-6 text-foreground/70 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
-                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              )
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Branches - Alternative framings and simulations */}
-        {activeDestination === 'Branches' && (
-          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">Simulation Branch</h2>
-              <p className="text-xs text-muted-foreground font-light">Alternate paths &amp; rewritten responses</p>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-              {[
-                { icon: IconRewrite, title: 'Rewritten: Softer lead', desc: '"I want to check something with you"' },
-                { icon: IconSimulations, title: 'Simulation: If you validate first', desc: 'They relax → become receptive' },
-                { icon: IconPerspective, title: 'Their perspective', desc: 'They see confrontation, not partnership' },
-              ].map((item, idx) => {
-                const Icon = item.icon
-                return (
-                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 transition-all cursor-pointer">
-                  <div className="flex items-start gap-3">
-                    <Icon className="w-5 h-5 text-secondary/80 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
-                      <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              )
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Family - System relationships and context */}
-        {activeDestination === 'Family' && (
-          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Header */}
-            <div className="flex-shrink-0 px-6 py-5 border-b border-border/30 bg-background/60 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold text-foreground mb-1">System View</h2>
-              <p className="text-xs text-muted-foreground font-light">Family patterns &amp; relational history</p>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-              {[
-                { 
-                  icon: IconSystemView, 
-                  title: 'Repeating patterns', 
-                  desc: 'How their family taught them to defend',
-                  status: '3 identified' 
-                },
-                { 
-                  icon: IconPerspective, 
-                  title: 'Historical triggers', 
-                  desc: 'Past events that mirror this moment',
-                  status: '2 mapped' 
-                },
-                { 
-                  icon: IconTiming, 
-                  title: 'Their relational role', 
-                  desc: 'How they see themselves in families',
-                  status: 'Primary' 
-                },
-              ].map((item, idx) => {
-                const Icon = item.icon
-                return (
-                <div key={idx} className="border border-secondary/30 rounded-lg p-4 bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/15 hover:to-secondary/8 transition-all">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 flex-1">
-                      <Icon className="w-6 h-6 text-secondary/80 flex-shrink-0 mt-0.5" />
+                  <div key={card.title} className={`rounded-[1.5rem] border bg-gradient-to-br ${card.tone} p-4`}>
+                    <div className="flex items-start gap-3">
+                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/78">
+                        <Icon className="h-5 w-5" />
+                      </div>
                       <div>
-                        <p className="text-xs font-semibold text-foreground tracking-wide uppercase">{item.title}</p>
-                        <p className="text-xs text-muted-foreground font-light mt-1.5 leading-relaxed">{item.desc}</p>
+                        <p className="text-sm font-semibold text-white/88">{card.title}</p>
+                        <p className="mt-2 text-sm leading-6 text-white/66">{card.description}</p>
                       </div>
                     </div>
-                    <span className="text-xs px-2 py-1 rounded bg-secondary/20 text-secondary/90 font-medium whitespace-nowrap">{item.status}</span>
                   </div>
-                </div>
-              )
+                )
               })}
             </div>
           </div>
         )}
 
-        {/* Brief - Daily summary and insights */}
-        {activeDestination === 'Brief' && (
-          <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/3 relative">
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-gradient-to-br from-primary/8 via-secondary/4 to-transparent blur-3xl"></div>
-            </div>
-            
-            <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 relative z-10">
-              <div className="relative w-40 h-40 mb-10">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="absolute w-40 h-40 rounded-full border border-border/15 animate-pulse"></div>
-                  <div className="absolute w-32 h-32 rounded-full border border-border/25 shadow-xl" style={{boxShadow: '0 0 30px rgba(var(--primary-rgb), 0.15)'}}></div>
-                  <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 border border-primary/40 flex items-center justify-center">
-                    <IconTiming className="w-12 h-12 text-foreground/50" />
+        {activeDestination === 'Branches' && (
+          <div className="h-full overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(94,234,212,0.08),transparent_26%),linear-gradient(180deg,#06070d_0%,#070911_100%)] px-4 py-3.5">
+            <div className="space-y-3">
+              <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Branch lane</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">Compare alternative openings without turning the workspace into a generic control panel.</p>
+              </div>
+              {branchCards.map((card) => {
+                const Icon = card.icon
+                return (
+                  <div key={card.title} className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/78">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white/88">{card.title}</p>
+                        <p className="mt-2 text-sm leading-6 text-white/66">{card.description}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {activeDestination === 'Family' && (
+          <div className="h-full overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(94,234,212,0.08),transparent_26%),linear-gradient(180deg,#06070d_0%,#070911_100%)] px-4 py-3.5">
+            <div className="space-y-3">
+              <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">System view</p>
+                <p className="mt-2 text-sm leading-6 text-white/74">Keep the family and pattern context readable while you hold the present conversation.</p>
+              </div>
+              {familyCards.map((card) => {
+                const Icon = card.icon
+                return (
+                  <div key={card.title} className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/78">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-white/88">{card.title}</p>
+                          <p className="mt-2 text-sm leading-6 text-white/66">{card.description}</p>
+                        </div>
+                      </div>
+                      <span className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/52">
+                        {card.status}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {activeDestination === 'Brief' && (
+          <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top,rgba(135,89,255,0.12),transparent_34%),linear-gradient(180deg,#06070d_0%,#070911_100%)] px-4 py-4">
+            <div>
+              <div className="rounded-[1.7rem] border border-white/8 bg-white/[0.04] p-5 text-center">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Daily brief</p>
+                <h2 className="mt-3 text-2xl font-semibold text-white/90">What matters most right now</h2>
+                <p className="mt-3 text-sm leading-6 text-white/66">
+                  A quick read on the live field, the pressure in play, and the next repair move worth trying.
+                </p>
               </div>
 
-              <div className="space-y-5 w-full max-w-md">
-                <div className="space-y-2 text-center">
-                  <h2 className="text-xl font-semibold text-foreground">Daily Brief</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed font-light">
-                    Key insights, patterns, and suggested next steps for your relationships
-                  </p>
-                </div>
-
-                <div className="space-y-2.5">
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">→ This Week&apos;s Patterns</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Recurring themes emerging across interactions</p>
+              <div className="mt-4 space-y-3">
+                {briefItems.map((item) => (
+                  <div key={item} className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] px-4 py-4 text-sm leading-6 text-white/72">
+                    {item}
                   </div>
-                  <div className="rounded-lg border border-border/40 bg-gradient-to-br from-card/60 to-card/20 backdrop-blur-sm p-3.5 group cursor-pointer hover:border-primary/40 hover:bg-gradient-to-br hover:from-card/80 hover:to-card/40 transition-all">
-                    <p className="text-xs font-semibold text-primary/90 tracking-wide">→ Next Steps</p>
-                    <p className="text-xs text-muted-foreground font-light mt-1.5">Suggested approaches for deeper understanding</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Premium Bottom Navigation - Native iOS App Feel */}
-      <div className="flex-shrink-0 border-t border-border/40 bg-background/90 backdrop-blur-lg flex safe-area-inset-bottom">
-        {mobileDestinations.map((dest, idx) => {
-          const IconComponent = dest.icon
-          return (
-          <button
-            key={dest.id}
-            onClick={() => setActiveDestination(dest.id)}
-            className={`flex-1 flex flex-col items-center justify-center py-4 px-2 text-xs font-medium transition-all ${
-              activeDestination === dest.id
-                ? 'text-primary bg-gradient-to-b from-primary/15 to-primary/5 border-t-2 border-primary'
-                : 'text-muted-foreground/70 hover:text-foreground hover:bg-muted/5'
-            }`}
-          >
-            <IconComponent className="w-5 h-5 mb-1.5" />
-            <span className="leading-tight text-xs tracking-tight">{dest.label}</span>
-          </button>
-          )
-        })}
+      <div className="border-t border-white/8 bg-[#0a0c13]/96 backdrop-blur-xl">
+        <div className="flex safe-area-inset-bottom">
+          {mobileDestinations.map((destination) => {
+            const Icon = destination.icon
+            const isActive = activeDestination === destination.id
+
+            return (
+              <button
+                key={destination.id}
+                onClick={() => setActiveDestination(destination.id)}
+                className={`flex flex-1 flex-col items-center justify-center gap-1 px-2 py-3 text-[11px] font-semibold transition-colors ${
+                  isActive
+                    ? 'text-white'
+                    : 'text-white/46 hover:text-white/72'
+                }`}
+              >
+                <span
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl border ${
+                    isActive
+                      ? 'border-primary/18 bg-primary/12 text-primary/90 shadow-[0_10px_25px_rgba(76,29,149,0.22)]'
+                      : 'border-white/8 bg-white/[0.04]'
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span>{destination.label}</span>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
