@@ -47,9 +47,9 @@ const mockMessages: Message[] = [
       },
     ],
     followUp: [
-      { label: 'Why this read?', action: 'expand_sources' },
-      { label: 'Show better opening', action: 'show_simulations' },
-      { label: 'Map the split', action: 'expand_detail' },
+      { label: 'What makes you say that?', action: 'expand_sources' },
+      { label: 'Show me what this is based on.', action: 'expand_sources' },
+      { label: 'Try another approach.', action: 'show_simulations' },
     ],
   },
   {
@@ -79,21 +79,24 @@ const mockMessages: Message[] = [
       },
     ],
     followUp: [
-      { label: 'Practice this branch', action: 'open_practice' },
-      { label: 'What supports this?', action: 'expand_sources' },
-      { label: 'Offer another angle', action: 'alternative_framing' },
+      { label: 'Practice the conversation.', action: 'open_practice' },
+      { label: 'Walk me through how this may land for them.', action: 'alternative_framing' },
+      { label: 'That doesn’t sound like them.', action: 'alternative_framing' },
     ],
   },
 ]
 
+function sourceKey(messageId: string, sourceName: string) {
+  return `${messageId}::${sourceName}`
+}
+
 export function ChatThread() {
-  const [expandedMessage, setExpandedMessage] = useState<string | null>('4')
+  const [expandedSourceKey, setExpandedSourceKey] = useState<string | null>(null)
 
   return (
     <div className="space-y-5 p-4">
       {mockMessages.map((message) => {
         const isDefrag = message.author === 'Defrag'
-        const isExpanded = expandedMessage === message.id
 
         return (
           <div key={message.id} className="space-y-3">
@@ -123,22 +126,28 @@ export function ChatThread() {
 
                   {message.sources && (
                     <div className="space-y-2">
-                      {message.sources.map((source) => (
-                        <button
-                          key={source.name}
-                          onClick={() => setExpandedMessage(isExpanded ? null : message.id)}
-                          className="block w-full rounded-2xl border border-white/8 bg-[#141516] p-3 text-left transition hover:bg-white/[0.04]"
-                        >
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <p className="text-sm font-semibold text-stone-200">{source.name}</p>
-                              <p className="mt-1 text-xs leading-5 text-stone-500">{source.description}</p>
+                      {message.sources.map((source) => {
+                        const key = sourceKey(message.id, source.name)
+                        const sourceOpen = expandedSourceKey === key
+
+                        return (
+                          <button
+                            key={source.name}
+                            type="button"
+                            onClick={() => setExpandedSourceKey(sourceOpen ? null : key)}
+                            className="block w-full rounded-2xl border border-white/8 bg-[#141516] p-3 text-left transition hover:bg-white/[0.04]"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-semibold text-stone-200">{source.name}</p>
+                                <p className="mt-1 text-xs leading-5 text-stone-500">{source.description}</p>
+                              </div>
+                              <span className="text-xs text-stone-600">{sourceOpen ? 'Hide' : 'Open'}</span>
                             </div>
-                            <span className="text-xs text-stone-600">{isExpanded ? 'Hide' : 'Open'}</span>
-                          </div>
-                          {isExpanded && <p className="mt-3 text-sm leading-6 text-stone-300">{source.detail}</p>}
-                        </button>
-                      ))}
+                            {sourceOpen && <p className="mt-3 text-sm leading-6 text-stone-300">{source.detail}</p>}
+                          </button>
+                        )
+                      })}
                     </div>
                   )}
 
@@ -147,8 +156,18 @@ export function ChatThread() {
                       {message.followUp.map((action) => (
                         <button
                           key={action.label}
-                          onClick={() => setExpandedMessage(isExpanded ? null : message.id)}
-                          className="rounded-full border border-white/8 bg-[#141516] px-3 py-2 text-xs font-semibold text-stone-300 transition hover:bg-white/[0.05]"
+                          type="button"
+                          onClick={() => {
+                            if (action.action === 'expand_sources' && message.sources?.length) {
+                              const first = message.sources[0]
+                              setExpandedSourceKey(sourceKey(message.id, first.name))
+                              return
+                            }
+                            if (action.action === 'show_simulations' || action.action === 'open_practice' || action.action === 'alternative_framing') {
+                              setExpandedSourceKey(null)
+                            }
+                          }}
+                          className="rounded-full border border-white/8 bg-[#141516] px-3 py-2 text-left text-xs font-semibold text-stone-300 transition hover:bg-white/[0.05]"
                         >
                           {action.label}
                         </button>

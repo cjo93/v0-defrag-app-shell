@@ -62,10 +62,10 @@ export default function DashboardPage() {
         <header className="border-b border-white/8 bg-[#101214]/88 px-5 py-5 backdrop-blur-md md:px-8 xl:px-10">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-stone-500">Relational command center</p>
-              <h1 className="text-3xl font-semibold tracking-tight text-stone-50">Dashboard</h1>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-stone-500">Dashboard</p>
+              <h1 className="text-3xl font-semibold tracking-tight text-stone-50">Your relational command center</h1>
               <p className="max-w-2xl text-sm leading-6 text-stone-400">
-                Baseline, live pressure, and the next move worth making.
+                A calm overview—not noisy analytics. Baseline, live pressure, and what may help next.
               </p>
             </div>
 
@@ -77,6 +77,12 @@ export default function DashboardPage() {
                 Open Workspace
               </Link>
               <Link
+                href="/pricing"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
+              >
+                Pricing
+              </Link>
+              <Link
                 href="/learn"
                 className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
               >
@@ -86,9 +92,9 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-5 py-5 md:px-8 md:py-6 xl:px-10 xl:py-8">
-          <div className="space-y-6">
-            <section className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+        <main className="flex-1 overflow-y-auto px-5 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:px-8 md:py-6 xl:px-10 xl:py-8">
+          <div className="space-y-8">
+            <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
               {!hasCompletedBaseline ? (
                 <div className="relative overflow-hidden rounded-[30px] border border-amber-300/12 bg-[linear-gradient(145deg,rgba(32,27,19,0.96),rgba(19,20,22,0.94))] p-6 sm:p-8">
                   <div className="absolute left-[-30px] top-[-40px] h-36 w-36 rounded-full bg-amber-300/10 blur-3xl" />
@@ -97,12 +103,12 @@ export default function DashboardPage() {
                   <div className="relative space-y-6">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-100/70">Locked baseline state</p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-100/70">Baseline incomplete</p>
                         <h2 className="max-w-2xl text-3xl font-semibold tracking-tight text-stone-50">
-                          Complete your baseline so Defrag can separate your pattern from this moment’s pressure.
+                          Complete your baseline
                         </h2>
                         <p className="max-w-xl text-sm leading-6 text-stone-300">
-                          Without it, the dashboard stays in setup mode and the workspace has less signal to work with.
+                          Add your baseline details to unlock more accurate guidance, timing context, and relational overlays.
                         </p>
                       </div>
 
@@ -121,8 +127,8 @@ export default function DashboardPage() {
                         <p className="mt-2 text-sm leading-6 text-stone-200">Raw birth data stays hidden. Defrag works from synthesized patterning.</p>
                       </div>
                       <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-                        <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Current state</p>
-                        <p className="mt-2 text-sm leading-6 text-stone-200">You are seeing the dashboard shell, not the fully active command surface.</p>
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Mode</p>
+                        <p className="mt-2 text-sm leading-6 text-stone-200">Setup—finish baseline to unlock the full command surface.</p>
                       </div>
                     </div>
 
@@ -130,7 +136,7 @@ export default function DashboardPage() {
                       href="/onboarding"
                       className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-6 text-sm font-semibold text-slate-950 transition hover:bg-white"
                     >
-                      Complete Baseline Setup
+                      Complete baseline
                     </Link>
                   </div>
                 </div>

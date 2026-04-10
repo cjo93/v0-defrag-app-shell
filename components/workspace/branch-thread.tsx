@@ -71,8 +71,8 @@ export function BranchThread() {
   return (
     <div className="space-y-4 p-4">
       <div className="sticky top-0 z-10 rounded-[22px] border border-white/8 bg-[#141516]/95 p-4 backdrop-blur-sm">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Branch state</p>
-        <h3 className="mt-1 text-base font-medium text-stone-100">Compare the original moment against safer alternate paths.</h3>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Simulation</p>
+        <h3 className="mt-1 text-base font-medium text-stone-100">Try another approach without losing the thread you started from.</h3>
       </div>
 
       {scenarios.map((scenario, index) => {
@@ -98,7 +98,7 @@ export function BranchThread() {
             <div className="space-y-4 p-4">
               <p className="text-sm leading-7 text-stone-100">{scenario.content}</p>
               <div className="rounded-2xl border border-white/8 bg-[#141516] p-4">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Likely effect</p>
+                <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">What may change</p>
                 <p className="mt-2 text-sm leading-6 text-stone-200">{scenario.outcome}</p>
               </div>
               {scenario.sources && <BasedOnDisclosure sources={scenario.sources} />}

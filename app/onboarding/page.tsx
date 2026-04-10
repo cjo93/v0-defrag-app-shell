@@ -26,10 +26,10 @@ export default function OnboardingPage() {
           <div className="space-y-8 text-center animate-in fade-in-50 duration-500">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight text-balance">
-                Welcome to DEFRAG
+                Welcome to Defrag
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground/80 font-light text-balance max-w-xl mx-auto">
-                A relational intelligence platform that helps you see interactions from more than one side
+                Relational intelligence for the moments where meaning splits—seen from more than one side.
               </p>
             </div>
 

@@ -40,7 +40,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
           <Input
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder={compact ? 'Describe the moment or ask for another angle...' : 'Describe the moment, the pressure, or what you wanted them to hear...'}
+            placeholder={compact ? 'Describe what happened, what was said, or what feels off.' : 'Describe what happened, what was said, or what feels off.'}
             aria-label="Message input"
             className={inputClass + ' border-white/8 bg-transparent text-stone-100 placeholder:text-stone-500'}
             onKeyDown={(event) => {
@@ -76,9 +76,9 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
         </div>
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 px-1">
-          <p className="text-[11px] leading-5 text-stone-500">Defrag keeps intent, impact, and pressure visible in the same workspace.</p>
+          <p className="text-[11px] leading-5 text-stone-500">Intent, impact, and pressure stay visible in one workspace.</p>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-400">
-            Based on 4 signals
+            Grounded in context
           </span>
         </div>
       </div>

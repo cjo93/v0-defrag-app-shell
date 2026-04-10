@@ -34,7 +34,7 @@ export function Footer() {
               </h3>
             </div>
             <p className="max-w-md text-sm leading-7 text-slate-700">
-              Defrag reveals relational context, pressure, and repair paths so meaning does not keep breaking in the same place.
+              Defrag is built for the moments where intent, timing, and reception split apart.
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
@@ -47,9 +47,10 @@ export function Footer() {
             <div className="space-y-2 text-sm text-slate-700">
               <Link href="/workspace" className="block transition hover:text-slate-950">Workspace</Link>
               <Link href="/dashboard" className="block transition hover:text-slate-950">Dashboard</Link>
-              <Link href="/learn" className="block transition hover:text-slate-950">Educational layer</Link>
-              <Link href="/invite" className="block transition hover:text-slate-950">Invite overlay</Link>
-              <Link href="/onboarding" className="block transition hover:text-slate-950">Build baseline</Link>
+              <Link href="/pricing" className="block transition hover:text-slate-950">Pricing</Link>
+              <Link href="/learn" className="block transition hover:text-slate-950">Learn</Link>
+              <Link href="/invite" className="block transition hover:text-slate-950">Invite</Link>
+              <Link href="/onboarding" className="block transition hover:text-slate-950">Baseline</Link>
             </div>
           </div>
 

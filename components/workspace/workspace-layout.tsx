@@ -27,9 +27,9 @@ export function WorkspaceLayout() {
             <div className="border-b border-white/8 bg-white/[0.03] px-5 py-4">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Primary thread</p>
-                  <h2 className="mt-1 text-sm font-medium text-stone-100">Interpretation</h2>
-                  <p className="mt-1 text-xs leading-5 text-stone-400">What may be happening and where the split began.</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Interpretation</p>
+                  <h2 className="mt-1 text-sm font-medium text-stone-100">What may be happening</h2>
+                  <p className="mt-1 text-xs leading-5 text-stone-400">Primary read on the moment and where the split may have started.</p>
                 </div>
                 <button
                   onClick={() => setIsBranchOpen(!isBranchOpen)}
@@ -54,9 +54,9 @@ export function WorkspaceLayout() {
           {isBranchOpen && (
             <div className="flex w-[380px] min-w-0 flex-col bg-[#151718]">
               <div className="border-b border-white/8 bg-white/[0.03] px-5 py-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Branch lane</p>
-                <h2 className="mt-1 text-sm font-medium text-stone-100">Simulation branch</h2>
-                <p className="mt-1 text-xs leading-5 text-stone-400">Compare alternate framings without dropping the source thread.</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Simulation</p>
+                <h2 className="mt-1 text-sm font-medium text-stone-100">Branch</h2>
+                <p className="mt-1 text-xs leading-5 text-stone-400">Alternate framings without losing the source thread.</p>
               </div>
 
               <div className="flex min-h-0 flex-1 flex-col">

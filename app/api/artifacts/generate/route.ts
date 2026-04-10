@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export async function POST(req: Request) {
   const supabase = await createSupabaseServerClient();
+  const admin = getSupabaseAdmin();
+
+  if (!supabase || !admin) {
+    return NextResponse.json(
+      { error: "Database is not configured. Set Supabase environment variables." },
+      { status: 503 }
+    );
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -14,7 +23,7 @@ export async function POST(req: Request) {
 
   const { workspaceId, threadId, kind, title } = await req.json();
 
-  const { data: workspace, error: workspaceError } = await supabaseAdmin
+  const { data: workspace, error: workspaceError } = await admin
     .from("workspaces")
     .select("id, user_id")
     .eq("id", workspaceId)
@@ -24,7 +33,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   }
 
-  const { data: artifact, error } = await supabaseAdmin
+  const { data: artifact, error } = await admin
     .from("artifacts")
     .insert({
       workspace_id: workspaceId,

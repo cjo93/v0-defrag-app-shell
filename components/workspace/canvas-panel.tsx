@@ -65,7 +65,7 @@ export function CanvasPanel({ mobile = false }: { mobile?: boolean }) {
               </Link>
             )}
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Relational field</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">Field</p>
               <h2 className="mt-1 text-lg font-medium text-stone-100">Live canvas</h2>
               <p className="mt-1 text-xs leading-5 text-stone-400">Artifacts stay visible while the moment evolves.</p>
             </div>
@@ -100,10 +100,11 @@ export function CanvasPanel({ mobile = false }: { mobile?: boolean }) {
                 </div>
               </div>
 
-              <div className="relative mt-6 h-[360px] overflow-hidden rounded-[28px] border border-white/8 bg-[#141516]/85">
-                <div className="absolute left-[16%] top-[16%] h-24 w-24 rounded-full border border-amber-200/25 bg-amber-200/10" />
-                <div className="absolute right-[15%] top-[18%] h-20 w-20 rounded-full border border-sky-200/25 bg-sky-200/10" />
-                <div className="absolute bottom-[18%] left-[34%] h-32 w-32 rounded-full border border-white/10 bg-white/[0.04]" />
+              <div className="relative mt-6 h-[360px] max-h-[52vh] overflow-hidden rounded-[28px] border border-white/10 bg-[#141516]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(223,191,123,0.08),transparent_55%)] motion-safe:animate-pulse" />
+                <div className="absolute left-[16%] top-[16%] h-24 w-24 rounded-full border border-amber-200/30 bg-amber-200/10 shadow-[0_0_40px_rgba(251,191,36,0.12)]" />
+                <div className="absolute right-[15%] top-[18%] h-20 w-20 rounded-full border border-sky-200/30 bg-sky-200/10 shadow-[0_0_36px_rgba(56,189,248,0.1)]" />
+                <div className="absolute bottom-[18%] left-[34%] h-32 w-32 rounded-full border border-white/12 bg-white/[0.05]" />
                 <div className="absolute left-[24%] top-[28%] h-px w-[28%] rotate-[8deg] bg-gradient-to-r from-amber-100/70 to-transparent" />
                 <div className="absolute left-[43%] top-[44%] h-px w-[24%] -rotate-[30deg] bg-gradient-to-r from-white/50 to-transparent" />
                 <div className="absolute left-[34%] top-[59%] h-px w-[18%] rotate-[30deg] bg-gradient-to-r from-sky-100/55 to-transparent" />
@@ -144,11 +145,12 @@ export function CanvasPanel({ mobile = false }: { mobile?: boolean }) {
                 return (
                   <button
                     key={artifact.id}
+                    type="button"
                     onClick={() => setSelectedArtifact(artifact.id)}
-                    className={`rounded-[24px] border p-4 text-left transition ${
+                    className={`rounded-[24px] border p-4 text-left transition-all duration-300 ${
                       isSelected
-                        ? 'border-white/20 bg-white/[0.08]'
-                        : 'border-white/8 bg-white/[0.03] hover:bg-white/[0.06]'
+                        ? 'border-amber-200/35 bg-white/[0.1] shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-amber-200/25'
+                        : 'border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:shadow-md hover:shadow-black/20'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3">

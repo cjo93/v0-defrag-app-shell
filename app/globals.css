@@ -142,3 +142,25 @@
     @apply leading-relaxed;
   }
 }
+
+/* Landing / workspace preview — subtle depth (respect reduced motion) */
+@keyframes defrag-field-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@layer utilities {
+  .defrag-ambient-breathe {
+    animation: defrag-field-breathe 7s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .defrag-ambient-breathe {
+      animation: none;
+    }
+  }
+}

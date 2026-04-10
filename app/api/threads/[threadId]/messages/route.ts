@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { runDefragAgent } from "@/lib/defrag/agent";
 
@@ -8,6 +8,26 @@ type Params = { params: Promise<{ threadId: string }> };
 export async function POST(req: Request, { params }: Params) {
   const { threadId } = await params;
   const supabase = await createSupabaseServerClient();
+  const admin = getSupabaseAdmin();
+
+  if (!supabase || !admin) {
+    return NextResponse.json(
+      { error: "Database is not configured. Set Supabase environment variables." },
+      { status: 503 }
+    );
+  }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey || apiKey === "your_openai_api_key_here") {
+    return NextResponse.json(
+      {
+        error:
+          "OpenAI is not configured. Add OPENAI_API_KEY to enable message responses.",
+      },
+      { status: 503 }
+    );
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -18,7 +38,7 @@ export async function POST(req: Request, { params }: Params) {
 
   const { content } = await req.json();
 
-  const { data: thread, error: threadError } = await supabaseAdmin
+  const { data: thread, error: threadError } = await admin
     .from("threads")
     .select("id, kind, workspace:workspaces(id, title, user_id)")
     .eq("id", threadId)
@@ -28,7 +48,7 @@ export async function POST(req: Request, { params }: Params) {
     return NextResponse.json({ error: "Thread not found" }, { status: 404 });
   }
 
-  const { data: userMessage, error: userMsgError } = await supabaseAdmin
+  const { data: userMessage, error: userMsgError } = await admin
     .from("messages")
     .insert({
       thread_id: threadId,
@@ -49,7 +69,7 @@ export async function POST(req: Request, { params }: Params) {
   });
 
   const { data: assistantMessage, error: assistantMsgError } =
-    await supabaseAdmin
+    await admin
       .from("messages")
       .insert({
         thread_id: threadId,
@@ -68,7 +88,7 @@ export async function POST(req: Request, { params }: Params) {
   }
 
   if (structured.rationale.length > 0) {
-    await supabaseAdmin.from("rationale_blocks").insert(
+    await admin.from("rationale_blocks").insert(
       structured.rationale.map((r) => ({
         message_id: assistantMessage.id,
         label: r.label,
