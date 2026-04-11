@@ -23,63 +23,64 @@ export function Footer() {
   }
 
   return (
-    <footer className="mt-20 border-t border-white/8 bg-[#070911] text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
-          <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">About</h4>
-            <p className="text-sm leading-7 text-white/62">
-              Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
+    <footer className="border-t border-white/5 bg-[#0d0e10] text-stone-300">
+      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr_0.9fr]">
+          <div className="space-y-5">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Defrag</p>
+              <h3 className="mt-3 max-w-sm text-3xl font-semibold tracking-tight text-stone-50">
+                See the moment from more than one side before it hardens.
+              </h3>
+            </div>
+            <p className="max-w-md text-sm leading-7 text-stone-400">
+              Defrag is built for the moments where intent, timing, and reception split apart.
             </p>
           </div>
 
-          <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">How It Works</h4>
-            <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-sm text-white/58 transition hover:text-white/86">Learn more</Link></li>
-              <li><Link href="/pricing" className="text-sm text-white/58 transition hover:text-white/86">See pricing</Link></li>
-              <li><Link href="/workspace" className="text-sm text-white/58 transition hover:text-white/86">Try workspace</Link></li>
-              <li><Link href="/learn" className="text-sm text-white/58 transition hover:text-white/86">Educational layer</Link></li>
-            </ul>
+          <div className="space-y-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Navigate</p>
+            <div className="space-y-2 text-sm text-stone-400">
+              <Link href="/workspace" className="block transition hover:text-stone-50">Workspace</Link>
+              <Link href="/dashboard" className="block transition hover:text-stone-50">Dashboard</Link>
+              <Link href="/pricing" className="block transition hover:text-stone-50">Pricing</Link>
+              <Link href="/learn" className="block transition hover:text-stone-50">Learn</Link>
+              <Link href="/about" className="block transition hover:text-stone-50">About</Link>
+              <Link href="/onboarding" className="block transition hover:text-stone-50">Baseline</Link>
+            </div>
           </div>
 
-          <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/42">Contact</h4>
-            <div className="space-y-3">
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
-              />
-              <Textarea
-                placeholder="How can Defrag help?"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="h-24 resize-none border-white/10 bg-white/[0.05] text-sm text-white placeholder:text-white/28"
-              />
-              <Button
-                onClick={handleSubmit}
-                size="sm"
-                disabled={submitted}
-                className="w-full rounded-full bg-white text-xs font-semibold text-black hover:bg-white/92"
-              >
-                {submitted ? 'Sent' : 'Send'}
-              </Button>
-              <p className="text-xs font-light text-white/34">Sends to chadowen93@gmail.com</p>
+          <div className="space-y-4 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Private feedback</p>
+              <p className="mt-2 text-sm leading-6 text-stone-400">Use this channel for product questions, invite concerns, or privacy requests.</p>
             </div>
+            <Input
+              type="email"
+              placeholder="Your email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
+            />
+            <Textarea
+              placeholder="Message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              className="h-24 resize-none border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
+            />
+            <Button onClick={handleSubmit} disabled={submitted} className="h-11 rounded-full bg-stone-100 text-sm font-semibold text-stone-950 hover:bg-white">
+              {submitted ? 'Sent' : 'Send'}
+            </Button>
           </div>
         </div>
 
-        <div className="border-t border-white/8 pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-xs text-white/34">&copy; 2026 Defrag. All rights reserved.</p>
-            <div className="text-xs text-white/34">
-              <Link href="/login" className="transition hover:text-white/80">Login</Link>
-              <span className="mx-2">•</span>
-              <Link href="/signup" className="transition hover:text-white/80">Signup</Link>
-            </div>
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-stone-500 md:flex-row md:items-center md:justify-between">
+          <p>© 2026 Defrag. All rights reserved.</p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/login" className="transition hover:text-stone-50">Login</Link>
+            <Link href="/signup" className="transition hover:text-stone-50">Signup</Link>
+            <Link href="/privacy" className="transition hover:text-stone-50">Privacy</Link>
+            <Link href="/terms" className="transition hover:text-stone-50">Terms</Link>
           </div>
         </div>
       </div>

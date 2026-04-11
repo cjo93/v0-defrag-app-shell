@@ -139,7 +139,7 @@ export function MessageInput({
         <div className="flex flex-col gap-2 min-[420px]:flex-row min-[420px]:items-end">{composer}</div>
 
         <div className="flex flex-col gap-1 px-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
-          <p className="text-xs leading-5 text-white/34">{helperText ?? 'Image, document, and voice shells stay available here without changing backend behavior.'}</p>
+          <p className="text-xs leading-5 text-white/34">{helperText ?? 'Image, document, and voice input stay available when the moment needs more context.'}</p>
           <span className="text-[11px] font-medium text-white/28">iPhone-ready</span>
         </div>
       </div>
@@ -163,7 +163,7 @@ export function MessageInput({
 
       <div className="flex flex-col gap-2 px-1 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-white/34">{helperText ?? 'Add screenshots, documents, or voice when the moment needs more context.'}</p>
-        <div className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/30">No backend changes in this pass</div>
+        <div className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/30">Context-ready</div>
       </div>
     </div>
   )

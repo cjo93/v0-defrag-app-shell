@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
+import { Footer } from '@/components/layout/footer'
 import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
@@ -40,39 +41,47 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
       
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div className="w-full max-w-md">
-          <div className="space-y-8">
-            <div className="text-center space-y-2">
-              <h1 className="text-3xl font-bold text-foreground">Welcome back</h1>
-              <p className="text-muted-foreground font-light">Sign in to your Defrag account</p>
+      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-[radial-gradient(circle_at_top_left,_rgba(199,160,92,0.08),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(72,117,125,0.08),_transparent_35%)]">
+        <div className="w-full max-w-md relative">
+          {/* Contextual Artifacts */}
+          <div className="absolute -top-24 -left-24 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl animate-pulse delay-700" />
+          
+          <div className="space-y-10 relative z-10">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400">
+                Secure Access
+              </div>
+              <h1 className="text-3xl font-semibold text-stone-50 tracking-tight">Welcome back</h1>
+              <p className="text-stone-400 font-light text-sm">Return to your relational workspace</p>
             </div>
 
-            <form onSubmit={handleSignIn} className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
+            <form onSubmit={handleSignIn} className="space-y-6 border border-white/10 rounded-[32px] p-10 bg-white/[0.02] backdrop-blur-xl shadow-2xl">
               {error && (
-                <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm p-3 rounded">
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-4 rounded-2xl flex items-center gap-3">
+                  <div className="h-1.5 w-1.5 rounded-full bg-red-400 shrink-0" />
                   {error}
                 </div>
               )}
-              <div>
-                <label className="text-sm font-semibold text-foreground block mb-2">Email</label>
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider block ml-1">Email Address</label>
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="name@company.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                  className="w-full px-5 py-3 rounded-2xl border border-white/10 bg-white/[0.03] text-stone-100 text-sm focus:outline-none focus:border-white/20 focus:bg-white/[0.05] transition-all"
                 />
               </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-sm font-semibold text-foreground">Password</label>
-                  <Link href="/forgot-password" disabled className="text-xs text-primary hover:underline font-medium">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between ml-1">
+                  <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider block">Password</label>
+                  <Link href="/forgot-password" className="text-[10px] text-stone-500 hover:text-stone-300 transition uppercase tracking-widest font-bold">
                     Forgot?
                   </Link>
                 </div>
@@ -82,50 +91,51 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                  className="w-full px-5 py-3 rounded-2xl border border-white/10 bg-white/[0.03] text-stone-100 text-sm focus:outline-none focus:border-white/20 focus:bg-white/[0.05] transition-all"
                 />
               </div>
 
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="w-4 h-4 rounded border-border/40" />
-                <span className="text-sm text-muted-foreground font-light">Keep me signed in</span>
+              <label className="flex items-center gap-3 ml-1 cursor-pointer group">
+                <input type="checkbox" className="w-4 h-4 rounded-md border-white/10 bg-white/5 checked:bg-stone-100 transition" />
+                <span className="text-xs text-stone-400 group-hover:text-stone-300 transition">Keep me signed in</span>
               </label>
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Signing in...' : 'Sign In'}
+              <Button type="submit" className="w-full h-12 rounded-full bg-stone-100 text-stone-950 font-semibold hover:bg-white shadow-lg transition-all" disabled={isSubmitting}>
+                {isSubmitting ? 'Verifying...' : 'Sign In'}
               </Button>
 
               {statusMessage && (
-                <p className="rounded-md border border-border/40 bg-card/40 px-3 py-2 text-sm text-muted-foreground">
+                <div className="rounded-2xl border border-white/5 bg-white/[0.01] px-4 py-3 text-xs text-stone-500 text-center animate-pulse">
                   {statusMessage}
-                </p>
+                </div>
               )}
 
-              <div className="relative">
+              <div className="relative pt-2">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border/30"></div>
+                  <div className="w-full border-t border-white/5"></div>
                 </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-background text-muted-foreground font-light">or</span>
+                <div className="relative flex justify-center text-[10px] uppercase tracking-[0.2em]">
+                  <span className="px-4 bg-[#0d0e10] text-stone-600">Secure Bridge</span>
                 </div>
               </div>
 
-              <Button variant="outline" className="w-full" disabled>
-                Google sign-in unavailable in this release shell
+              <Button variant="outline" className="w-full h-12 rounded-full border-white/10 bg-transparent text-stone-400 text-xs hover:bg-white/5 transition" disabled>
+                Google sign-in coming soon
               </Button>
             </form>
 
             <div className="text-center">
-              <p className="text-sm text-muted-foreground font-light">
-                Don&apos;t have an account?{' '}
-                <Link href="/signup" className="text-primary hover:underline font-semibold">
-                  Sign up
+              <p className="text-sm text-stone-500 font-light">
+                New to Defrag?{' '}
+                <Link href="/signup" className="text-stone-300 hover:text-stone-50 hover:underline font-semibold transition">
+                  Create an account
                 </Link>
               </p>
             </div>
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

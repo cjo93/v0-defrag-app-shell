@@ -12,7 +12,7 @@ type Artifact = {
     | "video_explainer";
   status: "queued" | "generating" | "ready" | "failed";
   title?: string;
-  payload: any;
+  payload: Record<string, unknown>;
 };
 
 export function CanvasRenderer({ artifact }: { artifact: Artifact | null }) {
@@ -50,19 +50,21 @@ export function CanvasRenderer({ artifact }: { artifact: Artifact | null }) {
     case "educational":
       return <EducationalView payload={artifact.payload} />;
     default:
-      return <GenericArtifactView payload={artifact.payload} title={artifact.title} />;
+      return (
+        <GenericArtifactView payload={artifact.payload} title={artifact.title} />
+      );
   }
 }
 
-function RelationalMap({ payload }: { payload: any }) {
-  const nodes = payload.nodes ?? [];
-  const edges = payload.edges ?? [];
+function RelationalMap({ payload }: { payload: Record<string, unknown> }) {
+  const nodes = (payload.nodes as { id: string; label: string; x: number; y: number }[]) ?? [];
+  const edges = (payload.edges as { from: string; to: string; label: string }[]) ?? [];
 
   return (
     <svg viewBox="0 0 600 300" className="h-full w-full">
-      {edges.map((edge: any, i: number) => {
-        const from = nodes.find((n: any) => n.id === edge.from);
-        const to = nodes.find((n: any) => n.id === edge.to);
+      {edges.map((edge, i) => {
+        const from = nodes.find((n) => n.id === edge.from);
+        const to = nodes.find((n) => n.id === edge.to);
         if (!from || !to) return null;
 
         return (
@@ -86,7 +88,7 @@ function RelationalMap({ payload }: { payload: any }) {
           </g>
         );
       })}
-      {nodes.map((node: any) => (
+      {nodes.map((node) => (
         <g key={node.id}>
           <circle cx={node.x} cy={node.y} r="28" fill="currentColor" opacity="0.08" />
           <circle cx={node.x} cy={node.y} r="18" fill="currentColor" opacity="0.2" />
@@ -99,11 +101,12 @@ function RelationalMap({ payload }: { payload: any }) {
   );
 }
 
-function FamilySystemView({ payload }: { payload: any }) {
+function FamilySystemView({ payload }: { payload: Record<string, unknown> }) {
+  const members = (payload.members as { id: string; label: string }[]) ?? [];
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium">{payload.title ?? "Family system"}</h3>
-      {(payload.members ?? []).map((m: any) => (
+      <h3 className="text-sm font-medium">{String(payload.title ?? "Family system")}</h3>
+      {members.map((m) => (
         <div key={m.id} className="rounded-xl border p-3 text-sm">
           {m.label}
         </div>
@@ -112,11 +115,12 @@ function FamilySystemView({ payload }: { payload: any }) {
   );
 }
 
-function TimingView({ payload }: { payload: any }) {
+function TimingView({ payload }: { payload: Record<string, unknown> }) {
+  const items = (payload.items as { label: string; level: string }[]) ?? [];
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium">{payload.title ?? "Timing view"}</h3>
-      {(payload.items ?? []).map((item: any, i: number) => (
+      <h3 className="text-sm font-medium">{String(payload.title ?? "Timing view")}</h3>
+      {items.map((item, i) => (
         <div key={i} className="rounded-xl border p-3 text-sm">
           <div className="font-medium">{item.label}</div>
           <div className="text-muted-foreground">{item.level}</div>
@@ -126,11 +130,11 @@ function TimingView({ payload }: { payload: any }) {
   );
 }
 
-function EducationalView({ payload }: { payload: any }) {
+function EducationalView({ payload }: { payload: Record<string, unknown> }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium">{payload.title}</h3>
-      <p className="text-sm text-muted-foreground">{payload.summary}</p>
+      <h3 className="text-sm font-medium">{String(payload.title)}</h3>
+      <p className="text-sm text-muted-foreground">{String(payload.summary)}</p>
     </div>
   );
 }
@@ -139,7 +143,7 @@ function GenericArtifactView({
   payload,
   title,
 }: {
-  payload: any;
+  payload: Record<string, unknown>;
   title?: string;
 }) {
   return (
@@ -151,5 +155,3 @@ function GenericArtifactView({
     </div>
   );
 }
-
-

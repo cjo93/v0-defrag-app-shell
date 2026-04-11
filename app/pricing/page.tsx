@@ -4,43 +4,45 @@ import { PricingCard } from '@/components/pricing/pricing-card'
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
 
-      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="text-center mb-12 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-pretty">
-            Simple, transparent pricing
+      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-20 md:py-32 bg-[radial-gradient(circle_at_top_right,_rgba(199,160,92,0.1),_transparent_40%)]">
+        <div className="text-center mb-20 space-y-6">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
+            Access Relational Intelligence
+          </div>
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.04em] text-stone-50 text-pretty">
+            Choose your level of clarity
           </h1>
-          <p className="text-lg text-muted-foreground text-balance">
-            Choose the plan that fits your needs
+          <p className="text-lg text-stone-400 text-balance max-w-2xl mx-auto">
+            Defrag helps you see the other side before the moment hardens. Select the plan that fits your interaction volume.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <PricingCard
-            name="Core"
+            name="Personal"
             price="$29"
-            description="Perfect for individuals"
+            description="For individuals navigating high-stakes interactions"
             features={[
-              'Up to 50 interactions per month',
-              'Single workspace',
-              'Email support',
-              'Basic insights',
+              '50 workspace interactions / mo',
+              'Intent & Impact mapping',
+              'Next move simulations',
+              'Private history',
             ]}
           />
 
           <PricingCard
-            name="System"
+            name="Professional"
             price="$79"
-            description="For growing teams"
+            description="For leaders and teams building relational intelligence"
             features={[
               'Unlimited interactions',
-              'Up to 5 team members',
-              'Shared workspaces',
-              'Priority support',
-              'Advanced insights',
-              'Integration APIs',
+              'Shared workspace threads',
+              'Team baseline mapping',
+              'Priority response logic',
+              'Pattern analysis',
             ]}
             highlighted
           />
@@ -48,25 +50,23 @@ export default function PricingPage() {
           <PricingCard
             name="Studio"
             price="Custom"
-            description="For enterprises"
+            description="Custom deployments for organizations"
             features={[
-              'Unlimited everything',
-              'Unlimited team members',
-              'Custom integrations',
-              'Dedicated support',
-              'SLA guarantee',
-              'On-premise option',
+              'Enterprise-grade privacy',
+              'Custom integration layer',
+              'Dedicated relational support',
+              'On-premise options available',
             ]}
           />
         </div>
 
-        <div className="mt-16 p-8 rounded-lg bg-card border border-border text-center space-y-4 max-w-2xl mx-auto">
-          <h3 className="font-semibold text-foreground text-lg">Questions about pricing?</h3>
-          <p className="text-muted-foreground">
-            Contact our sales team for a custom plan tailored to your organization&apos;s needs.
+        <div className="mt-24 p-10 rounded-[32px] border border-white/10 bg-white/[0.02] text-center space-y-6 max-w-3xl mx-auto backdrop-blur-sm">
+          <h3 className="font-semibold text-stone-50 text-2xl tracking-tight">Need a custom configuration?</h3>
+          <p className="text-stone-400 text-lg">
+            For specialized team needs or organizational scale, we offer tailored relational intelligence packages.
           </p>
-          <a href="#" className="text-primary font-medium hover:underline">
-            Talk to sales
+          <a href="mailto:hello@defrag.com" className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-stone-950 transition hover:bg-white">
+            Talk to us
           </a>
         </div>
       </section>

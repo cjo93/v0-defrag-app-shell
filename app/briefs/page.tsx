@@ -44,7 +44,7 @@ export default function BriefsPage() {
 
           <div className="space-y-4">
             <div className="rounded-[1.8rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Audio brief shell</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Audio brief</p>
               <div className="mt-5 rounded-2xl border border-white/8 bg-black/18 p-4">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold text-white/86">Listen on the go</p>
