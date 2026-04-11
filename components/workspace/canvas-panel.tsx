@@ -110,7 +110,7 @@ export function CanvasPanel({ embedded = false }: { embedded?: boolean }) {
             : 'bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.16),transparent_32%),radial-gradient(circle_at_78%_22%,rgba(94,234,212,0.08),transparent_25%),linear-gradient(180deg,#070911_0%,#090b12_44%,#070911_100%)]'
         }`}
       >
-        <div className={`mx-auto flex flex-col gap-4 ${embedded ? 'max-w-none' : 'max-w-4xl'}`}>
+        <div className={`mx-auto flex flex-col gap-4 overflow-x-hidden ${embedded ? 'max-w-none' : 'max-w-4xl'}`}>
           <section className="rounded-[1.6rem] border border-white/8 bg-black/18 p-5 shadow-[0_24px_80px_rgba(1,4,12,0.28)] sm:p-6">
             <div className="flex items-start gap-3">
               <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border ${interpretation.tone}`}>
@@ -162,7 +162,7 @@ export function CanvasPanel({ embedded = false }: { embedded?: boolean }) {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Rewrite</p>
                   <h3 className="mt-1 text-lg font-semibold text-white/90">A calmer opening to try</h3>
                 </div>
-                <span className="rounded-full border border-primary/18 bg-primary/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85">
+                <span className="inline-flex shrink-0 rounded-full border border-primary/18 bg-primary/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/85">
                   Recommended
                 </span>
               </div>
@@ -189,7 +189,7 @@ export function CanvasPanel({ embedded = false }: { embedded?: boolean }) {
               </div>
               <button
                 onClick={() => setShowSupport((value) => !value)}
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 text-sm font-medium text-white/76 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 text-sm font-medium text-white/76 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white sm:w-auto"
               >
                 {showSupport ? 'Hide support surfaces' : 'Show support surfaces'}
               </button>

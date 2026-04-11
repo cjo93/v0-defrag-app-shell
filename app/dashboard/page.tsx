@@ -79,17 +79,19 @@ export default function DashboardPage() {
   const hasCompletedBaseline = false
 
   return (
-    <div className="flex h-screen bg-[#05060a] text-foreground">
-      <Sidebar />
+    <div className="flex min-h-screen bg-[#05060a] text-foreground md:h-screen">
+      <div className="hidden md:flex">
+        <Sidebar />
+      </div>
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <div className="border-b border-white/8 bg-[#0a0c13]/96 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Relational command center</p>
               <h1 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-white/90">Dashboard</h1>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex w-full flex-col gap-2 min-[420px]:flex-row sm:w-auto">
               <Button variant="outline" size="sm" asChild>
                 <Link href="/">Home</Link>
               </Button>
@@ -97,6 +99,21 @@ export default function DashboardPage() {
                 <Link href="/settings">Settings</Link>
               </Button>
             </div>
+          </div>
+
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1 md:hidden">
+            <Link
+              href="/workspace"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 text-sm font-medium text-white/78 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+            >
+              Workspace
+            </Link>
+            <Link
+              href="/learn"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 text-sm font-medium text-white/78 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+            >
+              Learn
+            </Link>
           </div>
         </div>
 
@@ -117,12 +134,12 @@ export default function DashboardPage() {
               </div>
 
               <div className="rounded-[1.8rem] border border-primary/16 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/38">Recommended move</p>
                     <h2 className="mt-2 text-lg font-semibold text-white/90">Take this into the workspace</h2>
                   </div>
-                  <span className="rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
+                  <span className="inline-flex w-fit rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
                     Live
                   </span>
                 </div>
@@ -131,7 +148,7 @@ export default function DashboardPage() {
                 </p>
                 <Link
                   href="/workspace"
-                  className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92"
+                  className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92 sm:w-auto"
                 >
                   Open Workspace
                 </Link>
@@ -142,26 +159,26 @@ export default function DashboardPage() {
               <div className="space-y-5">
                 {!hasCompletedBaseline ? (
                   <div className="rounded-[1.8rem] border border-amber-400/18 bg-gradient-to-br from-amber-400/10 via-amber-400/5 to-transparent p-5 sm:p-6">
-                    <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
                       <div>
                         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-100/70">Baseline locked</p>
                         <h2 className="mt-2 text-xl font-semibold text-white/90">Complete your baseline to unlock a steadier read</h2>
                       </div>
-                      <span className="rounded-full border border-amber-400/18 bg-amber-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-100/80">
+                      <span className="inline-flex w-fit rounded-full border border-amber-400/18 bg-amber-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-100/80">
                         Incomplete
                       </span>
                     </div>
                     <p className="mt-4 max-w-2xl text-sm leading-6 text-white/66">
                       Your baseline becomes the reference point for how you tend to show up under pressure, how you read conflict, and what helps you reconnect more cleanly.
                     </p>
-                    <div className="mt-5 flex flex-wrap gap-3">
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                       <Link
                         href="/onboarding"
-                        className="inline-flex h-12 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92"
+                        className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92"
                       >
                         Complete Baseline
                       </Link>
-                      <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm text-white/62">
+                      <div className="inline-flex min-h-12 items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm text-white/62">
                         Locked until onboarding is complete
                       </div>
                     </div>

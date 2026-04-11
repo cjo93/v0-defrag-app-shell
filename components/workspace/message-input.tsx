@@ -104,15 +104,15 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
   if (compact) {
     return (
       <div className="space-y-3 rounded-[1.4rem] border border-white/8 bg-white/[0.04] p-3 sm:p-3.5">
-        <div className="flex items-center justify-between gap-3 px-1">
+        <div className="flex flex-col gap-1 px-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/36">Bring the moment in</p>
           <span className="text-[11px] text-white/28">Plain language works best</span>
         </div>
 
-        <div className="flex items-end gap-2">{composer}</div>
+        <div className="flex flex-col gap-2 min-[420px]:flex-row min-[420px]:items-end">{composer}</div>
 
-        <div className="flex items-center justify-between gap-3 px-1">
-          <p className="text-xs text-white/34">Image, document, and voice shells stay available here without changing backend behavior.</p>
+        <div className="flex flex-col gap-1 px-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
+          <p className="text-xs leading-5 text-white/34">Image, document, and voice shells stay available here without changing backend behavior.</p>
           <span className="text-[11px] font-medium text-white/28">iPhone-ready</span>
         </div>
       </div>

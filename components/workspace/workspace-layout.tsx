@@ -16,7 +16,7 @@ export function WorkspaceLayout() {
   const [showAlternatives, setShowAlternatives] = useState(false)
 
   const conversationPanel = (
-    <section className={`${shellCardClass} flex min-h-[720px] flex-col overflow-hidden`}>
+    <section className={`${shellCardClass} flex min-h-[640px] flex-col overflow-hidden md:min-h-[720px]`}>
       <div className="border-b border-white/8 px-5 py-4 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -26,7 +26,7 @@ export function WorkspaceLayout() {
 
           <button
             onClick={() => setShowAlternatives((value) => !value)}
-            className={`inline-flex h-10 items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors ${
+            className={`inline-flex min-h-11 w-full items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors sm:min-h-10 sm:w-auto ${
               showAlternatives
                 ? 'border-primary/18 bg-primary/12 text-primary/90 hover:bg-primary/16'
                 : 'border-white/10 bg-white/[0.04] text-white/74 hover:border-white/16 hover:bg-white/[0.08] hover:text-white'
@@ -51,7 +51,7 @@ export function WorkspaceLayout() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Alternate framings</p>
             <p className="mt-1 text-sm leading-6 text-white/62">Keep practice paths available, but secondary to the main conversation.</p>
           </div>
-          <div className="max-h-[360px] overflow-y-auto">
+          <div className="max-h-[300px] overflow-y-auto sm:max-h-[360px]">
             <BranchThread />
           </div>
         </div>
@@ -60,7 +60,7 @@ export function WorkspaceLayout() {
   )
 
   const readingPanel = (
-    <section className={`${shellCardClass} min-h-[720px] overflow-hidden`}>
+    <section className={`${shellCardClass} min-h-[auto] overflow-hidden md:min-h-[720px]`}>
       <CanvasPanel embedded />
     </section>
   )
@@ -133,7 +133,7 @@ export function WorkspaceLayout() {
         </div>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_32%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4">
+      <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_32%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex max-w-6xl flex-col gap-4">
           {introPanel}
           {conversationPanel}
