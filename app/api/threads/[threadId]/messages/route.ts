@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { runDefragAgent } from "@/lib/defrag/agent";
 
@@ -7,7 +7,24 @@ type Params = { params: Promise<{ threadId: string }> };
 
 export async function POST(req: Request, { params }: Params) {
   const { threadId } = await params;
-  const supabase = await createSupabaseServerClient();
+  let supabase;
+  let supabaseAdmin;
+
+  try {
+    supabase = await createSupabaseServerClient();
+    supabaseAdmin = getSupabaseAdmin();
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Supabase is not configured.",
+      },
+      { status: 503 }
+    );
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
