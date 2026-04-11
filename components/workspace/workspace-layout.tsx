@@ -55,7 +55,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
 
       if (msgError) throw msgError
 
-      const formattedMessages: WorkspaceMessage[] = dbMessages.map(msg => ({
+      const formattedMessages: WorkspaceMessage[] = dbMessages.map((msg: any) => ({
         id: msg.id,
         author: msg.role === 'user' ? 'You' : 'Defrag',
         content: msg.content,

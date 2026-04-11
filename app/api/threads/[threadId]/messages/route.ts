@@ -35,13 +35,17 @@ export async function POST(req: Request, { params }: Params) {
 
   const { content } = await req.json();
 
-  const { data: thread, error: threadError } = await supabaseAdmin
+  // Supabase may return joined workspace as an array or object depending on the query result.
+  // Cast to any for minimal friction and normalize the workspace shape for safe access.
+  const { data: thread, error: threadError }: any = await supabaseAdmin
     .from("threads")
     .select("id, kind, workspace:workspaces(id, title, user_id)")
     .eq("id", threadId)
     .single();
 
-  if (threadError || !thread || thread.workspace.user_id !== user.id) {
+  const workspace = thread?.workspace && Array.isArray(thread.workspace) ? thread.workspace[0] : thread?.workspace;
+
+  if (threadError || !thread || !workspace || workspace.user_id !== user.id) {
     return NextResponse.json({ error: "Thread not found" }, { status: 404 });
   }
 
@@ -63,7 +67,7 @@ export async function POST(req: Request, { params }: Params) {
   // Insert "Reading..." placeholder or handle AI generation
   const structured = await runDefragAgent({
     userMessage: content,
-    workspaceTitle: thread.workspace.title,
+    workspaceTitle: workspace.title,
     threadKind: thread.kind,
   });
 
@@ -100,7 +104,7 @@ export async function POST(req: Request, { params }: Params) {
   // Also update artifacts for the workspace if needed
   if (structured.suggestedArtifact && structured.suggestedArtifact !== 'none') {
     await supabaseAdmin.from("artifacts").insert({
-      workspace_id: thread.workspace.id,
+      workspace_id: workspace.id,
       source_thread_id: threadId,
       kind: structured.suggestedArtifact,
       status: 'ready',
