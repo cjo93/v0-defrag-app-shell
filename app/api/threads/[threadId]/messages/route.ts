@@ -45,6 +45,7 @@ export async function POST(req: Request, { params }: Params) {
     return NextResponse.json({ error: "Thread not found" }, { status: 404 });
   }
 
+  // Insert user message
   const { data: userMessage, error: userMsgError } = await supabaseAdmin
     .from("messages")
     .insert({
@@ -59,6 +60,7 @@ export async function POST(req: Request, { params }: Params) {
     return NextResponse.json({ error: userMsgError.message }, { status: 500 });
   }
 
+  // Insert "Reading..." placeholder or handle AI generation
   const structured = await runDefragAgent({
     userMessage: content,
     workspaceTitle: thread.workspace.title,
@@ -84,7 +86,8 @@ export async function POST(req: Request, { params }: Params) {
     );
   }
 
-  if (structured.rationale.length > 0) {
+  // Insert rationale blocks
+  if (structured.rationale && structured.rationale.length > 0) {
     await supabaseAdmin.from("rationale_blocks").insert(
       structured.rationale.map((r) => ({
         message_id: assistantMessage.id,
@@ -92,6 +95,18 @@ export async function POST(req: Request, { params }: Params) {
         payload: r,
       }))
     );
+  }
+
+  // Also update artifacts for the workspace if needed
+  if (structured.suggestedArtifact && structured.suggestedArtifact !== 'none') {
+    await supabaseAdmin.from("artifacts").insert({
+      workspace_id: thread.workspace.id,
+      source_thread_id: threadId,
+      kind: structured.suggestedArtifact,
+      status: 'ready',
+      title: structured.suggestedArtifact.replace('_', ' '),
+      payload: structured.educationalLayer || { summary: structured.responseText }
+    });
   }
 
   return NextResponse.json({

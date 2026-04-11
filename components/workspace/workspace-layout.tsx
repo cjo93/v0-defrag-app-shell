@@ -1,67 +1,79 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
 import { Button } from '@/components/ui/button'
 import { BranchThread } from './branch-thread'
 import { CanvasPanel } from './canvas-panel'
-import { ChatThread, initialWorkspaceMessages, type WorkspaceMessage } from './chat-thread'
+import { ChatThread, type WorkspaceMessage } from './chat-thread'
 import { MessageInput } from './message-input'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
 
 const shellCardClass =
   'rounded-[1.8rem] border border-white/8 bg-white/[0.04] shadow-[0_24px_80px_rgba(1,4,12,0.32)] backdrop-blur'
 
-export function WorkspaceLayout() {
+export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
+  const router = useRouter()
   const [showAlternatives, setShowAlternatives] = useState(false)
-  const [messages, setMessages] = useState<WorkspaceMessage[]>(initialWorkspaceMessages)
+  const [messages, setMessages] = useState<WorkspaceMessage[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [composerError, setComposerError] = useState<string | null>(null)
+  const [currentWorkspaceId, setCurrentWorkspaceId] = useState<string | null>(workspaceId || null)
+  const [currentThreadId, setCurrentThreadId] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(!!workspaceId)
 
-  const hasSupabaseRuntime =
-    typeof process.env.NEXT_PUBLIC_SUPABASE_URL === 'string' &&
-    typeof process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY === 'string' &&
-    process.env.NEXT_PUBLIC_SUPABASE_URL.length > 0 &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length > 0
+  const supabase = createClient()
 
-  const modeLabel = hasSupabaseRuntime ? 'Workspace ready' : 'Demo mode'
-  const helperText = hasSupabaseRuntime
-    ? 'Your entries stay usable here while runtime services finish wiring.'
-    : 'Runtime services are not configured, so this workspace stays in guided demo mode and will not call live APIs.'
+  useEffect(() => {
+    if (workspaceId) {
+      loadWorkspace(workspaceId)
+    }
+  }, [workspaceId])
 
-  const buildResponse = (input: string): WorkspaceMessage => {
-    const normalized = input.toLowerCase()
-    const isTiming = normalized.includes('tonight') || normalized.includes('later') || normalized.includes('timing')
-    const isRepair = normalized.includes('sorry') || normalized.includes('repair') || normalized.includes('apolog')
+  const loadWorkspace = async (id: string) => {
+    setIsLoading(true)
+    try {
+      // 1. Fetch workspace and its primary thread
+      const { data: thread, error: threadError } = await supabase
+        .from('threads')
+        .select('id, workspace_id')
+        .eq('workspace_id', id)
+        .eq('kind', 'primary')
+        .single()
 
-    const content = isTiming
-      ? 'The timing may be doing as much work as the words. A shorter opening now, or a calmer window later, likely protects the connection better.'
-      : isRepair
-        ? 'Lead with acknowledgement before explanation. When repair is the goal, being understood usually comes after they feel met.'
-        : 'The safest next read is still to lower pressure in the opening. Start with what they may have felt, then move into what you meant.'
+      if (threadError) throw threadError
+      setCurrentThreadId(thread.id)
 
-    return {
-      id: String(Date.now() + 1),
-      author: 'Defrag',
-      content,
-      timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-      type: 'insight',
-      sources: [
-        {
-          name: 'Pressure check',
-          description: 'What this moment may amplify',
-          detail: 'When a conversation already feels loaded, even neutral wording can land harder than intended.',
-        },
-        {
-          name: 'Repair logic',
-          description: 'What helps next',
-          detail: 'Validation first gives the other person a reason to stay present long enough for clarification to work.',
-        },
-      ],
-      followUp: [
-        { label: 'Show the signal', action: 'expand_sources' },
-        { label: 'Practice the wording', action: 'open_practice' },
-      ],
+      // 2. Fetch messages for that thread
+      const { data: dbMessages, error: msgError } = await supabase
+        .from('messages')
+        .select('*, rationale_blocks(*)')
+        .eq('thread_id', thread.id)
+        .order('created_at', { ascending: true })
+
+      if (msgError) throw msgError
+
+      const formattedMessages: WorkspaceMessage[] = dbMessages.map(msg => ({
+        id: msg.id,
+        author: msg.role === 'user' ? 'You' : 'Defrag',
+        content: msg.content,
+        timestamp: new Date(msg.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+        type: msg.role === 'user' ? 'user' : (msg.structured_output?.relationalStatus === 'aligned' ? 'insight' : 'interpretation'),
+        sources: msg.rationale_blocks?.map((rb: any) => ({
+          name: rb.label,
+          description: rb.payload?.summary || '',
+          detail: Array.isArray(rb.payload?.details) ? rb.payload.details.join('. ') : rb.payload?.details || ''
+        }))
+      }))
+
+      setMessages(formattedMessages)
+    } catch (err) {
+      console.error('Error loading workspace:', err)
+      setComposerError('Failed to load session history.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -69,24 +81,108 @@ export function WorkspaceLayout() {
     setComposerError(null)
     setIsSubmitting(true)
 
-    const userMessage: WorkspaceMessage = {
-      id: String(Date.now()),
-      author: 'You',
-      content: input,
-      timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-      type: 'user',
-    }
-
-    setMessages((current) => [...current, userMessage])
+    let wId = currentWorkspaceId
+    let tId = currentThreadId
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 450))
-      setMessages((current) => [...current, buildResponse(input)])
-    } catch {
-      setComposerError('The workspace could not render the next read. Try again in a moment.')
+      // 1. Ensure we have a workspace and thread
+      if (!wId) {
+        const title = input.slice(0, 40) + (input.length > 40 ? '...' : '')
+        const response = await fetch('/api/workspaces', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title }),
+        })
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || 'Failed to create workspace')
+        
+        wId = data.workspace.id
+        setCurrentWorkspaceId(wId)
+        
+        // Fetch the thread that was created automatically
+        const { data: thread } = await supabase
+          .from('threads')
+          .select('id')
+          .eq('workspace_id', wId)
+          .single()
+        
+        tId = thread?.id || null
+        setCurrentThreadId(tId)
+        
+        // Update URL without full refresh to "reopen" this session
+        window.history.replaceState(null, '', `/workspace?id=${wId}`)
+      }
+
+      if (!tId) throw new Error('No thread found for workspace')
+
+      // 2. Add local user message immediately
+      const tempUserMsg: WorkspaceMessage = {
+        id: 'temp-' + Date.now(),
+        author: 'You',
+        content: input,
+        timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+        type: 'user',
+      }
+      setMessages(curr => [...curr, tempUserMsg])
+
+      // 3. Persist and get AI response via API
+      const response = await fetch(`/api/threads/${tId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: input }),
+      })
+
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || 'Failed to persist message')
+
+      // 4. Update messages with real data from DB
+      const assistantMsg = data.assistantMessage
+      const structured = data.structured
+      
+      const newDefragMsg: WorkspaceMessage = {
+        id: assistantMsg.id,
+        author: 'Defrag',
+        content: assistantMsg.content,
+        timestamp: new Date(assistantMsg.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+        type: structured.relationalStatus === 'aligned' ? 'insight' : 'interpretation',
+        sources: structured.rationale?.map((r: any) => ({
+          name: r.label,
+          description: r.summary,
+          detail: Array.isArray(r.details) ? r.details.join('. ') : r.details,
+        })),
+      }
+
+      setMessages(curr => {
+        // Replace temp user message with real one if needed, or just append
+        const withoutTemp = curr.filter(m => !m.id.startsWith('temp-'))
+        const realUserMsg: WorkspaceMessage = {
+          id: data.userMessage.id,
+          author: 'You',
+          content: data.userMessage.content,
+          timestamp: new Date(data.userMessage.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+          type: 'user'
+        }
+        return [...withoutTemp, realUserMsg, newDefragMsg]
+      })
+
+    } catch (err: any) {
+      setComposerError(err.message || 'Something went wrong.')
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  const helperText = "Enter the moment as it happened. Defrag will provide interpretation and a next move."
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#05060a]">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-sm text-white/40">Loading your session...</p>
+        </div>
+      </div>
+    )
   }
 
   const conversationPanel = (
@@ -111,13 +207,8 @@ export function WorkspaceLayout() {
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <span className="inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
-            {modeLabel}
+            Workspace ready
           </span>
-          {!hasSupabaseRuntime && (
-            <span className="text-xs leading-5 text-white/42">
-              Missing public Supabase env vars are handled gracefully here.
-            </span>
-          )}
         </div>
       </div>
 

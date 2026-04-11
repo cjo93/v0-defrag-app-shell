@@ -5,17 +5,44 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
+import { createClient } from '@/lib/supabase/client'
 
 export default function SignupPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async () => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault()
     setIsSubmitting(true)
-    setStatusMessage('Preparing your dashboard shell…')
-    await new Promise((resolve) => setTimeout(resolve, 350))
-    router.push('/dashboard')
+    setError(null)
+    setStatusMessage('Creating your account...')
+
+    const supabase = createClient()
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+      setIsSubmitting(false)
+      setStatusMessage(null)
+      return
+    }
+
+    setStatusMessage('Success! Please check your email to confirm your account.')
+    setIsSubmitting(false)
   }
 
   return (
@@ -30,30 +57,56 @@ export default function SignupPage() {
               <p className="text-muted-foreground font-light">Join Defrag and start seeing interactions clearly</p>
             </div>
 
-            <div className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
+            <form onSubmit={handleSignUp} className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
+              {error && (
+                <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm p-3 rounded">
+                  {error}
+                </div>
+              )}
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Full Name</label>
-                <input type="text" placeholder="Your name" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60" />
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                />
               </div>
 
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Email</label>
-                <input type="email" placeholder="your@email.com" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60" />
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                />
               </div>
 
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Password</label>
-                <input type="password" placeholder="••••••••" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                />
                 <p className="text-xs text-muted-foreground mt-1 font-light">At least 8 characters</p>
               </div>
 
               <label className="flex items-center gap-2">
-                <input type="checkbox" className="w-4 h-4 rounded border-border/40" />
+                <input type="checkbox" required className="w-4 h-4 rounded border-border/40" />
                 <span className="text-sm text-muted-foreground font-light">I agree to the Terms of Service and Privacy Policy</span>
               </label>
 
-              <Button className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? 'Opening…' : 'Create Account'}
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? 'Creating...' : 'Create Account'}
               </Button>
 
               {statusMessage && (
@@ -74,7 +127,7 @@ export default function SignupPage() {
               <Button variant="outline" className="w-full" disabled>
                 Google sign-up unavailable in this release shell
               </Button>
-            </div>
+            </form>
 
             <div className="text-center">
               <p className="text-sm text-muted-foreground font-light">

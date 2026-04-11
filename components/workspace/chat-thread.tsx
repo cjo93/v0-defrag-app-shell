@@ -15,7 +15,7 @@ export interface WorkspaceMessage {
   author: string
   content: string
   timestamp: string
-  type?: 'interpretation' | 'insight' | 'user'
+  type?: 'interpretation' | 'insight' | 'user' | 'rewrite'
   sources?: {
     name: string
     description: string
@@ -202,8 +202,8 @@ export function ChatThread({
                             : 'border-white/10 bg-white/[0.05] text-white/52'
                         }`}
                       >
-                        <span className={`h-1.5 w-1.5 rounded-full ${isInsight ? 'bg-primary' : 'bg-emerald-300'} shadow-[0_0_10px_rgba(255,255,255,0.35)]`} />
-                        {isInsight ? 'What may help next' : 'What they may be reacting to'}
+                        <span className={`h-1.5 w-1.5 rounded-full ${message.type === 'rewrite' ? 'bg-amber-400' : isInsight ? 'bg-primary' : 'bg-emerald-300'} shadow-[0_0_10px_rgba(255,255,255,0.35)]`} />
+                        {message.type === 'rewrite' ? 'Rewrite' : isInsight ? 'What may help next' : 'What they may be reacting to'}
                       </span>
                     </div>
 

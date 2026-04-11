@@ -21,6 +21,7 @@ export const DefragStructuredResponseSchema = z.object({
     "brief",
   ]),
   rationale: z.array(RationaleBlockSchema).default([]),
+  rewrite: z.string().optional(),
   educationalLayer: z
     .object({
       title: z.string(),

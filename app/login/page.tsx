@@ -5,17 +5,38 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
+import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async () => {
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault()
     setIsSubmitting(true)
-    setStatusMessage('Opening your workspace shell…')
-    await new Promise((resolve) => setTimeout(resolve, 350))
+    setError(null)
+    setStatusMessage('Signing you in...')
+
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      setError(error.message)
+      setIsSubmitting(false)
+      setStatusMessage(null)
+      return
+    }
+
+    setStatusMessage('Success! Opening your workspace...')
     router.push('/dashboard')
+    router.refresh()
   }
 
   return (
@@ -30,20 +51,39 @@ export default function LoginPage() {
               <p className="text-muted-foreground font-light">Sign in to your Defrag account</p>
             </div>
 
-            <div className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
+            <form onSubmit={handleSignIn} className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
+              {error && (
+                <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm p-3 rounded">
+                  {error}
+                </div>
+              )}
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Email</label>
-                <input type="email" placeholder="your@email.com" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60" />
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-sm font-semibold text-foreground">Password</label>
-                  <Link href="/forgot-password" className="text-xs text-primary hover:underline font-medium">
+                  <Link href="/forgot-password" disabled className="text-xs text-primary hover:underline font-medium">
                     Forgot?
                   </Link>
                 </div>
-                <input type="password" placeholder="••••••••" className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 rounded border border-border/40 bg-background text-foreground text-sm focus:outline-none focus:border-primary/60"
+                />
               </div>
 
               <label className="flex items-center gap-2">
@@ -51,8 +91,8 @@ export default function LoginPage() {
                 <span className="text-sm text-muted-foreground font-light">Keep me signed in</span>
               </label>
 
-              <Button className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? 'Opening…' : 'Sign In'}
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? 'Signing in...' : 'Sign In'}
               </Button>
 
               {statusMessage && (
@@ -73,7 +113,7 @@ export default function LoginPage() {
               <Button variant="outline" className="w-full" disabled>
                 Google sign-in unavailable in this release shell
               </Button>
-            </div>
+            </form>
 
             <div className="text-center">
               <p className="text-sm text-muted-foreground font-light">
