@@ -9,6 +9,10 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Defrag',
   description: 'See the interaction from more than one side before the same misunderstanding gets worse.',
+  metadataBase: new URL('https://defrag.app'),
+  alternates: {
+    canonical: '/',
+  },
   generator: 'v0.app',
   icons: {
     icon: [
