@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
 import Link from 'next/link'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -11,7 +11,10 @@ export function Footer() {
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e?: React.FormEvent) => {
+    // Prevent full-page reload when the form is submitted via Enter or button
+    e?.preventDefault()
+
     if (email && message) {
       setSubmitted(true)
       setTimeout(() => {
@@ -55,22 +58,41 @@ export function Footer() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Private feedback</p>
               <p className="mt-2 text-sm leading-6 text-stone-400">Use this channel for product questions, invite concerns, or privacy requests.</p>
             </div>
-            <Input
-              type="email"
-              placeholder="Your email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
-            />
-            <Textarea
-              placeholder="Message"
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              className="h-24 resize-none border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
-            />
-            <Button onClick={handleSubmit} disabled={submitted} className="h-11 rounded-full bg-stone-100 text-sm font-semibold text-stone-950 hover:bg-white">
-              {submitted ? 'Sent' : 'Send'}
-            </Button>
+
+            {/* Use a semantic form so Enter submits and screen readers get the expected behaviour */}
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <label htmlFor="footer-email" className="sr-only">Your email</label>
+              <Input
+                id="footer-email"
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
+                aria-label="Your email"
+              />
+
+              <label htmlFor="footer-message" className="sr-only">Message</label>
+              <Textarea
+                id="footer-message"
+                placeholder="Message"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                className="h-24 resize-none border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
+                aria-label="Message"
+              />
+
+              <div className="flex items-center gap-3">
+                <Button type="submit" disabled={submitted} className="h-11 rounded-full bg-stone-100 text-sm font-semibold text-stone-950 hover:bg-white">
+                  {submitted ? 'Sent' : 'Send'}
+                </Button>
+
+                {/* Visible status for assistive tech */}
+                <div role="status" aria-live="polite" className="text-sm text-stone-400">
+                  {submitted ? 'Thanks — we received your message.' : ''}
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 

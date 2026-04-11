@@ -53,7 +53,8 @@ export default function OnboardingPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Baseline onboarding</p>
             <h1 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-white/92 sm:text-3xl">Build your Defrag baseline</h1>
           </div>
-          <Link href="/dashboard" className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/72 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+          {/* Route back through signup for new users to avoid exposing dashboard to unauthenticated visitors */}
+          <Link href="/signup" className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/72 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
             Back
           </Link>
         </div>
@@ -187,14 +188,15 @@ export default function OnboardingPage() {
               You now have a steadier starting point for timing, pressure, and relational pattern reads across the workspace and dashboard.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              {/* For unauthenticated/new users, route through signup with a next param so auth is preserved */}
               <Link
-                href="/dashboard"
+                href="/signup?next=/dashboard"
                 className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
               >
                 Go to dashboard
               </Link>
               <Link
-                href="/workspace"
+                href="/signup?next=/workspace"
                 className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
               >
                 Open workspace
