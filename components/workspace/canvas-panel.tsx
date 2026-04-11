@@ -118,7 +118,7 @@ const tintClassNames = {
   },
 } as const
 
-export function CanvasPanel() {
+export function CanvasPanel({ embedded = false }: { embedded?: boolean }) {
   const [selectedArtifact, setSelectedArtifact] = useState<string>('map')
 
   const activeArtifact = useMemo(
@@ -130,8 +130,8 @@ export function CanvasPanel() {
   const ActiveIcon = activeArtifact.icon
 
   return (
-    <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-[#070911] text-foreground">
-      <div className="border-b border-white/8 bg-[#0b0d14]/94 px-4 py-3 backdrop-blur sm:px-6">
+    <div className={`flex h-full min-w-0 flex-1 flex-col overflow-hidden text-foreground ${embedded ? 'bg-transparent' : 'bg-[#070911]'}`}>
+      <div className={`border-b border-white/8 px-4 py-3 sm:px-6 ${embedded ? 'bg-transparent' : 'bg-[#0b0d14]/94 backdrop-blur'}`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <Link
@@ -164,8 +164,14 @@ export function CanvasPanel() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.16),transparent_32%),radial-gradient(circle_at_78%_22%,rgba(94,234,212,0.08),transparent_25%),linear-gradient(180deg,#070911_0%,#090b12_44%,#070911_100%)] px-4 py-5 sm:px-6 sm:py-6">
-        <div className="mx-auto flex max-w-6xl flex-col gap-5">
+      <div
+        className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${
+          embedded
+            ? 'bg-transparent'
+            : 'bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.16),transparent_32%),radial-gradient(circle_at_78%_22%,rgba(94,234,212,0.08),transparent_25%),linear-gradient(180deg,#070911_0%,#090b12_44%,#070911_100%)]'
+        }`}
+      >
+        <div className={`mx-auto flex flex-col gap-5 ${embedded ? 'max-w-none' : 'max-w-6xl'}`}>
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] px-4 py-4 backdrop-blur">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">Selected surface</p>
