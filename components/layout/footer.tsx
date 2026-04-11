@@ -23,7 +23,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-white/5 bg-[#0d0e10] text-stone-300">
+    <footer className="border-t border-white/6 bg-[#0b0c0e] text-stone-300">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr_0.9fr]">
           <div className="space-y-5">
@@ -50,7 +50,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="space-y-4 rounded-[28px] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
+          <div className="space-y-4 rounded-[28px] border border-white/6 bg-[#0f1114]/60 p-5 backdrop-blur-sm">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Private feedback</p>
               <p className="mt-2 text-sm leading-6 text-stone-400">Use this channel for product questions, invite concerns, or privacy requests.</p>

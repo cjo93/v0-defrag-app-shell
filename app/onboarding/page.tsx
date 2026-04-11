@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-type OnboardingStep = 'welcome' | 'why' | 'profile' | 'complete'
+type OnboardingStep = 'welcome' | 'profile' | 'complete'
 
 const frameworkCards = [
   {
@@ -71,7 +71,7 @@ export default function OnboardingPage() {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button
-                  onClick={() => setStep('why')}
+                  onClick={() => setStep('profile')}
                   className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
                 >
                   Start baseline
@@ -102,52 +102,7 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {step === 'why' && (
-          <div className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
-            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Why we ask</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-white/92">A simple explanation of the inputs</h2>
-              <div className="mt-5 space-y-3">
-                {fieldExplainers.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4">
-                    <p className="text-sm font-semibold text-white/86">{item.label}</p>
-                    <p className="mt-2 text-sm leading-6 text-white/62">{item.detail}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 rounded-2xl border border-emerald-400/16 bg-emerald-400/8 px-4 py-4 text-sm leading-6 text-emerald-100/86">
-                Defrag does not need you to know everything perfectly to begin. You can start with what you know and refine your baseline later.
-              </div>
-            </div>
-
-            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Frameworks in plain language</p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {frameworkCards.map((card) => (
-                  <div key={card.title} className="rounded-2xl border border-white/8 bg-black/18 p-4">
-                    <p className="text-sm font-semibold text-white/88">{card.title}</p>
-                    <p className="mt-2 text-sm leading-6 text-white/62">{card.description}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <button
-                  onClick={() => setStep('welcome')}
-                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
-                >
-                  Back
-                </button>
-                <button
-                  onClick={() => setStep('profile')}
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
-                >
-                  Continue to details
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* 'Why' step removed to keep onboarding lightweight and focused (welcome -> profile -> complete) */}
 
         {step === 'profile' && (
           <div className="grid gap-4 xl:grid-cols-[1fr_0.82fr]">
@@ -193,7 +148,7 @@ export default function OnboardingPage() {
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <button
-                  onClick={() => setStep('why')}
+                  onClick={() => setStep('welcome')}
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
                 >
                   Back

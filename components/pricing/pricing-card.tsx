@@ -39,7 +39,8 @@ export function PricingCard({
           ? 'bg-stone-100 text-stone-950 hover:bg-white' 
           : 'bg-white/10 text-stone-100 hover:bg-white/20 border border-white/10'
       }`}>
-        <Link href="/signup">Get Started</Link>
+        {/* Route new users into signup and then onboarding for a smooth flow */}
+        <Link href="/signup?next=/onboarding">Get Started</Link>
       </Button>
 
       <ul className="space-y-4 pt-4 border-t border-white/5">
