@@ -10,13 +10,36 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-export function MessageInput({ compact = false }: { compact?: boolean }) {
+type MessageInputProps = {
+  compact?: boolean
+  onSubmit?: (message: string) => Promise<void> | void
+  isSubmitting?: boolean
+  disabled?: boolean
+  helperText?: string
+}
+
+export function MessageInput({
+  compact = false,
+  onSubmit,
+  isSubmitting = false,
+  disabled = false,
+  helperText,
+}: MessageInputProps) {
   const [message, setMessage] = useState('')
   const [isVoiceActive, setIsVoiceActive] = useState(false)
 
-  const handleSend = () => {
-    if (message.trim()) {
+  const handleSend = async () => {
+    const value = message.trim()
+
+    if (!value || isSubmitting || disabled) {
+      return
+    }
+
+    try {
+      await onSubmit?.(value)
       setMessage('')
+    } catch {
+      // Parent state handles surfaced errors.
     }
   }
 
@@ -41,7 +64,8 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
           <Button
             size="sm"
             variant="ghost"
-            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.05] px-0 text-white/68 hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+            disabled={disabled || isSubmitting}
+            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.05] px-0 text-white/68 hover:border-white/16 hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -65,6 +89,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Describe the moment as it happened..."
+          disabled={disabled || isSubmitting}
           className="h-11 sm:h-12 border-0 bg-transparent px-0 text-[15px] text-white/84 placeholder:text-white/30 focus-visible:ring-0"
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -79,11 +104,12 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
         onClick={isVoiceActive ? handleVoiceStop : handleVoiceStart}
         size="sm"
         variant="ghost"
+        disabled={disabled || isSubmitting}
         className={`h-11 w-11 sm:h-12 sm:w-12 rounded-2xl border px-0 ${
           isVoiceActive
             ? 'border-primary/18 bg-primary/10 text-primary'
             : 'border-white/10 bg-white/[0.05] text-white/68 hover:border-white/16 hover:bg-white/[0.08] hover:text-white'
-        }`}
+        } disabled:cursor-not-allowed disabled:opacity-50`}
         title="Voice input"
       >
         <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
@@ -94,9 +120,10 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
       <Button
         onClick={handleSend}
         size="sm"
-        className="h-11 sm:h-12 rounded-2xl bg-white px-4 sm:px-5 text-sm font-semibold text-black hover:bg-white/92"
+        disabled={disabled || isSubmitting || !message.trim()}
+        className="h-11 sm:h-12 rounded-2xl bg-white px-4 sm:px-5 text-sm font-semibold text-black hover:bg-white/92 disabled:cursor-not-allowed disabled:bg-white/35 disabled:text-black/60"
       >
-        Send
+        {isSubmitting ? 'Reading…' : 'Send'}
       </Button>
     </>
   )
@@ -112,7 +139,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
         <div className="flex flex-col gap-2 min-[420px]:flex-row min-[420px]:items-end">{composer}</div>
 
         <div className="flex flex-col gap-1 px-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
-          <p className="text-xs leading-5 text-white/34">Image, document, and voice shells stay available here without changing backend behavior.</p>
+          <p className="text-xs leading-5 text-white/34">{helperText ?? 'Image, document, and voice shells stay available here without changing backend behavior.'}</p>
           <span className="text-[11px] font-medium text-white/28">iPhone-ready</span>
         </div>
       </div>
@@ -135,7 +162,7 @@ export function MessageInput({ compact = false }: { compact?: boolean }) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">{composer}</div>
 
       <div className="flex flex-col gap-2 px-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-white/34">Add screenshots, documents, or voice when the moment needs more context.</p>
+        <p className="text-xs text-white/34">{helperText ?? 'Add screenshots, documents, or voice when the moment needs more context.'}</p>
         <div className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/30">No backend changes in this pass</div>
       </div>
     </div>

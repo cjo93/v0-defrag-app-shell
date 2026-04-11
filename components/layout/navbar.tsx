@@ -24,10 +24,10 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild className="text-sm text-white/72 hover:bg-white/[0.06] hover:text-white">
-              <Link href="/dashboard">Sign In</Link>
+              <Link href="/login">Sign In</Link>
             </Button>
             <Button size="sm" asChild className="rounded-full bg-white px-4 text-sm font-semibold text-black hover:bg-white/92">
-              <Link href="/dashboard">Get Started</Link>
+              <Link href="/signup">Get Started</Link>
             </Button>
           </div>
         </div>

@@ -1,10 +1,23 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 
 export default function LoginPage() {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true)
+    setStatusMessage('Opening your workspace shell…')
+    await new Promise((resolve) => setTimeout(resolve, 350))
+    router.push('/dashboard')
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
@@ -12,13 +25,11 @@ export default function LoginPage() {
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="w-full max-w-md">
           <div className="space-y-8">
-            {/* Header */}
             <div className="text-center space-y-2">
               <h1 className="text-3xl font-bold text-foreground">Welcome back</h1>
               <p className="text-muted-foreground font-light">Sign in to your Defrag account</p>
             </div>
 
-            {/* Form */}
             <div className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Email</label>
@@ -40,9 +51,15 @@ export default function LoginPage() {
                 <span className="text-sm text-muted-foreground font-light">Keep me signed in</span>
               </label>
 
-              <Link href="/dashboard">
-                <Button className="w-full">Sign In</Button>
-              </Link>
+              <Button className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
+                {isSubmitting ? 'Opening…' : 'Sign In'}
+              </Button>
+
+              {statusMessage && (
+                <p className="rounded-md border border-border/40 bg-card/40 px-3 py-2 text-sm text-muted-foreground">
+                  {statusMessage}
+                </p>
+              )}
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -53,10 +70,11 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <Button variant="outline" className="w-full">Sign in with Google</Button>
+              <Button variant="outline" className="w-full" disabled>
+                Google sign-in unavailable in this release shell
+              </Button>
             </div>
 
-            {/* Footer */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground font-light">
                 Don&apos;t have an account?{' '}

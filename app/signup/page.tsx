@@ -1,10 +1,23 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 
 export default function SignupPage() {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true)
+    setStatusMessage('Preparing your dashboard shell…')
+    await new Promise((resolve) => setTimeout(resolve, 350))
+    router.push('/dashboard')
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
@@ -12,13 +25,11 @@ export default function SignupPage() {
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="w-full max-w-md">
           <div className="space-y-8">
-            {/* Header */}
             <div className="text-center space-y-2">
               <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
               <p className="text-muted-foreground font-light">Join Defrag and start seeing interactions clearly</p>
             </div>
 
-            {/* Form */}
             <div className="space-y-6 border border-border/40 rounded-lg p-8 bg-gradient-to-br from-card/60 to-card/20">
               <div>
                 <label className="text-sm font-semibold text-foreground block mb-2">Full Name</label>
@@ -41,9 +52,15 @@ export default function SignupPage() {
                 <span className="text-sm text-muted-foreground font-light">I agree to the Terms of Service and Privacy Policy</span>
               </label>
 
-              <Link href="/dashboard">
-                <Button className="w-full">Create Account</Button>
-              </Link>
+              <Button className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
+                {isSubmitting ? 'Opening…' : 'Create Account'}
+              </Button>
+
+              {statusMessage && (
+                <p className="rounded-md border border-border/40 bg-card/40 px-3 py-2 text-sm text-muted-foreground">
+                  {statusMessage}
+                </p>
+              )}
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -54,10 +71,11 @@ export default function SignupPage() {
                 </div>
               </div>
 
-              <Button variant="outline" className="w-full">Sign up with Google</Button>
+              <Button variant="outline" className="w-full" disabled>
+                Google sign-up unavailable in this release shell
+              </Button>
             </div>
 
-            {/* Footer */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground font-light">
                 Already have an account?{' '}

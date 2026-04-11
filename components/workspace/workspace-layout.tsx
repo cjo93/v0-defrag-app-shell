@@ -6,7 +6,7 @@ import { Sidebar } from '@/components/layout/sidebar'
 import { Button } from '@/components/ui/button'
 import { BranchThread } from './branch-thread'
 import { CanvasPanel } from './canvas-panel'
-import { ChatThread } from './chat-thread'
+import { ChatThread, initialWorkspaceMessages, type WorkspaceMessage } from './chat-thread'
 import { MessageInput } from './message-input'
 
 const shellCardClass =
@@ -14,6 +14,80 @@ const shellCardClass =
 
 export function WorkspaceLayout() {
   const [showAlternatives, setShowAlternatives] = useState(false)
+  const [messages, setMessages] = useState<WorkspaceMessage[]>(initialWorkspaceMessages)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [composerError, setComposerError] = useState<string | null>(null)
+
+  const hasSupabaseRuntime =
+    typeof process.env.NEXT_PUBLIC_SUPABASE_URL === 'string' &&
+    typeof process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY === 'string' &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL.length > 0 &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length > 0
+
+  const modeLabel = hasSupabaseRuntime ? 'Workspace ready' : 'Demo mode'
+  const helperText = hasSupabaseRuntime
+    ? 'Your entries stay usable here while runtime services finish wiring.'
+    : 'Runtime services are not configured, so this workspace stays in guided demo mode and will not call live APIs.'
+
+  const buildResponse = (input: string): WorkspaceMessage => {
+    const normalized = input.toLowerCase()
+    const isTiming = normalized.includes('tonight') || normalized.includes('later') || normalized.includes('timing')
+    const isRepair = normalized.includes('sorry') || normalized.includes('repair') || normalized.includes('apolog')
+
+    const content = isTiming
+      ? 'The timing may be doing as much work as the words. A shorter opening now, or a calmer window later, likely protects the connection better.'
+      : isRepair
+        ? 'Lead with acknowledgement before explanation. When repair is the goal, being understood usually comes after they feel met.'
+        : 'The safest next read is still to lower pressure in the opening. Start with what they may have felt, then move into what you meant.'
+
+    return {
+      id: String(Date.now() + 1),
+      author: 'Defrag',
+      content,
+      timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+      type: 'insight',
+      sources: [
+        {
+          name: 'Pressure check',
+          description: 'What this moment may amplify',
+          detail: 'When a conversation already feels loaded, even neutral wording can land harder than intended.',
+        },
+        {
+          name: 'Repair logic',
+          description: 'What helps next',
+          detail: 'Validation first gives the other person a reason to stay present long enough for clarification to work.',
+        },
+      ],
+      followUp: [
+        { label: 'Show the signal', action: 'expand_sources' },
+        { label: 'Practice the wording', action: 'open_practice' },
+      ],
+    }
+  }
+
+  const handleSubmit = async (input: string) => {
+    setComposerError(null)
+    setIsSubmitting(true)
+
+    const userMessage: WorkspaceMessage = {
+      id: String(Date.now()),
+      author: 'You',
+      content: input,
+      timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+      type: 'user',
+    }
+
+    setMessages((current) => [...current, userMessage])
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 450))
+      setMessages((current) => [...current, buildResponse(input)])
+    } catch {
+      setComposerError('The workspace could not render the next read. Try again in a moment.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const conversationPanel = (
     <section className={`${shellCardClass} flex min-h-[640px] flex-col overflow-hidden md:min-h-[720px]`}>
@@ -35,14 +109,29 @@ export function WorkspaceLayout() {
             {showAlternatives ? 'Hide alternate framings' : 'Show alternate framings'}
           </button>
         </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
+            {modeLabel}
+          </span>
+          {!hasSupabaseRuntime && (
+            <span className="text-xs leading-5 text-white/42">
+              Missing public Supabase env vars are handled gracefully here.
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="min-h-0 flex-1 overflow-hidden">
-        <ChatThread />
+        <ChatThread messages={messages} isSubmitting={isSubmitting} errorMessage={composerError} />
       </div>
 
       <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3 sm:px-5">
-        <MessageInput compact />
+        <MessageInput
+          compact
+          onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
+          helperText={helperText}
+        />
       </div>
 
       {showAlternatives && (
