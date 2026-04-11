@@ -100,7 +100,7 @@ export function Footer() {
           <p>© 2026 Defrag. All rights reserved.</p>
           <div className="flex flex-wrap gap-4">
             <Link href="/login" className="transition hover:text-stone-50">Login</Link>
-            <Link href="/signup" className="transition hover:text-stone-50">Signup</Link>
+            <Link href="/signup?next=/onboarding" className="transition hover:text-stone-50">Signup</Link>
             <Link href="/privacy" className="transition hover:text-stone-50">Privacy</Link>
             <Link href="/terms" className="transition hover:text-stone-50">Terms</Link>
           </div>
