@@ -120,9 +120,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <Button variant="outline" className="w-full h-12 rounded-full border-white/10 bg-transparent text-stone-400 text-xs hover:bg-white/5 transition" disabled>
-                Google sign-in coming soon
-              </Button>
+              {/* Third-party sign-in coming soon. Use your email and password to sign in securely. */}
             </form>
 
             <div className="text-center">
