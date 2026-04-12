@@ -1,3 +1,4 @@
+"use client"
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { PricingCard } from '@/components/pricing/pricing-card'
@@ -56,6 +57,7 @@ export default function PricingPage() {
               'Integration and workflow tailoring',
               'Dedicated support and onboarding',
             ]}
+            contactOnly
           />
         </div>
 

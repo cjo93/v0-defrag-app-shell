@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface PricingCardProps {
   name: string
@@ -7,6 +8,7 @@ interface PricingCardProps {
   description: string
   features: string[]
   highlighted?: boolean
+  contactOnly?: boolean
 }
 
 export function PricingCard({
@@ -15,7 +17,32 @@ export function PricingCard({
   description,
   features,
   highlighted = false,
+  contactOnly = false,
 }: PricingCardProps) {
+  const [loading, setLoading] = useState(false);
+  const plan = name.toLowerCase();
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: plan })
+      });
+      const data = await res.json();
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        console.error('Checkout failed', data);
+      }
+    } catch (err) {
+      console.error('Checkout error', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className={`rounded-[28px] p-10 space-y-8 transition duration-300 ${
@@ -34,14 +61,23 @@ export function PricingCard({
         {price !== 'Custom' && <span className="text-sm font-medium text-stone-500 uppercase tracking-wider">/ mo</span>}
       </div>
 
-      <Button asChild className={`w-full h-12 rounded-full font-semibold transition ${
-        highlighted 
-          ? 'bg-stone-100 text-stone-950 hover:bg-white' 
-          : 'bg-white/10 text-stone-100 hover:bg-white/20 border border-white/10'
-      }`}>
-        {/* Route new users into signup and then onboarding for a smooth flow */}
-        <Link href="/signup?next=/onboarding">Get Started</Link>
-      </Button>
+      {contactOnly ? (
+        <Button asChild className={`w-full h-12 rounded-full font-semibold transition bg-white/10 text-stone-100 hover:bg-white/20 border border-white/10`}>
+          <Link href="mailto:info@defrag.app">Contact us</Link>
+        </Button>
+      ) : (
+        <Button
+          className={`w-full h-12 rounded-full font-semibold transition ${
+            highlighted
+              ? 'bg-stone-100 text-stone-950 hover:bg-white'
+              : 'bg-white/10 text-stone-100 hover:bg-white/20 border border-white/10'
+          }`}
+          onClick={handleCheckout}
+          disabled={loading}
+        >
+          {loading ? 'Redirecting…' : 'Get Started'}
+        </Button>
+      )}
 
       <ul className="space-y-4 pt-4 border-t border-white/5">
         {features.map((feature) => (
