@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { createClient } from '@/lib/supabase/client'
+import { getAuthRedirectUrl } from '@/lib/supabase/redirect'
 
 export default function LoginPage() {
   const router = useRouter()

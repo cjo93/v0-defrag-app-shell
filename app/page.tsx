@@ -206,64 +206,42 @@ export default function LandingPage() {
                         <div className="text-sm text-stone-400">Live · 0:47</div>
                       </div>
 
-                      <div className="relative grid grid-cols-2 gap-4">
-                        {/* Field Map (Artifact A) */}
-                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] p-4 flex items-center justify-center">
-                          <div className="w-full">
-                            <div className="flex items-center justify-between mb-2 text-[10px] uppercase tracking-[0.16em] text-stone-500">FIELD MAP — LIVE <span className="text-emerald-300 text-xs">Live</span></div>
-                            <svg viewBox="0 0 220 120" className="w-full h-36">
-                              <defs>
-                                <linearGradient id="g1" x1="0" x2="1">
-                                  <stop offset="0%" stopColor="#f6c27a" stopOpacity="0.9" />
-                                  <stop offset="100%" stopColor="#7ee7e0" stopOpacity="0.9" />
-                                </linearGradient>
-                              </defs>
-                              {/* Nodes */}
-                              <circle cx="60" cy="40" r="10" fill="#fff" opacity="0.95" />
-                              <text x="60" y="68" textAnchor="middle" className="text-[10px] fill-stone-200">YOU</text>
-                              <circle cx="160" cy="40" r="10" fill="#fff" opacity="0.95" />
-                              <text x="160" y="68" textAnchor="middle" className="text-[10px] fill-stone-200">THEM</text>
-                              {/* Vectors */}
-                              <path d="M70 40 C100 30, 120 30, 150 40" stroke="#f6c27a" strokeWidth="2" fill="none" opacity="0.9" />
-                              <path d="M150 40 C120 50, 100 50, 70 40" stroke="#7ee7e0" strokeWidth="2" fill="none" opacity="0.85" />
-                              {/* Labels */}
-                              <text x="110" y="26" textAnchor="middle" className="text-[9px] fill-amber-200">urgency</text>
-                              <text x="110" y="54" textAnchor="middle" className="text-[9px] fill-sky-200">withdrawal</text>
-                              <text x="120" y="42" textAnchor="middle" className="text-[9px] fill-stone-300">defensiveness</text>
-                            </svg>
-                          </div>
-                        </div>
+                                    <div className="relative grid grid-cols-1 gap-4">
+                                      {/* Session/Read Card - dominant */}
+                                      <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-[#0f1416] to-[#0b0d0f] p-6 shadow-lg">
+                                        <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">SESSION</div>
+                                        <h4 className="mt-2 text-lg font-semibold text-stone-50">You brought in: ‘Why do you always go quiet…’</h4>
+                                        <p className="mt-3 text-sm text-stone-300">Primary read: urgency framed as accusation</p>
+                                        <div className="mt-4 rounded-md border border-emerald-300/12 bg-emerald-300/6 p-3 text-sm text-stone-100">Next move: Lower pressure, reopen without blame</div>
+                                      </div>
 
-                        {/* Explainer preview (real thumbnail + play overlay) */}
-                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] overflow-hidden">
-                          <div className="relative">
-                            <img src="/placeholder.jpg" alt="Explainer thumbnail" className="w-full h-28 object-cover" />
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                              <div className="w-12 h-12 rounded-full bg-black/40 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                  <path d="M5 3v18l15-9L5 3z" strokeWidth="1.6" />
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="p-3">
-                            <p className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER</p>
-                            <div className="mt-1 text-sm font-semibold text-stone-50">Why this moment escalated</div>
-                            <div className="mt-1 text-xs text-stone-400">0:47 · short brief</div>
-                          </div>
-                        </div>
+                                      {/* Field Map Card - simplified, centered composition */}
+                                      <div className="rounded-2xl border border-white/10 bg-[#0f1416] p-4 flex items-center justify-center">
+                                        <div className="w-full max-w-sm">
+                                          <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">FIELD MAP</div>
+                                          <svg viewBox="0 0 200 100" className="w-full h-32 mt-2">
+                                            <circle cx="50" cy="50" r="8" fill="#f6f6f6" />
+                                            <text x="50" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">YOU</text>
+                                            <circle cx="150" cy="50" r="8" fill="#f6f6f6" />
+                                            <text x="150" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">THEM</text>
+                                            <path d="M60 50 C95 40, 105 40, 140 50" stroke="#f6c27a" strokeWidth="2" fill="none" />
+                                            <path d="M60 55 C95 65, 105 65, 140 55" stroke="#7ee7e0" strokeWidth="2" fill="none" />
+                                            <text x="100" y="30" textAnchor="middle" className="text-[8px] fill-amber-200">urgency</text>
+                                            <text x="100" y="60" textAnchor="middle" className="text-[8px] fill-sky-200">withdrawal</text>
+                                          </svg>
+                                        </div>
+                                      </div>
 
-                        {/* Subordinate branch trigger and compact reference */}
-                        <div className="col-span-2 mt-2 flex items-center justify-between">
-                          <div>
-                            <p className="text-[11px] uppercase tracking-[0.12em] text-stone-500">Explore the deeper pattern</p>
-                            <p className="mt-1 text-sm text-stone-300">This may be part of a longer urgency / retreat cycle.</p>
-                          </div>
-                          <div className="text-sm text-stone-400">
-                            <button className="rounded-full border border-white/8 bg-white/[0.02] px-3 py-1 text-sm font-medium text-stone-100 hover:bg-white/[0.04]">Open branch</button>
-                          </div>
-                        </div>
-                      </div>
+                                      {/* Explainer Card - poster frame */}
+                                      <div className="rounded-2xl border border-white/10 bg-[#0f1416] overflow-hidden flex">
+                                        <div className="w-1/3 bg-cover bg-center" style={{ backgroundImage: "url('/placeholder.jpg')" }} />
+                                        <div className="p-3 flex-1">
+                                          <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER</div>
+                                          <div className="mt-1 text-sm font-semibold text-stone-50">Why this moment escalated</div>
+                                          <div className="mt-2 text-xs text-stone-400">0:47 · short brief</div>
+                                        </div>
+                                      </div>
+                                    </div>
                     </div>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { createClient } from '@/lib/supabase/client'
+import { getAuthRedirectUrl } from '@/lib/supabase/redirect'
 
 export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -22,6 +23,7 @@ export default function SignupPage() {
     setStatusMessage('Creating your account...')
 
     const supabase = createClient()
+    const redirectTo = getAuthRedirectUrl('/auth/callback')
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -29,7 +31,8 @@ export default function SignupPage() {
         data: {
           full_name: fullName,
         },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        // Use environment-aware redirect so Supabase doesn't default back to localhost
+        emailRedirectTo: redirectTo,
       },
     })
 
@@ -40,7 +43,8 @@ export default function SignupPage() {
       return
     }
 
-    setStatusMessage('Success! Please check your email to confirm your account.')
+    // Message should work whether email confirmation is required or not
+    setStatusMessage('Success! If your account requires confirmation, check your email. Otherwise you can sign in now.')
     setIsSubmitting(false)
   }
 
