@@ -11,23 +11,26 @@ export function Navbar() {
           </Link>
 
           <div className="hidden items-center gap-7 md:flex">
-            <Link href="/" className="text-sm text-white/52 transition-colors hover:text-white/82">
+            <Link href="/product" className="text-sm text-white/52 transition-colors hover:text-white/82">
               Product
             </Link>
-            <Link href="/pricing" className="text-sm text-white/52 transition-colors hover:text-white/82">
-              Pricing
+            <Link href="/learn" className="text-sm text-white/52 transition-colors hover:text-white/82">
+              Learn
             </Link>
             <Link href="/dashboard" className="text-sm text-white/52 transition-colors hover:text-white/82">
               Dashboard
+            </Link>
+            <Link href="/invite" className="text-sm text-white/52 transition-colors hover:text-white/82">
+              Invite
             </Link>
           </div>
 
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild className="text-sm text-white/72 hover:bg-white/[0.06] hover:text-white">
-              <Link href="/login">Sign In</Link>
+              <Link href="/signin">Sign In</Link>
             </Button>
             <Button size="sm" asChild className="rounded-full bg-white px-4 text-sm font-semibold text-black hover:bg-white/92">
-              <Link href="/signup">Get Started</Link>
+              <Link href="/get-started">Get Started</Link>
             </Button>
           </div>
         </div>

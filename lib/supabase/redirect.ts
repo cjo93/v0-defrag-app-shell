@@ -1,32 +1,57 @@
-// Helper to produce environment-aware redirect URLs for Supabase auth flows.
-// Uses NEXT_PUBLIC_SITE_URL for production, NEXT_PUBLIC_VERCEL_URL for Vercel previews,
-// and falls back to window.location.origin for local development when available,
-// otherwise to http://localhost:3000.
-export function getAuthRedirectUrl(path = '/auth/callback') {
-  const envSite = process.env.NEXT_PUBLIC_SITE_URL
-  const envVercel = process.env.NEXT_PUBLIC_VERCEL_URL
+/*
+  lib/supabase/redirect.ts
 
-  // Normalize Vercel value into a full URL when present (Vercel may provide domain only)
-  const vercelUrl = envVercel ? (envVercel.startsWith('http') ? envVercel : `https://${envVercel}`) : undefined
+  getAuthRedirectUrl(path)
 
-  // If running in a browser, prefer the current origin for non-localhost deployments
-  if (typeof window !== 'undefined') {
-    const origin = window.location.origin
-    // If we're on localhost/127, treat as dev and return the actual origin
-    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-      return `${origin}${path}`
-    }
-    // If SITE_URL is explicitly provided, prefer it (production)
-    if (envSite) return `${envSite.replace(/\/$/, '')}${path}`
-    // If this is a Vercel preview domain, prefer it
-    if (vercelUrl) return `${vercelUrl.replace(/\/$/, '')}${path}`
-    // Otherwise use the current origin
-    return `${origin}${path}`
+  Behavior:
+  - Prefer NEXT_PUBLIC_SITE_URL (explicit production site).
+  - Then prefer NEXT_PUBLIC_VERCEL_URL (preview / Vercel-hosted).
+  - Then, client-side, use window.location.origin only if either:
+      - the origin is not localhost (so previews are okay), or
+      - NODE_ENV === 'development' (true local dev).
+    This prevents returning localhost in production/previews if env vars are missing.
+  - Last resort: return the path only (relative). This avoids leaking localhost in non-dev environments;
+    Supabase will fall back to the Site URL configured in the Supabase dashboard when given a relative path.
+*/
+
+export function getAuthRedirectUrl(path = '/onboarding') {
+  const nodeEnv = typeof process !== 'undefined' ? process.env.NODE_ENV : undefined;
+  const siteEnv = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_SITE_URL : undefined;
+  const vercelEnv = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_VERCEL_URL : undefined;
+
+  const normalize = (base: string) => {
+    const trimmed = base.replace(/\/$/, '');
+    return trimmed + (path.startsWith('/') ? path : '/' + path);
+  };
+
+  // 1) explicit site URL (production)
+  if (siteEnv && siteEnv.length) {
+    return normalize(siteEnv);
   }
 
-  // Server-side or build-time fallback: prefer SITE_URL -> VERCEL_URL -> localhost
-  if (envSite) return `${envSite.replace(/\/$/, '')}${path}`
-  if (vercelUrl) return `${vercelUrl.replace(/\/$/, '')}${path}`
-  return `http://localhost:3000${path}`
+  // 2) Vercel URL (preview / deployments)
+  if (vercelEnv && vercelEnv.length) {
+    // NEXT_PUBLIC_VERCEL_URL may be like "my-app-abc123.vercel.app" — ensure protocol.
+    const base = vercelEnv.startsWith('http') ? vercelEnv : `https://${vercelEnv}`;
+    return normalize(base);
+  }
+
+  // 3) client-side origin fallback (use only if not exposing localhost in prod)
+  if (typeof window !== 'undefined' && window.location && window.location.origin) {
+    const origin = window.location.origin;
+    const hostname = window.location.hostname;
+
+    // Allow using the origin if:
+    //  - It's not localhost (so preview domains are okay), OR
+    //  - We are in true local development (NODE_ENV === 'development')
+    if (hostname !== 'localhost' || nodeEnv === 'development') {
+      return normalize(origin);
+    }
+  }
+
+  // 4) last-resort: return the path only (relative). This avoids returning "http://localhost:3000" in prod.
+  return path;
 }
+
+export default getAuthRedirectUrl;
 
