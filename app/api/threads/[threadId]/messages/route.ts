@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { runDefragAgent } from '@/lib/defrag/agent'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-
+import { z } from 'zod'
 type Params = { params: Promise<{ threadId: string }> }
 type ThreadWorkspace = { id: string; title: string; user_id: string }
 
