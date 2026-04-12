@@ -45,10 +45,19 @@ export default function PrivacyPage() {
               </section>
 
               <section className="space-y-4">
+<<<<<<< HEAD
                 <h2 className="text-2xl font-semibold text-stone-50">Retention and deletion</h2>
                 <p>
                   You control retention. By default, Defrag retains workspace interactions to enable continuity and pattern recognition. You can request deletion of specific interactions or your entire account through Settings. After a deletion request, we will remove associated content within 30 days, subject to legal retention requirements. Inactive accounts may be purged after 12 months of inactivity following advance notice.
                 </p>
+=======
+                <h2 className="text-2xl font-semibold text-stone-50">Retention Timeline</h2>
+                <ul className="list-disc ml-6 text-stone-300">
+                  <li>By default, your workspace interactions are retained to enable continuity and pattern recognition.</li>
+                  <li>You may request deletion of specific interactions or your entire account at any time via Settings.</li>
+                  <li>After a verified deletion request, associated content is removed within <span className="font-semibold text-stone-50">30 days</span>, subject to legal retention requirements.</li>
+                </ul>
+>>>>>>> ae55f9d (Trust/legal: clarify privacy retention, deletion, contact; expand terms billing, cancellation, refund, contact. info@defrag.app everywhere.)
               </section>
 
               <section className="space-y-4">
@@ -59,11 +68,24 @@ export default function PrivacyPage() {
               </section>
 
               <section className="space-y-4">
-                <h2 className="text-2xl font-semibold text-stone-50">User control and requests</h2>
+                <h2 className="text-2xl font-semibold text-stone-50">Deletion Expectations</h2>
+                <ul className="list-disc ml-6 text-stone-300">
+                  <li>You can access, correct, export, or request deletion of your data from the Settings panel.</li>
+                  <li>Deletion requests are processed promptly and completed within 30 days of verification.</li>
+                  <li>Some data may be retained as required by law or for security purposes, but will not be used for any other purpose.</li>
+                </ul>
+              </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-semibold text-stone-50">Contact</h2>
                 <p>
+<<<<<<< HEAD
                   You can access, correct, export, or request deletion of your data from the Settings panel. For privacy inquiries, email us at{' '}
                   <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>.
                   We will respond to verified requests within a reasonable timeframe.
+=======
+                  For privacy questions or requests, email <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>. We respond to verified requests within a reasonable timeframe.
+>>>>>>> ae55f9d (Trust/legal: clarify privacy retention, deletion, contact; expand terms billing, cancellation, refund, contact. info@defrag.app everywhere.)
                 </p>
               </section>
 

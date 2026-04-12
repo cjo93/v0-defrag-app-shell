@@ -32,6 +32,7 @@ export default function TermsPage() {
               </section>
 
               <section className="space-y-4">
+<<<<<<< HEAD
                 <h2 className="text-2xl font-semibold text-stone-50">Payments and billing</h2>
                 <p>
                   Paid plans (Base, Core, Studio) provide access to higher levels of continuity, reads, and retention. Billing is handled through our secure payment processor. By subscribing, you authorize us to charge your payment method on a recurring basis at the rate shown at checkout.
@@ -41,14 +42,30 @@ export default function TermsPage() {
                   <li>You may cancel at any time from your account Settings. Cancellation takes effect at the end of the current billing period.</li>
                   <li>Refunds are not issued for partial periods, except where required by law or at our discretion for documented service failures.</li>
                   <li>For Studio or custom configurations, billing terms are arranged separately. Contact <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>.</li>
+=======
+                <h2 className="text-2xl font-semibold text-stone-50">Billing & Payment Terms</h2>
+                <ul className="list-disc ml-6 text-stone-300">
+                  <li>Paid plans (Base, Core, Studio) provide access to different levels of continuity and retention.</li>
+                  <li>All payments are processed securely through our billing portal.</li>
+                  <li>For Studio configurations, custom terms may be arranged. Contact <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a> for details.</li>
+>>>>>>> ae55f9d (Trust/legal: clarify privacy retention, deletion, contact; expand terms billing, cancellation, refund, contact. info@defrag.app everywhere.)
                 </ul>
               </section>
 
               <section className="space-y-4">
+<<<<<<< HEAD
                 <h2 className="text-2xl font-semibold text-stone-50">Account and use limitations</h2>
                 <p>
                   You agree not to use Defrag to attempt to defame, harass, or harm others. Avoid sharing material that violates third-party rights. Each account is for a single user; sharing credentials is not permitted. We reserve the right to suspend accounts for abusive or illegal activity.
                 </p>
+=======
+                <h2 className="text-2xl font-semibold text-stone-50">Cancellation & Refunds</h2>
+                <ul className="list-disc ml-6 text-stone-300">
+                  <li>You may cancel your subscription at any time through the billing portal. Cancellation will take effect at the end of your current billing period.</li>
+                  <li>Refunds are not provided for partial billing periods or unused time, except where required by law.</li>
+                  <li>If you believe you are entitled to a refund, contact <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a> and we will review your request promptly.</li>
+                </ul>
+>>>>>>> ae55f9d (Trust/legal: clarify privacy retention, deletion, contact; expand terms billing, cancellation, refund, contact. info@defrag.app everywhere.)
               </section>
 
               <section className="space-y-4">
@@ -66,11 +83,15 @@ export default function TermsPage() {
               </section>
 
               <section className="space-y-4">
-                <h2 className="text-2xl font-semibold text-stone-50">Contact and changes</h2>
+                <h2 className="text-2xl font-semibold text-stone-50">Contact</h2>
                 <p>
+<<<<<<< HEAD
                   For questions about these terms or your account, email{' '}
                   <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>.
                   We may update these terms; we will post changes and the effective date on this page. Continued use after changes constitutes acceptance.
+=======
+                  For questions about these terms, billing, or your account, email <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>. We may update these terms; changes and the effective date will be posted on this page.
+>>>>>>> ae55f9d (Trust/legal: clarify privacy retention, deletion, contact; expand terms billing, cancellation, refund, contact. info@defrag.app everywhere.)
                 </p>
               </section>
             </div>
