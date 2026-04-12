@@ -50,6 +50,13 @@ export default function TermsPage() {
               </section>
 
               <section className="space-y-4">
+                <h2 className="text-2xl font-semibold text-stone-50">Governing law and jurisdiction</h2>
+                <p>
+                  These Terms are governed by the laws of the state of California, without regard to conflict of law principles. Any dispute arising under or related to these Terms will be subject to the exclusive jurisdiction of the state and federal courts located in San Francisco County, California.
+                </p>
+              </section>
+
+              <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-stone-50">Contact and changes</h2>
                 <p>
                   For questions about these terms, email <a href="mailto:legal@defrag.com" className="underline">legal@defrag.com</a>. We may update these terms; we will post changes and the effective date on this page.
