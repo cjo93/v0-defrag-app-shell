@@ -120,91 +120,152 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="relative min-h-[min(640px,78svh)] overflow-hidden rounded-[34px] border border-white/10 bg-[#111315] text-stone-100 shadow-[0_50px_140px_rgba(0,0,0,0.55)] ring-1 ring-white/[0.07]">
-              <div className="defrag-ambient-breathe pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,_rgba(223,191,123,0.22),_transparent_18%),radial-gradient(circle_at_74%_16%,_rgba(98,137,145,0.2),_transparent_24%),linear-gradient(180deg,_rgba(255,255,255,0.04),_transparent_36%)]" />
-              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/8 to-transparent" />
+            <div className="relative min-h-[min(640px,78svh)] overflow-hidden rounded-[34px] border border-white/10 bg-[#0f1114] text-stone-100 shadow-[0_60px_160px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.06]">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,_rgba(223,191,123,0.12),_transparent_18%),radial-gradient(circle_at_74%_16%,_rgba(98,137,145,0.12),_transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_36%)]" />
+              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/6 to-transparent" />
 
               <div className="relative flex h-full flex-col">
                 <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Live workspace</p>
-                    <p className="mt-1 text-sm font-medium text-stone-100">Misread intent / repair path</p>
+                    <p className="mt-1 text-sm font-medium text-stone-100">Misread intent · pattern · repair</p>
                   </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-200">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
                     Field active
                   </div>
                 </div>
 
-                <div className="grid flex-1 grid-cols-1 lg:grid-cols-[310px_1fr]">
-                  <div className="border-b border-white/10 bg-white/[0.03] lg:border-b-0 lg:border-r lg:border-white/10">
-                    <div className="space-y-5 p-5">
-                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Interpretation</p>
-                        <p className="mt-3 text-sm leading-6 text-stone-100">
-                          Urgency may have landed as criticism before your care became visible.
-                        </p>
+                <div className="grid flex-1 grid-cols-1 lg:grid-cols-[420px_1fr]">
+                  {/* Left: Main vertical thread */}
+                  <div className="border-b border-white/10 bg-white/[0.02] lg:border-b-0 lg:border-r lg:border-white/10">
+                    <div className="space-y-4 p-5">
+                      <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-4 shadow-sm">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">YOU BROUGHT IN</p>
+                        <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“I said, ‘Why do you always go quiet when I bring this up?’ and the whole thing shut down again.”</p>
                       </div>
-                      <div className="rounded-2xl border border-amber-300/15 bg-amber-200/10 p-4">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/80">Pressure note</p>
-                        <p className="mt-3 text-sm leading-6 text-stone-200">
-                          Stress was already high, so the opening read like threat.
-                        </p>
+
+                      <div className="rounded-2xl border border-white/8 bg-[#111317] p-4">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">DEFRAg primary read</p>
+                        <h3 className="mt-2 text-lg font-semibold text-stone-50">WHAT CHANGED</h3>
+                        <p className="mt-2 text-sm text-stone-300">The question carried urgency; the word “always” likely turned it into a character judgment rather than a pattern-check.</p>
+
+                        <div className="mt-3 space-y-2">
+                          <p className="text-sm font-semibold text-stone-200">HOW IT MAY HAVE LANDED</p>
+                          <ul className="mt-1 ml-3 list-inside list-disc text-sm text-stone-300">
+                            <li>accusation before safety</li>
+                            <li>pressure before reflection</li>
+                            <li>being cornered before being understood</li>
+                          </ul>
+                        </div>
+
+                        <div className="mt-3 space-y-2">
+                          <p className="text-sm font-semibold text-stone-200">WHAT DEFRAg SEES</p>
+                          <p className="text-sm text-stone-300">A repeating loop: urgency → withdrawal → silence confirms fear → more urgency.</p>
+                        </div>
+
+                        <div className="mt-3 rounded-md border border-emerald-300/16 bg-emerald-300/6 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.16em] text-emerald-100/85">WHAT HELPS NEXT</p>
+                          <p className="mt-2 text-sm text-stone-100">Lower pressure first, then reopen the topic without blame.</p>
+                        </div>
                       </div>
-                      <div className="rounded-2xl border border-white/10 bg-[#17191c] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Safer branch</p>
-                        <p className="mt-3 text-sm leading-6 text-stone-100">
-                          Reassure first, then ask for a quieter window.
-                        </p>
+
+                      <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-4">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">REWRITE OUTPUT</p>
+                        <p className="mt-3 text-sm text-stone-100 italic">REPAIR OPENING</p>
+                        <div className="mt-2 text-sm text-stone-200">“I’m not trying to pin this on you. I think we both get stuck here, and I want to understand what happens for you when this comes up.”</div>
+                      </div>
+
+                      <div className="text-sm text-stone-400"> 
+                        <button className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-stone-300 hover:text-stone-100 transition">Explore the deeper pattern ⌄</button>
                       </div>
                     </div>
                   </div>
 
-                  <div className="relative p-4 sm:p-6">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(223,191,123,0.14),_transparent_34%)]" />
-                    <div className="relative grid h-full grid-rows-[auto_1fr_auto] gap-4">
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div>
-                          <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Field</p>
-                          <h2 className="mt-1 text-xl font-semibold tracking-tight text-stone-50">Intent, stress, and history are pulling the same line apart.</h2>
+                  {/* Right: Artifacts canvas */}
+                  <div className="relative p-6">
+                    <div className="grid h-full grid-rows-[auto_1fr] gap-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1">
+                          <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Artifacts</p>
+                          <h3 className="text-lg font-semibold text-stone-50">Field map · explainer · branches</h3>
                         </div>
-                        <div className="flex gap-2 text-[11px] uppercase tracking-[0.18em] text-stone-300">
-                          <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1">Map live</span>
-                          <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1">3 branches</span>
-                        </div>
+                        <div className="text-sm text-stone-400">Live · 0:47</div>
                       </div>
 
-                      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-inner shadow-black/20">
-                        <div className="absolute left-[18%] top-[20%] h-28 w-28 rounded-full border border-amber-200/30 bg-amber-200/10 blur-[1px] motion-safe:animate-pulse" />
-                        <div className="absolute right-[18%] top-[24%] h-24 w-24 rounded-full border border-sky-200/25 bg-sky-200/10 blur-[1px]" />
-                        <div className="absolute bottom-[18%] left-[34%] h-36 w-36 rounded-full border border-white/10 bg-white/[0.04]" />
-                        <div className="absolute left-[26%] top-[32%] h-px w-[34%] rotate-[10deg] bg-gradient-to-r from-amber-200/60 to-transparent" />
-                        <div className="absolute left-[44%] top-[44%] h-px w-[26%] -rotate-[28deg] bg-gradient-to-r from-white/50 to-transparent" />
-                        <div className="absolute left-[33%] top-[57%] h-px w-[18%] rotate-[34deg] bg-gradient-to-r from-sky-200/55 to-transparent" />
-
-                        <div className="absolute left-[11%] top-[14%] max-w-[180px] rounded-2xl border border-white/10 bg-[#181b1f]/90 p-3 shadow-2xl">
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Intent</p>
-                          <p className="mt-2 text-sm text-stone-100">You meant: clear this up before it festers.</p>
-                        </div>
-                        <div className="absolute right-[7%] top-[18%] max-w-[200px] rounded-2xl border border-white/10 bg-[#181b1f]/90 p-3 shadow-2xl">
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Likely read</p>
-                          <p className="mt-2 text-sm text-stone-100">They heard: I am in trouble again.</p>
-                        </div>
-                        <div className="absolute bottom-[10%] left-[18%] max-w-[260px] rounded-2xl border border-emerald-300/20 bg-emerald-300/10 p-4 shadow-2xl">
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-emerald-100/85">Repair opening</p>
-                          <p className="mt-2 text-sm leading-6 text-stone-100">
-                            “I’m not trying to come at you. I want to understand what this felt like on your side.”
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-3">
-                        {productPlanes.map((plane) => (
-                          <div key={plane.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                            <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">{plane.title}</p>
-                            <p className="mt-2 text-sm leading-6 text-stone-300">{plane.body}</p>
+                      <div className="relative grid grid-cols-2 gap-4">
+                        {/* Field Map (Artifact A) */}
+                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] p-4 flex items-center justify-center">
+                          <div className="w-full">
+                            <div className="flex items-center justify-between mb-2 text-[10px] uppercase tracking-[0.16em] text-stone-500">FIELD MAP — LIVE <span className="text-emerald-300 text-xs">Live</span></div>
+                            <svg viewBox="0 0 220 120" className="w-full h-36">
+                              <defs>
+                                <linearGradient id="g1" x1="0" x2="1">
+                                  <stop offset="0%" stopColor="#f6c27a" stopOpacity="0.9" />
+                                  <stop offset="100%" stopColor="#7ee7e0" stopOpacity="0.9" />
+                                </linearGradient>
+                              </defs>
+                              {/* Nodes */}
+                              <circle cx="60" cy="40" r="10" fill="#fff" opacity="0.95" />
+                              <text x="60" y="68" textAnchor="middle" className="text-[10px] fill-stone-200">YOU</text>
+                              <circle cx="160" cy="40" r="10" fill="#fff" opacity="0.95" />
+                              <text x="160" y="68" textAnchor="middle" className="text-[10px] fill-stone-200">THEM</text>
+                              {/* Vectors */}
+                              <path d="M70 40 C100 30, 120 30, 150 40" stroke="#f6c27a" strokeWidth="2" fill="none" opacity="0.9" />
+                              <path d="M150 40 C120 50, 100 50, 70 40" stroke="#7ee7e0" strokeWidth="2" fill="none" opacity="0.85" />
+                              {/* Labels */}
+                              <text x="110" y="26" textAnchor="middle" className="text-[9px] fill-amber-200">urgency</text>
+                              <text x="110" y="54" textAnchor="middle" className="text-[9px] fill-sky-200">withdrawal</text>
+                              <text x="120" y="42" textAnchor="middle" className="text-[9px] fill-stone-300">defensiveness</text>
+                            </svg>
                           </div>
-                        ))}
+                        </div>
+
+                        {/* Explainer Card (Artifact B) */}
+                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] p-3">
+                          <div className="relative overflow-hidden rounded-md bg-[#0b0d0f]">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="w-12 h-12 rounded-full bg-white/6 flex items-center justify-center">
+                                <svg className="w-5 h-5 text-stone-50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                  <path d="M5 3v18l15-9L5 3z" strokeWidth="1.5" />
+                                </svg>
+                              </div>
+                            </div>
+                            <div className="p-4 pt-12">
+                              <div className="flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER — WHY THIS ESCALATED</p>
+                                <p className="text-xs text-stone-400">0:47</p>
+                              </div>
+                              <h4 className="mt-2 text-sm font-semibold text-stone-50">How urgency + withdrawal turned one question into a shutdown loop.</h4>
+                              <p className="mt-2 text-sm text-stone-300">Short educational explainer tied to this moment — poster frame and caption.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Branch Trigger (Artifact C) */}
+                        <div className="col-span-2 rounded-2xl border border-white/8 bg-[#0f1416] p-3 flex items-center justify-between">
+                          <div>
+                            <p className="text-[11px] uppercase tracking-[0.12em] text-stone-500">Explore the deeper pattern</p>
+                            <p className="mt-1 text-sm text-stone-300">“This may be part of a longer urgency / retreat cycle. Open branch.”</p>
+                          </div>
+                          <div className="ml-4">
+                            <button className="rounded-full border border-white/8 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-stone-100 hover:bg-white/[0.06]">Open branch</button>
+                          </div>
+                        </div>
+
+                        {/* Expandable reference drawer (visual only) */}
+                        <div className="col-span-2 mt-2 rounded-2xl border border-white/6 bg-[#0f1416] p-3">
+                          <div className="flex items-center justify-between">
+                            <p className="text-[11px] uppercase tracking-[0.12em] text-stone-500">Reference</p>
+                            <button className="text-sm text-stone-300">⌄</button>
+                          </div>
+                          <div className="mt-2 grid grid-cols-2 gap-3 text-sm text-stone-300">
+                            <div>word trigger: <span className="text-stone-100">always</span></div>
+                            <div>pressure level: <span className="text-stone-100">high</span></div>
+                            <div>repair window: <span className="text-stone-100">after decompression</span></div>
+                            <div>pattern signal: <span className="text-stone-100">pursuit / withdrawal</span></div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

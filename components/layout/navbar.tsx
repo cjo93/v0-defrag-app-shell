@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-40 border-b border-white/8 bg-[#080a11]/88 backdrop-blur-xl">
+    <nav className="sticky top-0 z-40 border-b border-white/8 bg-gradient-to-r from-[#0b0f12]/80 via-[#0a0c10]/70 to-[#0d0f11]/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="text-lg font-semibold tracking-[0.18em] text-white transition-colors hover:text-white/86">
