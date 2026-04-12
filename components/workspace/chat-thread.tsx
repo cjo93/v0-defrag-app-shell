@@ -11,11 +11,26 @@ import {
 } from '@/components/ui/empty'
 
 
-type WorkspaceMessage = {
+export type WorkspaceMessage = {
   id: string
-  role: 'user' | 'assistant'
+  // New canonical shape used by ChatThread
+  role?: 'user' | 'assistant'
   content: string
   created_at?: string
+
+  // Legacy/expanded fields used elsewhere in the workspace until fully migrated
+  author?: string
+  timestamp?: string
+  type?: 'interpretation' | 'insight' | 'user' | 'rewrite'
+  sources?: {
+    name: string
+    description: string
+    detail: string
+  }[]
+  followUp?: {
+    label: string
+    action: string
+  }[]
 }
 
 export const initialWorkspaceMessages: WorkspaceMessage[] = [

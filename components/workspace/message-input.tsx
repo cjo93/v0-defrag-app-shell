@@ -26,7 +26,26 @@ export function MessageInput({
   helperText,
 }: MessageInputProps) {
   const [message, setMessage] = useState('')
-  const [isVoiceActive, setIsVoiceActive] = useState(false)
+
+  // Minimal attachment actions to avoid undefined reference in this component.
+  // These are UI-only placeholders; real handlers are implemented elsewhere.
+  const attachmentActions = [
+    { label: 'Image', hint: 'Attach an image' },
+    { label: 'Document', hint: 'Attach a file' },
+    { label: 'Voice', hint: 'Record voice' },
+  ]
+
+  const handleSend = async () => {
+    if (!message.trim() || isSubmitting) return
+
+    try {
+      await onSubmit?.(message.trim())
+      setMessage('')
+    } catch (err) {
+      console.error('Message send failed', err)
+    }
+  }
+
   const composer = (
     <>
       <DropdownMenu>
@@ -35,7 +54,7 @@ export function MessageInput({
             size="sm"
             variant="ghost"
             disabled={disabled || isSubmitting}
-            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.05] px-0 text-white/68 hover:bg-white/5 active:scale-[0.98] transition-all duration-200"
+            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/5 px-0 text-white/68 hover:bg-white/5 active:scale-[0.98] transition-all duration-200"
           >
             +
           </Button>
@@ -78,7 +97,7 @@ export function MessageInput({
 
   if (compact) {
     return (
-      <div className="space-y-3 rounded-[1.4rem] border border-white/8 bg-white/[0.04] p-3 sm:p-3.5">
+        <div className="space-y-3 rounded-[1.4rem] border border-white/8 bg-white/4 p-3 sm:p-3.5">
         <div className="flex flex-col gap-1 px-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/36">Bring the moment in</p>
           <span className="text-[11px] text-white/28">Plain language works best</span>
@@ -95,13 +114,13 @@ export function MessageInput({
   }
 
   return (
-    <div className="space-y-3 rounded-[1.6rem] border border-white/8 bg-white/[0.04] p-4">
+    <div className="space-y-3 rounded-[1.6rem] border border-white/8 bg-white/4 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3 px-1">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/36">Bring the moment in</p>
           <p className="mt-1 text-xs text-white/30">Keep it direct. Defrag will translate the pressure into clearer context.</p>
         </div>
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/46">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/46">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,0.8)]" />
           Live field
         </div>
