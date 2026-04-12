@@ -232,9 +232,31 @@ export default function LandingPage() {
                                         </div>
                                       </div>
 
-                                      {/* Explainer Card - poster frame */}
+                                      {/* Explainer Card - poster frame (premium fallback + optional image) */}
                                       <div className="rounded-2xl border border-white/10 bg-[#0f1416] overflow-hidden flex">
-                                        <div className="w-1/3 bg-cover bg-center" style={{ backgroundImage: "url('/placeholder.jpg')" }} />
+                                        {/* Left: poster visual. Use a layered background so a gradient/texture shows when the image is missing. */}
+                                        <div
+                                          className="w-1/3 relative bg-cover bg-center"
+                                          style={{
+                                            // Gradient first — ensures a premium fallback even if the image is missing/broken.
+                                            backgroundImage:
+                                              "radial-gradient(circle at 30% 30%, rgba(135,89,255,0.10), transparent 35%), linear-gradient(180deg, rgba(0,0,0,0.18), rgba(11,13,14,0.6)), url('/placeholder.jpg')",
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                          }}
+                                          aria-hidden={true}
+                                        >
+                                          {/* Subtle overlay texture to keep the surface premium */}
+                                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02),transparent_40%)]" />
+                                          {/* Centered play affordance */}
+                                          <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+                                              <svg className="h-6 w-6 text-white/86" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                                <path d="M8 5v14l11-7z" />
+                                              </svg>
+                                            </div>
+                                          </div>
+                                        </div>
                                         <div className="p-3 flex-1">
                                           <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER</div>
                                           <div className="mt-1 text-sm font-semibold text-stone-50">Why this moment escalated</div>
