@@ -2,7 +2,9 @@
 
 import { Sidebar } from '@/components/layout/sidebar'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { hasAccess } from '@/lib/entitlement'
+import { UpgradeGate } from '@/components/upgrade-gate'
 
 type DashboardMode = 'locked' | 'active'
 
@@ -52,13 +54,47 @@ const nextMoves = [
 
 export default function DashboardPage() {
   const [showFrameworkDetails, setShowFrameworkDetails] = useState(false)
+  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null)
+  const [profileLoading, setProfileLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch('/api/profile', { method: 'GET' })
+        const data = await res.json()
+        setSubscriptionTier(data?.subscription_tier || null)
+      } catch {
+        setSubscriptionTier(null)
+      } finally {
+        setProfileLoading(false)
+      }
+    }
+    fetchProfile()
+  }, [])
+
+  if (profileLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#0f1012] text-stone-100">
+        <span>Loading your dashboard…</span>
+      </div>
+    )
+  }
+
+  if (!hasAccess(subscriptionTier, 'base')) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#0f1012] text-stone-100">
+        <UpgradeGate requiredTier="base" currentTier={subscriptionTier} benefit="Your current plan does not include premium dashboard access. Upgrade to Base or Core to unlock full features." />
+      </div>
+    )
+  }
+
   const hasCompletedBaseline = dashboardMode === 'active'
 
   return (
     <div className="flex h-screen bg-[#0f1012] text-stone-100">
       <Sidebar />
 
-      <div className="flex flex-1 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(120,92,46,0.18),_transparent_24%),radial-gradient(circle_at_78%_18%,_rgba(74,111,118,0.18),_transparent_24%),linear-gradient(180deg,_#101113_0%,_#0d0e10_100%)]">
+      <div className="flex flex-1 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,rgba(120,92,46,0.18),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(74,111,118,0.18),transparent_24%),linear-gradient(180deg,#101113_0%,#0d0e10_100%)]">
         <header className="border-b border-white/8 bg-[#101214]/88 px-5 py-5 backdrop-blur-md md:px-8 xl:px-10">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-2">
@@ -78,13 +114,13 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/pricing"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/3 px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
               >
                 Pricing
               </Link>
               <Link
                 href="/learn"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/3 px-6 text-sm font-semibold text-stone-200 transition hover:bg-white/[0.07]"
               >
                 Learn
               </Link>
@@ -97,8 +133,8 @@ export default function DashboardPage() {
             <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
               {!hasCompletedBaseline ? (
                 <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(145deg,rgba(32,27,19,0.98),rgba(19,20,22,0.96))] p-6 sm:p-8">
-                  <div className="absolute left-[-30px] top-[-40px] h-36 w-36 rounded-full bg-amber-300/10 blur-3xl" />
-                  <div className="absolute right-[-40px] bottom-[-60px] h-40 w-40 rounded-full bg-sky-300/8 blur-3xl" />
+                  <div className="absolute -left-7.5 -top-10 h-36 w-36 rounded-full bg-amber-300/10 blur-3xl" />
+                  <div className="absolute -right-10 -bottom-15 h-40 w-40 rounded-full bg-sky-300/8 blur-3xl" />
 
                   <div className="relative space-y-6">
                     <div className="flex flex-wrap items-start justify-between gap-4">
@@ -142,7 +178,7 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="relative overflow-hidden rounded-[30px] border border-emerald-300/12 bg-[linear-gradient(145deg,rgba(18,21,22,0.96),rgba(15,16,18,0.96))] p-6 sm:p-8">
-                  <div className="absolute right-[-20px] top-[-20px] h-32 w-32 rounded-full bg-emerald-300/10 blur-3xl" />
+                  <div className="absolute -right-5 -top-5 h-32 w-32 rounded-full bg-emerald-300/10 blur-3xl" />
                   <div className="relative space-y-5">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
@@ -175,7 +211,7 @@ export default function DashboardPage() {
                           ['Gene Keys', 'Growth patterns around honesty and calm.'],
                           ['Numerology', 'A cycle emphasizing accountability.'],
                         ].map(([title, body]) => (
-                          <div key={title} className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                          <div key={title} className="rounded-2xl border border-white/8 bg-white/3 p-4">
                             <p className="text-sm font-semibold text-stone-100">{title}</p>
                             <p className="mt-1 text-sm leading-6 text-stone-300">{body}</p>
                           </div>
@@ -187,7 +223,7 @@ export default function DashboardPage() {
               )}
 
               <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(160deg,rgba(17,18,20,0.98),rgba(13,14,16,0.96))] p-6 sm:p-8">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,_rgba(81,140,152,0.18),_transparent_24%),radial-gradient(circle_at_18%_16%,_rgba(207,171,101,0.18),_transparent_22%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(81,140,152,0.18),transparent_24%),radial-gradient(circle_at_18%_16%,rgba(207,171,101,0.18),transparent_22%)]" />
                 <div className="relative space-y-5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -199,7 +235,7 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-white/8 bg-white/[0.04] p-4">
+                  <div className="rounded-[24px] border border-white/8 bg-white/4 p-4">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-stone-500">Current recommendation</p>
                       <span className="inline-flex items-center gap-2 text-[11px] text-stone-400">
@@ -220,7 +256,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+                    <div className="rounded-2xl border border-white/8 bg-white/4 p-4">
                       <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Primary action</p>
                       <Link
                         href="/workspace"
@@ -229,7 +265,7 @@ export default function DashboardPage() {
                         Resume live workspace
                       </Link>
                     </div>
-                    <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+                    <div className="rounded-2xl border border-white/8 bg-white/4 p-4">
                       <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Field state</p>
                       <p className="mt-3 text-sm leading-6 text-stone-200">Validation-first branch is outperforming direct problem entry.</p>
                     </div>
@@ -266,7 +302,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6">
+              <div className="rounded-[26px] border border-white/8 bg-white/3 p-5 sm:p-6">
                 <div className="mb-4 flex items-end justify-between gap-4">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Who and where</p>
@@ -282,7 +318,7 @@ export default function DashboardPage() {
                         <p className="text-sm font-semibold text-stone-100">{thread.title}</p>
                         <p className="mt-1 text-sm leading-6 text-stone-400">{thread.note}</p>
                       </div>
-                      <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-400">
+                      <span className="rounded-full border border-white/10 bg-white/3 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-400">
                         {thread.state}
                       </span>
                     </div>
@@ -290,7 +326,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6 lg:col-span-2 xl:col-span-1">
+              <div className="rounded-[26px] border border-white/8 bg-white/3 p-5 sm:p-6 lg:col-span-2 xl:col-span-1">
                 <div className="mb-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Suggested move</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-50">What may help next</h3>

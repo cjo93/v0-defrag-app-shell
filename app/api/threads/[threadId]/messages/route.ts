@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { runDefragAgent } from "@/lib/defrag/agent";
+import { requireTier } from '@/lib/entitlement'
+import { getCurrentUserProfile } from '@/lib/supabase/profile'
 
 type Params = { params: Promise<{ threadId: string }> };
 
@@ -34,6 +36,13 @@ export async function POST(req: Request, { params }: Params) {
   }
 
   const { content } = await req.json();
+
+  // Fetch user profile and check entitlement (single source of truth)
+  const profile = await getCurrentUserProfile();
+  const entitlementError = requireTier(profile, 'base');
+  if (entitlementError) {
+    return NextResponse.json(entitlementError, { status: 403 });
+  }
 
   // Supabase may return joined workspace as an array or object depending on the query result.
   // Cast to any for minimal friction and normalize the workspace shape for safe access.

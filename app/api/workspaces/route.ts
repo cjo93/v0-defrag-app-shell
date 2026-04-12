@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { requireTier } from '@/lib/entitlement'
+import { getCurrentUserProfile } from '@/lib/supabase/profile'
 
 export async function POST(req: Request) {
   let supabase;
@@ -27,6 +29,13 @@ export async function POST(req: Request) {
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Entitlement check (single source of truth)
+  const profile = await getCurrentUserProfile();
+  const entitlementError = requireTier(profile, 'base');
+  if (entitlementError) {
+    return NextResponse.json(entitlementError, { status: 403 });
   }
 
   const body = await req.json();

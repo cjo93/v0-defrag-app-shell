@@ -1,8 +1,10 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { BasedOnDisclosure } from './based-on-disclosure'
-import { IconPerspective, IconRewrite, IconSimulations } from '@/components/icons/DefragIcons'
+import { IconSimulations } from '@/components/icons/DefragIcons'
 
+// Add Scenario type
 interface Scenario {
   id: string
   type: 'rewrite' | 'simulation' | 'perspective'
@@ -16,51 +18,8 @@ interface Scenario {
   }[]
 }
 
+// Demo scenarios (should be replaced with real data in production)
 const scenarios: Scenario[] = [
-  {
-    id: '1',
-    type: 'rewrite',
-    icon: IconRewrite,
-    title: 'Softer opening',
-    content:
-      '“I want to check in about something” lowers the threat signal and gives the conversation a calmer first step.',
-    sources: [
-      {
-        name: 'Communication safety',
-        description: 'How language creates openness',
-        detail:
-          'Threat-coded language can trigger defensiveness before understanding, while a softer opening leaves more room for curiosity.',
-      },
-      {
-        name: 'Body response',
-        description: 'What happens before thinking',
-        detail:
-          'The nervous system often closes before reflection begins, so wording that feels safer buys you more listening room.',
-      },
-    ],
-  },
-  {
-    id: '2',
-    type: 'perspective',
-    icon: IconPerspective,
-    title: 'Their likely read',
-    content:
-      'They may be hearing criticism first. If that happens, their body can brace before they fully understand what you mean.',
-    sources: [
-      {
-        name: 'Relational history',
-        description: 'Their protective patterns',
-        detail:
-          'Past experiences with criticism can activate protection quickly, especially when the opening feels sudden or loaded.',
-      },
-      {
-        name: 'Sensitivity to pressure',
-        description: 'What they may already be feeling',
-        detail:
-          'If they are already carrying stress, even practical language can sound more confrontational than you intended.',
-      },
-    ],
-  },
   {
     id: '3',
     type: 'simulation',
@@ -85,58 +44,114 @@ const scenarios: Scenario[] = [
   },
 ]
 
-const scenarioTone = {
-  rewrite: 'border-white/10 bg-white/[0.045]',
-  perspective: 'border-secondary/16 bg-gradient-to-br from-secondary/10 via-secondary/5 to-black/18',
-  simulation: 'border-primary/18 bg-gradient-to-br from-primary/12 via-primary/6 to-black/18',
+
+
+// Utility: Reactive mobile detection
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile
 }
 
 export function BranchThread() {
+  // For progressive disclosure on mobile
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+  const mobile = useIsMobile()
+
+  // For mobile collapse/expand
+  function toggleExpand(id: string) {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
+
   return (
-    <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4 sm:py-5">
-      <div className="mx-auto max-w-xl space-y-4">
-        <div className="sticky top-0 z-10 rounded-[1.4rem] border border-white/8 bg-[#0b0d14]/92 px-4 py-3 backdrop-blur-xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Branch lane</p>
-          <p className="mt-1 text-sm text-white/72">Alternate ways this moment could land.</p>
+    <div className="flex-1 overflow-y-auto pb-28 px-3 py-4 sm:px-4 sm:py-5 bg-linear-to-b from-[#181c28] via-[#10131b] to-[#0b0d14]">
+      <div className="mx-auto max-w-2xl space-y-6">
+        {/* Sticky header: strong anchor, left/top bias, higher contrast */}
+        <div className="sticky top-0 z-10 bg-linear-to-r from-[#181c28]/90 via-[#0b0d14]/85 to-[#181c28]/90 px-4 py-3 backdrop-blur-xl border-b border-white/10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">Branch lane</p>
+          <p className="mt-1 text-sm text-white/55">Alternate ways this moment could land.</p>
         </div>
 
-        {scenarios.map((scenario) => {
+        {scenarios.map((scenario: Scenario, idx: number) => {
           const Icon = scenario.icon
+          const isPrimary = idx === 0
+          const isSecondary = !isPrimary
+          const collapsed = mobile && isSecondary && !expanded[scenario.id as keyof typeof expanded]
 
           return (
             <div
               key={scenario.id}
-              className={`overflow-hidden rounded-[1.5rem] border p-4 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-5 ${scenarioTone[scenario.type]}`}
+              className={`overflow-hidden rounded-3xl border p-4 sm:p-5
+                ${isPrimary
+                  ? 'bg-white/6 border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.25)]'
+                  : 'bg-white/3 border-white/8'}
+                ${!isPrimary ? 'opacity-70' : ''}
+                transition-all duration-200
+              `}
             >
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/82">
+                  <div className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/6 ${isSecondary ? 'text-white/40' : 'text-white/82'}`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">
+                    <p className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isSecondary ? 'text-white/40' : 'text-white/55'}`}> 
                       {scenario.type === 'simulation'
                         ? 'Practice path'
                         : scenario.type === 'rewrite'
                           ? 'Rewrite'
                           : 'Perspective'}
                     </p>
-                    <p className="mt-1 text-base font-semibold text-white/90">{scenario.title}</p>
+                    <p className="mt-1 text-base font-semibold text-white/95">{scenario.title}</p>
                   </div>
                 </div>
 
-                <p className="text-[15px] leading-7 text-white/82 sm:text-base">{scenario.content}</p>
+                {/* Progressive disclosure: summary only on mobile for secondary, expand on tap */}
+                <div>
+                  <div className="relative">
+                    <p className={`text-[15px] leading-7 ${isSecondary ? 'text-white/55' : 'text-white/95'} sm:text-base`}>
+                      {collapsed ? scenario.content.slice(0, 72) : scenario.content}
+                    </p>
+                    {collapsed && (
+                      <div className="absolute bottom-0 left-0 right-0 h-6 bg-linear-to-t from-[#0b0d14] to-transparent" />
+                    )}
+                  </div>
+                  {mobile && isSecondary && (
+                    <button
+                      className="mt-2 text-xs text-emerald-400 underline underline-offset-2"
+                      onClick={() => toggleExpand(scenario.id)}
+                    >
+                      {collapsed ? 'Show more' : 'Show less'}
+                    </button>
+                  )}
+                </div>
 
-                <div className="flex flex-wrap gap-2">
-                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                {/* Buttons: premium interaction, no ripple */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <button
+                    className={`inline-flex min-h-11 items-center rounded-full bg-white/5 px-4 py-3 text-sm font-medium transition-all duration-200 ease-out hover:bg-white/8 active:scale-[0.98] ${isSecondary ? 'text-white/40' : 'text-emerald-400'}`}
+                  >
                     Try this wording
                   </button>
-                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                  <button
+                    className={`inline-flex min-h-11 items-center rounded-full bg-white/5 px-4 py-3 text-sm font-medium transition-all duration-200 ease-out hover:bg-white/8 active:scale-[0.98] ${isSecondary ? 'text-white/40' : 'text-emerald-400'}`}
+                  >
                     Compare to primary lane
                   </button>
                 </div>
 
-                {scenario.sources && <BasedOnDisclosure compactLabel="Why this path may land better" sources={scenario.sources} />}
+                {/* Progressive disclosure: sources hidden by default on mobile for secondary */}
+                {scenario.sources && (!mobile || !isSecondary || expanded[scenario.id as keyof typeof expanded]) && (
+                  <BasedOnDisclosure
+                    compactLabel="Why this path may land better"
+                    sources={scenario.sources}
+                  />
+                )}
               </div>
             </div>
           )

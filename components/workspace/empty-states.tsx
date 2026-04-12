@@ -1,14 +1,17 @@
 export function EmptyThreadState() {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
-      <div className="space-y-3">
-        <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto">
-          <svg className="w-6 h-6 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center animate-in fade-in duration-300 transition-all">
+      <div className="space-y-4">
+        <div className="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-400/20 flex items-center justify-center mx-auto transition-all duration-200 ease-out">
+          <svg className="w-6 h-6 text-emerald-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <h3 className="text-sm font-semibold text-foreground">No conversation yet</h3>
-        <p className="text-xs text-muted-foreground/70 max-w-xs font-light">Describe an interaction using the input below to generate relational analysis</p>
+        <h3 className="text-lg font-bold text-white/90 transition-all duration-200 ease-out">Start with a moment.</h3>
+        <p className="text-base text-white/60 font-normal">We'll show you how it actually lands.</p>
+        <div className="mt-4">
+          <span className="inline-block rounded-full bg-white/5 px-5 py-3 text-base font-semibold text-emerald-300 shadow-sm transition-all duration-200 ease-out">Describe your moment below</span>
+        </div>
       </div>
     </div>
   )

@@ -27,36 +27,6 @@ export function MessageInput({
 }: MessageInputProps) {
   const [message, setMessage] = useState('')
   const [isVoiceActive, setIsVoiceActive] = useState(false)
-
-  const handleSend = async () => {
-    const value = message.trim()
-
-    if (!value || isSubmitting || disabled) {
-      return
-    }
-
-    try {
-      await onSubmit?.(value)
-      setMessage('')
-    } catch {
-      // Parent state handles surfaced errors.
-    }
-  }
-
-  const handleVoiceStart = () => {
-    setIsVoiceActive(true)
-  }
-
-  const handleVoiceStop = () => {
-    setIsVoiceActive(false)
-  }
-
-  const attachmentActions = [
-    { label: 'Upload image', hint: 'Screenshots or photo context' },
-    { label: 'Upload document', hint: 'Messages, notes, or transcripts' },
-    { label: 'Voice note', hint: 'Capture tone and pacing' },
-  ]
-
   const composer = (
     <>
       <DropdownMenu>
@@ -65,65 +35,43 @@ export function MessageInput({
             size="sm"
             variant="ghost"
             disabled={disabled || isSubmitting}
-            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.05] px-0 text-white/68 hover:border-white/16 hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-11 w-11 rounded-2xl border border-white/10 bg-white/[0.05] px-0 text-white/68 hover:bg-white/5 active:scale-[0.98] transition-all duration-200"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
+            +
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-60 border-white/10 bg-[#10131d]/96 text-white">
+        <DropdownMenuContent className="w-60 border-white/10 bg-[#10131d]/96 text-white">
           {attachmentActions.map((action) => (
-            <DropdownMenuItem key={action.label} className="cursor-pointer py-3 focus:bg-white/[0.08]">
+            <DropdownMenuItem key={action.label}>
               <div>
-                <div className="text-sm font-medium text-white/86">{action.label}</div>
-                <div className="text-xs text-white/48">{action.hint}</div>
+                <div className="text-sm font-medium">{action.label}</div>
+                <div className="text-xs text-white/50">{action.hint}</div>
               </div>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="min-w-0 flex-1 rounded-[1.35rem] border border-white/10 bg-black/18 px-4">
-        <Input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Describe the moment as it happened..."
-          disabled={disabled || isSubmitting}
-          className="h-11 sm:h-12 border-0 bg-transparent px-0 text-[15px] text-white/84 placeholder:text-white/30 focus-visible:ring-0"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault()
-              handleSend()
-            }
-          }}
-        />
-      </div>
-
-      <Button
-        onClick={isVoiceActive ? handleVoiceStop : handleVoiceStart}
-        size="sm"
-        variant="ghost"
+      <Input
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Describe your moment…"
         disabled={disabled || isSubmitting}
-        className={`h-11 w-11 sm:h-12 sm:w-12 rounded-2xl border px-0 ${
-          isVoiceActive
-            ? 'border-primary/18 bg-primary/10 text-primary'
-            : 'border-white/10 bg-white/[0.05] text-white/68 hover:border-white/16 hover:bg-white/[0.08] hover:text-white'
-        } disabled:cursor-not-allowed disabled:opacity-50`}
-        title="Voice input"
-      >
-        <svg className={`w-4 h-4 ${isVoiceActive ? 'animate-pulse' : ''}`} fill={isVoiceActive ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4" />
-        </svg>
-      </Button>
+        className="flex-1 bg-white/5 focus:bg-white/10 px-5 py-4 text-base text-white/90 rounded-xl"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            handleSend()
+          }
+        }}
+      />
 
       <Button
         onClick={handleSend}
-        size="sm"
-        disabled={disabled || isSubmitting || !message.trim()}
-        className="h-11 sm:h-12 rounded-2xl bg-white px-4 sm:px-5 text-sm font-semibold text-black hover:bg-white/92 disabled:cursor-not-allowed disabled:bg-white/35 disabled:text-black/60"
+        disabled={!message.trim() || isSubmitting}
+        className="h-11 px-6 rounded-2xl bg-emerald-500/90 text-white"
       >
-        {isSubmitting ? 'Reading…' : 'Send'}
+        {isSubmitting ? 'Reading…' : 'Next move'}
       </Button>
     </>
   )

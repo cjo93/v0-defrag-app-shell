@@ -10,6 +10,8 @@ import { ChatThread, type WorkspaceMessage } from './chat-thread'
 import { MessageInput } from './message-input'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { hasAccess } from '@/lib/entitlement'
+import { UpgradeGate } from '@/components/upgrade-gate'
 
 const shellCardClass =
   'rounded-[1.8rem] border border-white/8 bg-white/[0.04] shadow-[0_24px_80px_rgba(1,4,12,0.32)] backdrop-blur'
@@ -23,6 +25,8 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState<string | null>(workspaceId || null)
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(!!workspaceId)
+  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null)
+  const [profileLoading, setProfileLoading] = useState(true)
 
   const supabase = createClient()
 
@@ -34,6 +38,29 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       seedFirstWorkspace()
     }
   }, [workspaceId])
+
+  // Guarantee: if no thread/messages, always auto-seed starter workspace
+  useEffect(() => {
+    if (!isLoading && (!currentThreadId || messages.length === 0)) {
+      seedFirstWorkspace();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, currentThreadId, messages.length])
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch('/api/profile', { method: 'GET' })
+        const data = await res.json()
+        setSubscriptionTier(data?.subscription_tier || null)
+      } catch {
+        setSubscriptionTier(null)
+      } finally {
+        setProfileLoading(false)
+      }
+    }
+    fetchProfile()
+  }, [])
 
   // Seed starter workspace/thread for first session
   const seedFirstWorkspace = async () => {
@@ -204,7 +231,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
 
   const helperText = "Enter the moment as it happened. Defrag will provide interpretation and a next move."
 
-  if (isLoading) {
+  if (profileLoading || isLoading) {
     return (
       <div className="flex h-screen items-center justify-center bg-[#05060a]">
         <div className="text-center">
@@ -215,37 +242,46 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
     )
   }
 
+  // Gating logic: block creation for free, unlock advanced for core+
+  if (!hasAccess(subscriptionTier, 'base')) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#05060a]">
+        <UpgradeGate requiredTier="base" currentTier={subscriptionTier} benefit="Upgrade to Base or higher to create and edit workspaces. Read-only mode is available." />
+      </div>
+    )
+  }
+
   const conversationPanel = (
-    <section className={`${shellCardClass} flex min-h-[640px] flex-col overflow-hidden md:min-h-[720px]`}>
+    <section
+      className={`flex min-h-160 flex-col overflow-hidden md:min-h-180 animate-in fade-in duration-300 transition-all`}
+      style={{ background: 'rgba(18,22,32,0.92)', boxShadow: '0 24px 80px rgba(1,4,12,0.18)' }}
+    >
       <div className="border-b border-white/8 px-5 py-4 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-8">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Conversation</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">Moment</p>
             <h2 className="mt-1 text-lg font-semibold tracking-[-0.03em] text-white/90">Work the moment in one primary lane</h2>
           </div>
-
-          <button
-            onClick={() => setShowAlternatives((value) => !value)}
-            className={`inline-flex min-h-11 w-full items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors sm:min-h-10 sm:w-auto ${
-              showAlternatives
-                ? 'border-primary/18 bg-primary/12 text-primary/90 hover:bg-primary/16'
-                : 'border-white/10 bg-white/[0.04] text-white/74 hover:border-white/16 hover:bg-white/[0.08] hover:text-white'
-            }`}
-          >
+            <button
+              onClick={() => setShowAlternatives((value) => !value)}
+              className={`inline-flex min-h-11 w-full items-center justify-center rounded-full border px-4 text-sm font-medium transition-all duration-200 ease-out hover:bg-white/5 active:scale-[0.99] sm:w-auto ring-1 ring-white/10 focus:ring-emerald-400/40 focus:outline-none ${
+                showAlternatives
+                  ? 'border-primary/18 bg-primary/12 text-primary/90 hover:bg-primary/16'
+                  : 'border-white/10 bg-white/4 text-white/74 hover:border-white/16 hover:bg-white/8 hover:text-white'
+              }`}
+            >
             {showAlternatives ? 'Hide alternate framings' : 'Show alternate framings'}
           </button>
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
+              <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
             Workspace ready
           </span>
         </div>
       </div>
-
-      <div className="min-h-0 flex-1 overflow-hidden">
+      <div className="min-h-0 flex-1 overflow-hidden scroll-smooth overflow-y-auto">
         <ChatThread messages={messages} isSubmitting={isSubmitting} errorMessage={composerError} />
       </div>
-
       <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3 sm:px-5">
         <MessageInput
           compact
@@ -254,14 +290,13 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           helperText={helperText}
         />
       </div>
-
       {showAlternatives && (
-        <div className="border-t border-white/8 bg-black/14">
+        <div className="border-t border-white/8 bg-black/14 animate-in fade-in duration-300">
           <div className="border-b border-white/8 px-5 py-4 sm:px-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Alternate framings</p>
-            <p className="mt-1 text-sm leading-6 text-white/62">Keep practice paths available, but secondary to the main conversation.</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">Alternate framings</p>
+            <p className="mt-1 text-sm leading-6 text-white/60">Keep practice paths available, but secondary to the main moment.</p>
           </div>
-          <div className="max-h-[300px] overflow-y-auto sm:max-h-[360px]">
+          <div className="max-h-75 overflow-y-auto sm:max-h-90 scroll-smooth">
             <BranchThread />
           </div>
         </div>
@@ -270,19 +305,19 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   )
 
   const readingPanel = (
-    <section className={`${shellCardClass} min-h-[auto] overflow-hidden md:min-h-[720px]`}>
+    <section className={`min-h-auto overflow-hidden md:min-h-180 animate-in fade-in duration-300 transition-all`} style={{ background: 'rgba(12,16,24,0.82)' }}>
       <CanvasPanel embedded />
     </section>
   )
 
   const introPanel = (
-    <section className={`${shellCardClass} p-5 sm:p-6`}>
+    <section className={`p-5 sm:p-6 animate-in fade-in duration-300 transition-all`} style={{ background: 'rgba(18,22,32,0.92)' }}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/38">Live overview</p>
-          <h2 className="mt-2 text-lg font-semibold text-white/90">Keep the conversation on the left and the read on the right.</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/66">
-            The workspace stays focused on one thread, one interpretation, one next move, and one rewrite.
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">Workspace overview</p>
+          <h2 className="mt-2 text-lg font-semibold text-white/90">Keep the moment on the left and the read on the right.</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-white/60">
+            The workspace stays focused on one moment, one read, one next move, and one rewrite.
           </p>
         </div>
         <span className="rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
@@ -295,12 +330,11 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const desktopLayout = (
     <div className="hidden h-screen bg-[#05060a] text-foreground md:flex">
       <Sidebar />
-
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <div className="border-b border-white/8 bg-[#0a0c13]/96 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Relational workspace</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">Relational workspace</p>
               <h1 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-white/90">Workspace</h1>
             </div>
             <div className="flex items-center gap-2">
@@ -313,14 +347,18 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
             </div>
           </div>
         </div>
-
-        <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.06),transparent_20%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 lg:gap-6">
+        <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.06),transparent_20%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 sm:px-6 lg:px-8 lg:py-6 scroll-smooth">
+          <div className="mx-auto flex max-w-6xl flex-col gap-10 lg:gap-10">
             {introPanel}
-
-            <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-              {conversationPanel}
-              {readingPanel}
+            <div className="flex flex-col lg:flex-row gap-10">
+              {/* ZONE A: Primary lane */}
+              <div className="flex-1 max-w-2xl">
+                {conversationPanel}
+              </div>
+              {/* ZONE B/C: Secondary/tertiary */}
+              <div className="w-full lg:w-[320px] opacity-80">
+                {readingPanel}
+              </div>
             </div>
           </div>
         </div>
@@ -333,7 +371,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       <div className="border-b border-white/8 bg-[#0a0c13]/96 px-4 py-4 backdrop-blur-xl">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Relational workspace</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">Relational workspace</p>
             <h1 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-white/90">Workspace</h1>
           </div>
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
@@ -342,9 +380,8 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           </span>
         </div>
       </div>
-
-      <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_32%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4">
+      <div className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_32%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] scroll-smooth">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8">
           {introPanel}
           {conversationPanel}
           {readingPanel}

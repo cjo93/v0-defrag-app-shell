@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { runDefragAgent } from "@/lib/defrag/agent";
+import { requireTier } from '@/lib/entitlement'
+import { getCurrentUserProfile } from '@/lib/supabase/profile'
 
 export async function POST(req: Request) {
   try {
@@ -7,6 +9,13 @@ export async function POST(req: Request) {
 
     if (!input) {
       return NextResponse.json({ error: "Input is required" }, { status: 400 });
+    }
+
+    // Entitlement check (single source of truth)
+    const profile = await getCurrentUserProfile();
+    const entitlementError = requireTier(profile, 'core');
+    if (entitlementError) {
+      return NextResponse.json(entitlementError, { status: 403 });
     }
 
     // Check for required env vars - graceful handling if missing
