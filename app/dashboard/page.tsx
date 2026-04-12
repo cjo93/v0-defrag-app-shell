@@ -96,7 +96,7 @@ export default function DashboardPage() {
           <div className="space-y-8">
             <section className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
               {!hasCompletedBaseline ? (
-                <div className="relative overflow-hidden rounded-[30px] border border-amber-300/12 bg-[linear-gradient(145deg,rgba(32,27,19,0.96),rgba(19,20,22,0.94))] p-6 sm:p-8">
+                <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(145deg,rgba(32,27,19,0.98),rgba(19,20,22,0.96))] p-6 sm:p-8">
                   <div className="absolute left-[-30px] top-[-40px] h-36 w-36 rounded-full bg-amber-300/10 blur-3xl" />
                   <div className="absolute right-[-40px] bottom-[-60px] h-40 w-40 rounded-full bg-sky-300/8 blur-3xl" />
 
@@ -117,16 +117,16 @@ export default function DashboardPage() {
                       </div>
                     </div>
 
-                    <div className="grid gap-3 md:grid-cols-3">
-                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                    <div className="flex gap-4">
+                      <div className="p-4">
                         <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">What it unlocks</p>
                         <p className="mt-2 text-sm leading-6 text-stone-200">Conflict style, pressure pattern, and stronger repair cues.</p>
                       </div>
-                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                      <div className="p-4">
                         <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">What stays private</p>
                         <p className="mt-2 text-sm leading-6 text-stone-200">Raw birth data stays hidden. Defrag works from synthesized patterning.</p>
                       </div>
-                      <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                      <div className="p-4">
                         <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Mode</p>
                         <p className="mt-2 text-sm leading-6 text-stone-200">Setup—finish baseline to unlock the full command surface.</p>
                       </div>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
             </section>
 
             <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr] xl:grid-cols-[0.72fr_1fr_0.78fr]">
-              <div className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5 sm:p-6">
+              <div className="p-5 sm:p-6 bg-transparent">
                 <div className="mb-4 flex items-end justify-between gap-4">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Pressure radar</p>
@@ -250,14 +250,15 @@ export default function DashboardPage() {
 
                 <div className="space-y-3">
                   {pressureSignals.map((signal) => (
-                    <div key={signal.title} className="rounded-2xl border border-white/8 bg-[#101113] p-4">
+                    <div key={signal.title} className="p-3">
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="text-sm font-semibold text-stone-100">{signal.title}</p>
                           <p className="mt-1 text-sm leading-6 text-stone-400">{signal.detail}</p>
                         </div>
-                        <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-stone-400">
-                          {signal.status}
+                        <span className="inline-flex items-center gap-2 text-sm text-stone-400">
+                          <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                          <span className="text-xs uppercase">{signal.status}</span>
                         </span>
                       </div>
                     </div>

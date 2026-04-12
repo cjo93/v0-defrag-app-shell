@@ -18,10 +18,10 @@ export function PricingCard({
 }: PricingCardProps) {
   return (
     <div
-      className={`rounded-[32px] border p-10 space-y-8 transition duration-300 ${
+      className={`rounded-[28px] p-10 space-y-8 transition duration-300 ${
         highlighted
-          ? 'border-white/20 bg-white/[0.04] ring-1 ring-white/10'
-          : 'border-white/10 bg-white/[0.02]'
+          ? 'bg-white/[0.04] ring-1 ring-white/8 shadow-[0_8px_40px_rgba(0,0,0,0.4)]'
+          : 'bg-transparent'
       }`}
     >
       <div className="space-y-3">

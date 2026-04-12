@@ -18,14 +18,14 @@ export default function DemoPage() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="rounded-[28px] border border-white/8 bg-white/[0.02] p-6">
+            <div className="p-6 bg-transparent">
               <div className="space-y-5">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">SESSION</p>
                   <h2 className="mt-2 text-2xl font-semibold text-stone-50">You brought in: “Why do you always go quiet when I bring this up?”</h2>
                 </div>
 
-                <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-5">
+                <div className="rounded-2xl bg-[#0f1214]/80 p-5">
                   <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400">DEFRAg primary read</p>
                   <p className="mt-2 text-sm text-stone-300">The word “always” likely framed the question as a character judgment rather than a pattern-check. Pressure rose before safety.</p>
 
@@ -44,11 +44,11 @@ export default function DemoPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-white/8 bg-white/[0.02] p-6">
+            <div className="p-6 bg-transparent">
               <div className="space-y-5">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">Field map</p>
-                  <div className="mt-3 rounded-2xl border border-white/8 bg-[#0f1416] p-4 flex items-center justify-center">
+                  <div className="mt-3 rounded-2xl bg-[#0f1416]/70 p-4 flex items-center justify-center">
                     <svg viewBox="0 0 200 100" className="w-full h-40 max-w-sm">
                       <circle cx="50" cy="50" r="8" fill="#f6f6f6" />
                       <text x="50" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">YOU</text>

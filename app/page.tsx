@@ -120,7 +120,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="mt-4 grid gap-4 lg:grid-cols-[1fr]">
-                  <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-6 shadow-md">
+                  <div className="p-0">
                     <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">USER MOMENT</div>
                     <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“Why do you always go quiet when I bring this up?”</p>
 
@@ -135,7 +135,7 @@ export default function LandingPage() {
                       </ul>
                     </div>
 
-                    <div className="mt-4 rounded-md border border-emerald-300/12 bg-emerald-300/6 p-3">
+                    <div className="mt-4 bg-emerald-300/6 p-3 rounded-md">
                       <p className="text-sm font-semibold text-stone-100">NEXT MOVE</p>
                       <p className="mt-2 text-sm text-stone-100">Lower pressure first. Then reopen the topic without blame.</p>
                     </div>
@@ -184,9 +184,9 @@ export default function LandingPage() {
                 Compare intent with likely impact—before the moment hardens.
               </h2>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
               {valueBullets.map((item) => (
-                <div key={item.title} className="rounded-[24px] border border-white/8 bg-white/[0.03] p-6">
+                <div key={item.title} className="py-4">
                   <h3 className="text-lg font-semibold text-stone-50">{item.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-stone-400">{item.body}</p>
                 </div>
@@ -210,7 +210,7 @@ export default function LandingPage() {
 
               <div className="space-y-8">
                 {narrativeSteps.map((step, index) => (
-                  <div key={step.title} className="grid gap-4 border-t border-white/8 pt-5 sm:grid-cols-[72px_1fr]">
+                  <div key={step.title} className="grid gap-4 pt-5 sm:grid-cols-[72px_1fr]">
                     <div className="text-sm font-semibold uppercase tracking-[0.26em] text-stone-500">
                       0{index + 1} {step.eyebrow}
                     </div>

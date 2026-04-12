@@ -46,9 +46,9 @@ export default function LearnPage() {
 
           <div className="grid gap-8 lg:grid-cols-2">
             {learningModules.map((module) => (
-              <div key={module.title} className="group relative rounded-[40px] border border-white/10 bg-white/[0.02] p-10 backdrop-blur-sm transition hover:bg-white/[0.04]">
-                <div className="space-y-6">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 group-hover:text-stone-300 transition">
+              <div key={module.title} className="group relative p-8">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500">
                     {module.eyebrow}
                   </span>
                   <h3 className="text-3xl font-semibold tracking-tight text-stone-50">
@@ -57,11 +57,11 @@ export default function LearnPage() {
                   <p className="text-stone-400 leading-7">
                     {module.description}
                   </p>
-                  <ul className="space-y-4 pt-6 border-t border-white/5">
+                  <ul className="space-y-3 pt-4">
                     {module.items.map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm text-stone-300">
-                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/50" />
-                        {item}
+                      <li key={item} className="flex items-start gap-3 text-sm text-stone-300">
+                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/50 mt-1" />
+                        <div>{item}</div>
                       </li>
                     ))}
                   </ul>
@@ -71,7 +71,7 @@ export default function LearnPage() {
           </div>
 
           <div className="mt-20 grid gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2 rounded-[40px] border border-white/10 bg-white/[0.02] p-10 flex flex-col justify-between gap-10">
+            <div className="lg:col-span-2 p-10 flex flex-col justify-between gap-10">
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold text-stone-50">Visual Context</h3>
                 <p className="text-stone-400 leading-7 max-w-xl">
@@ -82,17 +82,14 @@ export default function LearnPage() {
                 <span className="text-[10px] uppercase tracking-[0.3em] text-stone-600 font-bold italic">Interactive Simulation Shell</span>
               </div>
             </div>
-
-            <div className="rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent p-10 flex flex-col justify-between">
+            <div className="p-10 flex flex-col justify-between">
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold text-stone-50">Audio Briefs</h3>
                 <p className="text-stone-400 text-sm leading-6">
                   Short, five-minute explainers for when you want the learning layer without reading.
                 </p>
               </div>
-              <button className="h-14 w-full rounded-full border border-white/10 bg-white/5 text-stone-300 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition">
-                Coming Soon
-              </button>
+              <div className="h-14 w-full rounded-full bg-white/6 text-stone-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center">Coming Soon</div>
             </div>
           </div>
         </div>
