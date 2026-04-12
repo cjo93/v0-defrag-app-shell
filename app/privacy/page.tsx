@@ -8,6 +8,9 @@ export default function PrivacyPage() {
       <main className="flex-1 overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(199,160,92,0.12),_transparent_32%),linear-gradient(180deg,_#101113_0%,_#0b0c0e_100%)] pb-20 pt-32">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <div className="space-y-8">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
+              Privacy Policy
+            </div>
             <h1 className="text-4xl font-semibold tracking-[-0.04em] text-stone-50 sm:text-5xl">
               Privacy Policy
             </h1>
@@ -26,6 +29,12 @@ export default function PrivacyPage() {
                 <p>
                   When you create an account and use Defrag, we collect account information (email, name), baseline signals you choose to provide, and the interaction content you add to the workspace. We also collect minimal operational data necessary to provide and secure the service (logs, usage metrics, error reports).
                 </p>
+                <ul className="list-disc pl-5 space-y-1 text-stone-400">
+                  <li>Account identifiers: email address, display name</li>
+                  <li>Workspace content: sessions, reads, notes you create</li>
+                  <li>Baseline signals: optional data you provide about your context</li>
+                  <li>Usage and error logs for service reliability</li>
+                </ul>
               </section>
 
               <section className="space-y-4">
@@ -38,21 +47,23 @@ export default function PrivacyPage() {
               <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-stone-50">Retention and deletion</h2>
                 <p>
-                  You control retention. By default, Defrag retains workspace interactions to enable continuity and pattern recognition. You can request deletion of specific interactions or your entire account through Settings. After a deletion request, we will remove associated content within 30 days, subject to legal retention requirements.
+                  You control retention. By default, Defrag retains workspace interactions to enable continuity and pattern recognition. You can request deletion of specific interactions or your entire account through Settings. After a deletion request, we will remove associated content within 30 days, subject to legal retention requirements. Inactive accounts may be purged after 12 months of inactivity following advance notice.
                 </p>
               </section>
 
               <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-stone-50">Security</h2>
                 <p>
-                  We encrypt data in transit and at rest, follow industry best practices for authentication and access control, and continuously monitor for unusual activity. While we strive to protect your information, no service can guarantee absolute security—see our Terms for service limits.
+                  We encrypt data in transit and at rest, follow industry best practices for authentication and access control, and continuously monitor for unusual activity. While we strive to protect your information, no service can guarantee absolute security&mdash;see our Terms for service limits.
                 </p>
               </section>
 
               <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-stone-50">User control and requests</h2>
                 <p>
-                  You can access, correct, export, or request deletion of your data from the Settings panel. For privacy inquiries, email us at <a href="mailto:privacy@defrag.com" className="underline">privacy@defrag.com</a>. We will respond to verified requests within a reasonable timeframe.
+                  You can access, correct, export, or request deletion of your data from the Settings panel. For privacy inquiries, email us at{' '}
+                  <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>.
+                  We will respond to verified requests within a reasonable timeframe.
                 </p>
               </section>
 
@@ -60,6 +71,15 @@ export default function PrivacyPage() {
                 <h2 className="text-2xl font-semibold text-stone-50">Model usage and AI</h2>
                 <p>
                   Defrag uses models to power reads and explainers. We do not expose your identifiable interaction content to public model training. Models may be updated and improved using aggregated, de-identified signals.
+                </p>
+              </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-semibold text-stone-50">Contact</h2>
+                <p>
+                  For privacy questions, data requests, or concerns, contact us at{' '}
+                  <a href="mailto:info@defrag.app" className="underline">info@defrag.app</a>.
+                  We are a small team and respond personally.
                 </p>
               </section>
             </div>
