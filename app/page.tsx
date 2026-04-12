@@ -101,169 +101,73 @@ export default function LandingPage() {
                   </Link>
                 </div>
 
-                <div className="mt-4 flex items-center gap-6 border-t border-white/6 pt-4">
-                  <div className="flex items-start gap-3">
-                    <div className="h-2 w-2 rounded-full bg-emerald-300 mt-1" />
-                    <div>
-                      <div className="text-sm font-semibold text-stone-50">See what changed</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-2 w-2 rounded-full bg-amber-300 mt-1" />
-                    <div>
-                      <div className="text-sm font-semibold text-stone-50">See how it landed</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-2 w-2 rounded-full bg-white/60 mt-1" />
-                    <div>
-                      <div className="text-sm font-semibold text-stone-50">See what helps next</div>
-                    </div>
-                  </div>
-                </div>
+                {/* left column: kept minimal per hotfix — eyebrow, headline, subhead, support line, anti-chatbot, CTAs only */}
               </div>
 
-              <div className="grid gap-4 border-t border-white/8 pt-6 sm:grid-cols-3">
-                {heroSignals.map((signal) => (
-                  <div key={signal} className="space-y-2">
-                    <div className="h-px w-10 bg-white/12" />
-                    <p className="text-sm leading-6 text-stone-400">{signal}</p>
-                  </div>
-                ))}
-              </div>
+              {/* removed the lower 3 proof blurbs to simplify hero (hotfix) */}
             </div>
 
-            <div className="relative min-h-[min(640px,78svh)] overflow-hidden rounded-[34px] border border-white/10 bg-[#0f1114] text-stone-100 shadow-[0_60px_160px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.06]">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,_rgba(223,191,123,0.12),_transparent_18%),radial-gradient(circle_at_74%_16%,_rgba(98,137,145,0.12),_transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_36%)]" />
-              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/6 to-transparent" />
+            {/* Right column: simplified premium hero card (single-card composition) */}
+            <div className="relative min-h-[min(560px,68svh)] overflow-hidden rounded-[28px] border border-white/8 bg-gradient-to-b from-[#0f1114] to-[#060708] text-stone-100 shadow-[0_40px_120px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.04]">
+              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_12%_18%,_rgba(223,191,123,0.08),_transparent_20%),radial-gradient(circle_at_80%_16%,_rgba(98,137,145,0.06),_transparent_22%)]" />
 
-              <div className="relative flex h-full flex-col">
-                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div className="relative flex h-full flex-col p-6 lg:p-8">
+                <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Live workspace</p>
-                    <p className="mt-1 text-sm font-medium text-stone-100">Misread intent · pattern · repair</p>
-                  </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
-                    Field active
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">LIVE READ</p>
+                    <p className="mt-1 text-sm font-medium text-stone-100">Session · Misread intent · pattern</p>
                   </div>
                 </div>
 
-                <div className="grid flex-1 grid-cols-1 lg:grid-cols-[420px_1fr]">
-                  {/* Left: Main vertical thread */}
-                  <div className="border-b border-white/10 bg-white/[0.02] lg:border-b-0 lg:border-r lg:border-white/10">
-                    <div className="space-y-4 p-5">
-                      <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-4 shadow-sm">
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">YOU BROUGHT IN</p>
-                        <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“I said, ‘Why do you always go quiet when I bring this up?’ and the whole thing shut down again.”</p>
-                      </div>
+                <div className="mt-4 grid gap-4 lg:grid-cols-[1fr]">
+                  <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-6 shadow-md">
+                    <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">USER MOMENT</div>
+                    <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“Why do you always go quiet when I bring this up?”</p>
 
-                      <div className="rounded-2xl border border-white/8 bg-[#111317] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">DEFRAg primary read</p>
-                        <h3 className="mt-2 text-lg font-semibold text-stone-50">WHAT CHANGED</h3>
-                        <p className="mt-2 text-sm text-stone-300">The question carried urgency; the word “always” likely turned it into a character judgment rather than a pattern-check.</p>
+                    <div className="mt-4">
+                      <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">READ</div>
+                      <p className="mt-2 text-sm text-stone-300">The word “always” likely made the moment land as accusation before concern could be felt.</p>
 
-                        <div className="mt-3 space-y-2">
-                          <p className="text-sm font-semibold text-stone-200">HOW IT MAY HAVE LANDED</p>
-                          <ul className="mt-1 ml-3 list-inside list-disc text-sm text-stone-300">
-                            <li>accusation before safety</li>
-                            <li>pressure before reflection</li>
-                            <li>being cornered before being understood</li>
-                          </ul>
-                        </div>
+                      <ul className="mt-3 ml-4 list-inside list-disc text-sm text-stone-300 space-y-1">
+                        <li>accusation before safety</li>
+                        <li>pressure before reflection</li>
+                        <li>being cornered before being understood</li>
+                      </ul>
+                    </div>
 
-                        <div className="mt-3 space-y-2">
-                          <p className="text-sm font-semibold text-stone-200">WHAT DEFRAg SEES</p>
-                          <p className="text-sm text-stone-300">A repeating loop: urgency → withdrawal → silence confirms fear → more urgency.</p>
-                        </div>
+                    <div className="mt-4 rounded-md border border-emerald-300/12 bg-emerald-300/6 p-3">
+                      <p className="text-sm font-semibold text-stone-100">NEXT MOVE</p>
+                      <p className="mt-2 text-sm text-stone-100">Lower pressure first. Then reopen the topic without blame.</p>
+                    </div>
 
-                        <div className="mt-3 rounded-md border border-emerald-300/16 bg-emerald-300/6 p-3">
-                          <p className="text-[11px] uppercase tracking-[0.16em] text-emerald-100/85">WHAT HELPS NEXT</p>
-                          <p className="mt-2 text-sm text-stone-100">Lower pressure first, then reopen the topic without blame.</p>
-                        </div>
-                      </div>
-
-                      <div className="rounded-2xl border border-white/8 bg-[#0f1214] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">REWRITE OUTPUT</p>
-                        <p className="mt-3 text-sm text-stone-100 italic">REPAIR OPENING</p>
-                        <div className="mt-2 text-sm text-stone-200">“I’m not trying to pin this on you. I think we both get stuck here, and I want to understand what happens for you when this comes up.”</div>
-                      </div>
-
-                      <div className="text-sm text-stone-400"> 
-                        <button className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-stone-300 hover:text-stone-100 transition">Explore the deeper pattern ⌄</button>
-                      </div>
+                    <div className="mt-4">
+                      <p className="text-sm font-semibold text-stone-200">REPAIR OPENING</p>
+                      <div className="mt-2 text-sm text-stone-200">“I’m not trying to pin this on you. I want to understand what happens for you when this comes up.”</div>
                     </div>
                   </div>
 
-                  {/* Right: Artifacts canvas */}
-                  <div className="relative p-6">
-                    <div className="grid h-full grid-rows-[auto_1fr] gap-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="space-y-1">
-                          <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">Artifacts</p>
-                          <h3 className="text-lg font-semibold text-stone-50">Field map · explainer · branches</h3>
+                  {/* Bottom artifact row: two compact chips/previews */}
+                  <div className="mt-3 flex items-center gap-3">
+                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
+                      <svg className="h-4 w-4 text-emerald-300" viewBox="0 0 8 8" fill="none" aria-hidden>
+                        <circle cx="4" cy="4" r="3" fill="#34D399" />
+                      </svg>
+                      <div className="text-sm text-stone-100">Map live</div>
+                    </div>
+
+                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
+                      {/* Poster-frame visual: always show a premium fallback gradient + play affordance */}
+                      <div className="relative h-10 w-16 rounded-md overflow-hidden bg-gradient-to-br from-[#15202b] to-[#0b1116] border border-white/4">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(135,89,255,0.08),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_40%)]" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/[0.03]">
+                            <svg className="h-4 w-4 text-white/90" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
                         </div>
-                        <div className="text-sm text-stone-400">Live · 0:47</div>
                       </div>
-
-                                    <div className="relative grid grid-cols-1 gap-4">
-                                      {/* Session/Read Card - dominant */}
-                                      <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-[#0f1416] to-[#0b0d0f] p-6 shadow-lg">
-                                        <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">SESSION</div>
-                                        <h4 className="mt-2 text-lg font-semibold text-stone-50">You brought in: ‘Why do you always go quiet…’</h4>
-                                        <p className="mt-3 text-sm text-stone-300">Primary read: urgency framed as accusation</p>
-                                        <div className="mt-4 rounded-md border border-emerald-300/12 bg-emerald-300/6 p-3 text-sm text-stone-100">Next move: Lower pressure, reopen without blame</div>
-                                      </div>
-
-                                      {/* Field Map Card - simplified, centered composition */}
-                                      <div className="rounded-2xl border border-white/10 bg-[#0f1416] p-4 flex items-center justify-center">
-                                        <div className="w-full max-w-sm">
-                                          <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">FIELD MAP</div>
-                                          <svg viewBox="0 0 200 100" className="w-full h-32 mt-2">
-                                            <circle cx="50" cy="50" r="8" fill="#f6f6f6" />
-                                            <text x="50" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">YOU</text>
-                                            <circle cx="150" cy="50" r="8" fill="#f6f6f6" />
-                                            <text x="150" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">THEM</text>
-                                            <path d="M60 50 C95 40, 105 40, 140 50" stroke="#f6c27a" strokeWidth="2" fill="none" />
-                                            <path d="M60 55 C95 65, 105 65, 140 55" stroke="#7ee7e0" strokeWidth="2" fill="none" />
-                                            <text x="100" y="30" textAnchor="middle" className="text-[8px] fill-amber-200">urgency</text>
-                                            <text x="100" y="60" textAnchor="middle" className="text-[8px] fill-sky-200">withdrawal</text>
-                                          </svg>
-                                        </div>
-                                      </div>
-
-                                      {/* Explainer Card - poster frame (premium fallback + optional image) */}
-                                      <div className="rounded-2xl border border-white/10 bg-[#0f1416] overflow-hidden flex">
-                                        {/* Left: poster visual. Use a layered background so a gradient/texture shows when the image is missing. */}
-                                        <div
-                                          className="w-1/3 relative bg-cover bg-center"
-                                          style={{
-                                            // Gradient first — ensures a premium fallback even if the image is missing/broken.
-                                            backgroundImage:
-                                              "radial-gradient(circle at 30% 30%, rgba(135,89,255,0.10), transparent 35%), linear-gradient(180deg, rgba(0,0,0,0.18), rgba(11,13,14,0.6)), url('/placeholder.jpg')",
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                          }}
-                                          aria-hidden={true}
-                                        >
-                                          {/* Subtle overlay texture to keep the surface premium */}
-                                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02),transparent_40%)]" />
-                                          {/* Centered play affordance */}
-                                          <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm">
-                                              <svg className="h-6 w-6 text-white/86" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                                                <path d="M8 5v14l11-7z" />
-                                              </svg>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div className="p-3 flex-1">
-                                          <div className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER</div>
-                                          <div className="mt-1 text-sm font-semibold text-stone-50">Why this moment escalated</div>
-                                          <div className="mt-2 text-xs text-stone-400">0:47 · short brief</div>
-                                        </div>
-                                      </div>
-                                    </div>
+                      <div className="text-sm text-stone-100">0:47 explainer</div>
                     </div>
                   </div>
                 </div>
