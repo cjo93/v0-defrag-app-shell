@@ -31,7 +31,6 @@ export default function SignupPage() {
         data: {
           full_name: fullName,
         },
-        // Use environment-aware redirect so Supabase doesn't default back to localhost
         emailRedirectTo: redirectTo,
       },
     })
@@ -43,9 +42,8 @@ export default function SignupPage() {
       return
     }
 
-    // Message should work whether email confirmation is required or not
-    setStatusMessage('Success! If your account requires confirmation, check your email. Otherwise you can sign in now.')
-    setIsSubmitting(false)
+    // Redirect to onboarding after successful signup
+    window.location.href = '/onboarding'
   }
 
   return (

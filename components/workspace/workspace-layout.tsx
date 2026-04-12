@@ -29,8 +29,38 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   useEffect(() => {
     if (workspaceId) {
       loadWorkspace(workspaceId)
+    } else {
+      // On first session, seed a starter workspace/thread if none exists
+      seedFirstWorkspace()
     }
   }, [workspaceId])
+
+  // Seed starter workspace/thread for first session
+  const seedFirstWorkspace = async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch('/api/workspaces', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: 'Welcome to Defrag',
+          seed: {
+            relation: 'partner',
+            moment: 'They seemed upset when I said we needed to talk about this.',
+            goal: 'clarity',
+          },
+        }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || 'Failed to create workspace')
+      setCurrentWorkspaceId(data.workspace.id)
+      loadWorkspace(data.workspace.id)
+    } catch (err) {
+      setComposerError('Failed to create starter workspace.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const loadWorkspace = async (id: string) => {
     setIsLoading(true)

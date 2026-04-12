@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 type OnboardingStep = 'orientation' | 'context' | 'complete'
 
@@ -10,6 +12,45 @@ export default function OnboardingPage() {
   const [relation, setRelation] = useState('partner')
   const [moment, setMoment] = useState('A recent disagreement')
   const [goal, setGoal] = useState<'clarity' | 'rewrite' | 'pattern'>('clarity')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
+
+  // Persist onboarding baseline/profile and seed starter workspace/thread
+  const handleComplete = async () => {
+    setIsSubmitting(true)
+    setError(null)
+    try {
+      const supabase = createClient()
+      // Update user profile with onboarding context
+      await supabase.from('profiles').upsert({
+        // user id will be set by RLS/session
+        relation,
+        onboarding_moment: moment,
+        onboarding_goal: goal,
+        completed_onboarding: true,
+      })
+      // Create starter workspace/thread if missing
+      await fetch('/api/workspaces', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: `First moment: ${moment}`,
+          seed: {
+            relation,
+            moment,
+            goal,
+          },
+        }),
+      })
+      // Redirect to dashboard after onboarding
+      router.push('/dashboard')
+    } catch (err: any) {
+      setError('Failed to complete onboarding. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.06),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
@@ -104,9 +145,15 @@ export default function OnboardingPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Ready</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white/92">Your baseline is set</h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/66">You now have a focused starting point. Start with one moment and let Defrag keep the context private and continuous.</p>
+            {error && <div className="mt-4 text-red-400 text-sm">{error}</div>}
             <div className="mt-6 flex items-center justify-center gap-4">
-              <Link href="/signup?next=/dashboard" className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black">Go to dashboard</Link>
-              <Link href="/signup?next=/workspace" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-semibold text-white/80">Open workspace</Link>
+              <button
+                onClick={handleComplete}
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black disabled:opacity-60"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Completing...' : 'Go to dashboard'}
+              </button>
             </div>
           </div>
         )}
