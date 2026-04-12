@@ -71,9 +71,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Redirect /studio to /
-  if (url.pathname === '/studio' || url.pathname.startsWith('/studio/')) {
-    url.pathname = '/'
+
+  // Redirect root / to /studio for public entry
+  if (url.pathname === '/') {
+    url.pathname = '/studio'
     return NextResponse.redirect(url, 301)
   }
 
