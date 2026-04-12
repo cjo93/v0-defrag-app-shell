@@ -13,36 +13,35 @@ export default function PricingPage() {
             Access Relational Intelligence
           </div>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.04em] text-stone-50 text-pretty">
-            Choose your level of clarity
+            Plans for continuity — not one-off fixes
           </h1>
           <p className="text-lg text-stone-400 text-balance max-w-2xl mx-auto">
-            Defrag helps you see the other side before the moment hardens. Select the plan that fits your interaction volume.
+            Defrag helps you see the other side before the moment hardens. Choose the level of continuity that matches how you want Defrag to follow your moments.
           </p>
+          <p className="max-w-2xl mx-auto text-sm text-stone-500">Privacy, restraint, and continuity are built into every plan. All subscriptions route into onboarding so your first baseline is focused and useful.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <PricingCard
-            name="Personal"
+            name="Base"
             price="$29"
-            description="For individuals navigating high-stakes interactions"
+            description="Start with a single moment — immediate relational clarity."
             features={[
-              '50 workspace interactions / mo',
-              'Intent & Impact mapping',
-              'Next move simulations',
-              'Private history',
+              'One detailed moment read',
+              'One repair opening suggested',
+              'Short private session history',
             ]}
           />
 
           <PricingCard
-            name="Professional"
+            name="Core"
             price="$79"
-            description="For leaders and teams building relational intelligence"
+            description="Ongoing continuity — recurring reads, saved baselines, and rewrite support."
             features={[
-              'Unlimited interactions',
-              'Shared workspace threads',
-              'Team baseline mapping',
-              'Priority response logic',
-              'Pattern analysis',
+              'Recurring moment reads',
+              'Persistent baseline & memory',
+              'Rewrite and phrasing support',
+              'Priority onboarding and continuity',
             ]}
             highlighted
           />
@@ -50,23 +49,23 @@ export default function PricingPage() {
           <PricingCard
             name="Studio"
             price="Custom"
-            description="Custom deployments for organizations"
+            description="Deeper pattern continuity and tailored support for extended practice."
             features={[
-              'Enterprise-grade privacy',
-              'Custom integration layer',
-              'Dedicated relational support',
-              'On-premise options available',
+              'Extended pattern history and analysis',
+              'Custom privacy and retention controls',
+              'Integration and workflow tailoring',
+              'Dedicated support and onboarding',
             ]}
           />
         </div>
 
         <div className="mt-24 p-10 rounded-[32px] border border-white/10 bg-white/[0.02] text-center space-y-6 max-w-3xl mx-auto backdrop-blur-sm">
-          <h3 className="font-semibold text-stone-50 text-2xl tracking-tight">Need a custom configuration?</h3>
+          <h3 className="font-semibold text-stone-50 text-2xl tracking-tight">Need a tailored configuration?</h3>
           <p className="text-stone-400 text-lg">
-            For specialized team needs or organizational scale, we offer tailored relational intelligence packages.
+            For sustained practice, organizational continuity, or custom retention needs, we offer studio-grade configurations and onboarding.
           </p>
           <a href="mailto:hello@defrag.com" className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-stone-950 transition hover:bg-white">
-            Talk to us
+            Contact us
           </a>
         </div>
       </section>
