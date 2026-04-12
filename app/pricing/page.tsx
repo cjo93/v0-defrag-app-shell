@@ -7,9 +7,9 @@ export default function PricingPage() {
     <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
 
-      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-20 md:py-32 bg-[radial-gradient(circle_at_top_right,_rgba(199,160,92,0.1),_transparent_40%)]">
+      <section className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-20 md:py-32 bg-[radial-gradient(circle_at_top_right,rgba(199,160,92,0.1),transparent_40%)]">
         <div className="text-center mb-20 space-y-6">
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/4 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
             Access Relational Intelligence
           </div>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.04em] text-stone-50 text-pretty">
@@ -59,7 +59,7 @@ export default function PricingPage() {
           />
         </div>
 
-        <div className="mt-10 max-w-4xl mx-auto p-6 rounded-2xl border border-white/8 bg-white/[0.02] text-stone-300">
+        <div className="mt-10 max-w-4xl mx-auto p-6 rounded-2xl border border-white/8 bg-white/2 text-stone-300">
           <h4 className="text-sm font-semibold text-stone-50">Why start with Defrag</h4>
           <p className="mt-2 text-sm text-stone-400">Start small. Your first moment generates a private read and a single repair opening — a low-friction way to feel the product's value. All plans prioritize privacy and continuity.</p>
           <div className="mt-4 flex flex-col sm:flex-row gap-3">
@@ -80,12 +80,12 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <div className="mt-24 p-10 rounded-[32px] border border-white/10 bg-white/[0.02] text-center space-y-6 max-w-3xl mx-auto backdrop-blur-sm">
+        <div className="mt-24 p-10 rounded-4xl border border-white/10 bg-white/2 text-center space-y-6 max-w-3xl mx-auto backdrop-blur-sm">
           <h3 className="font-semibold text-stone-50 text-2xl tracking-tight">Need a tailored configuration?</h3>
           <p className="text-stone-400 text-lg">
             For sustained practice, organizational continuity, or custom retention needs, we offer studio-grade configurations and onboarding.
           </p>
-          <a href="mailto:hello@defrag.com" className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-stone-950 transition hover:bg-white">
+          <a href="mailto:info@defrag.app" className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-stone-950 transition hover:bg-white">
             Contact us
           </a>
         </div>
