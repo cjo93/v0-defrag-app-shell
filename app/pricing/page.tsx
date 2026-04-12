@@ -59,6 +59,27 @@ export default function PricingPage() {
           />
         </div>
 
+        <div className="mt-10 max-w-4xl mx-auto p-6 rounded-2xl border border-white/8 bg-white/[0.02] text-stone-300">
+          <h4 className="text-sm font-semibold text-stone-50">Why start with Defrag</h4>
+          <p className="mt-2 text-sm text-stone-400">Start small. Your first moment generates a private read and a single repair opening — a low-friction way to feel the product's value. All plans prioritize privacy and continuity.</p>
+          <div className="mt-4 flex flex-col sm:flex-row gap-3">
+            <div className="inline-flex items-start gap-3">
+              <div className="h-2 w-2 rounded-full bg-emerald-300 mt-1" />
+              <div>
+                <div className="text-sm font-semibold text-stone-100">Private by default</div>
+                <div className="text-xs text-stone-400">Your interactions are private and not used to train public models.</div>
+              </div>
+            </div>
+            <div className="inline-flex items-start gap-3">
+              <div className="h-2 w-2 rounded-full bg-white/60 mt-1" />
+              <div>
+                <div className="text-sm font-semibold text-stone-100">Built for continuity</div>
+                <div className="text-xs text-stone-400">Core is for ongoing practice; Studio is for tailored continuity.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-24 p-10 rounded-[32px] border border-white/10 bg-white/[0.02] text-center space-y-6 max-w-3xl mx-auto backdrop-blur-sm">
           <h3 className="font-semibold text-stone-50 text-2xl tracking-tight">Need a tailored configuration?</h3>
           <p className="text-stone-400 text-lg">
