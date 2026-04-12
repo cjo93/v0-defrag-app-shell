@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/footer'
 export default function DemoPage() {
   const [explainerOpen, setExplainerOpen] = useState(false)
   const mapRef = useRef<HTMLDivElement | null>(null)
+  const [mapHighlight, setMapHighlight] = useState(false)
 
   function openExplainer() {
     setExplainerOpen(true)
@@ -20,6 +21,8 @@ export default function DemoPage() {
   function revealMap() {
     if (mapRef.current) {
       mapRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setMapHighlight(true)
+      setTimeout(() => setMapHighlight(false), 1100)
     }
   }
 
@@ -68,7 +71,10 @@ export default function DemoPage() {
               <div className="space-y-5">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">Field map</p>
-                  <div ref={mapRef} className="mt-3 rounded-2xl bg-[#0f1416]/70 p-4 flex items-center justify-center">
+                  <div
+                    ref={mapRef}
+                    className={`mt-3 rounded-2xl bg-[#0f1416]/70 p-4 flex items-center justify-center ${mapHighlight ? 'ring-2 ring-emerald-400/60' : ''}`}
+                  >
                     <svg viewBox="0 0 200 100" className="w-full h-40 max-w-sm">
                       <circle cx="50" cy="50" r="8" fill="#f6f6f6" />
                       <text x="50" y="75" textAnchor="middle" className="text-[9px] fill-stone-200">YOU</text>
