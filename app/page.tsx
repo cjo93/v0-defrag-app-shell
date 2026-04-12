@@ -80,8 +80,7 @@ export default function LandingPage() {
                   <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
                   DEFRAG relational intelligence
                 </div>
-
-                <div className="max-w-xl space-y-5">
+                <div className="max-w-xl space-y-4">
                   <p className="text-sm font-medium uppercase tracking-[0.28em] text-stone-500">Relational intelligence</p>
                   <h1 className="text-balance text-[2.35rem] font-semibold leading-[1.02] tracking-[-0.04em] text-stone-50 sm:text-[3.25rem] lg:text-[4.25rem]">
                     Before you answer, see the other side.
@@ -89,24 +88,38 @@ export default function LandingPage() {
                   <p className="max-w-lg text-base leading-7 text-stone-300 sm:text-lg">
                     Defrag helps you see how the moment may be landing on the other side, why it feels so different from your intent, and what to do next.
                   </p>
-                  <p className="max-w-lg text-sm leading-6 text-stone-500">
-                    See what they may be reacting to before the moment hardens.
-                  </p>
+                  <p className="max-w-lg text-sm leading-6 text-stone-500">See the pattern, the pressure, and the repair opening before the same conflict repeats.</p>
+                  <p className="text-xs text-stone-400 mt-1">Not a chatbot. A relational intelligence system for moments that can still go either way.</p>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/workspace"
-                    className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white"
-                  >
+                <div className="flex flex-col gap-3 sm:flex-row items-start">
+                  <Link href="/workspace" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white">
                     Open Workspace
                   </Link>
-                  <Link
-                    href="/pricing"
-                    className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full border border-white/12 bg-white/[0.05] px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/[0.1]"
-                  >
-                    View Pricing
+                  <Link href="/pricing" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full border border-white/12 bg-white/[0.04] px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/[0.08]">
+                    See Pricing
                   </Link>
+                </div>
+
+                <div className="mt-4 flex items-center gap-6 border-t border-white/6 pt-4">
+                  <div className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-emerald-300 mt-1" />
+                    <div>
+                      <div className="text-sm font-semibold text-stone-50">See what changed</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-amber-300 mt-1" />
+                    <div>
+                      <div className="text-sm font-semibold text-stone-50">See how it landed</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="h-2 w-2 rounded-full bg-white/60 mt-1" />
+                    <div>
+                      <div className="text-sm font-semibold text-stone-50">See what helps next</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -221,49 +234,33 @@ export default function LandingPage() {
                           </div>
                         </div>
 
-                        {/* Explainer Card (Artifact B) */}
-                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] p-3">
-                          <div className="relative overflow-hidden rounded-md bg-[#0b0d0f]">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="w-12 h-12 rounded-full bg-white/6 flex items-center justify-center">
-                                <svg className="w-5 h-5 text-stone-50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                  <path d="M5 3v18l15-9L5 3z" strokeWidth="1.5" />
+                        {/* Explainer preview (real thumbnail + play overlay) */}
+                        <div className="rounded-2xl border border-white/8 bg-[#0f1416] overflow-hidden">
+                          <div className="relative">
+                            <img src="/placeholder.jpg" alt="Explainer thumbnail" className="w-full h-28 object-cover" />
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                              <div className="w-12 h-12 rounded-full bg-black/40 flex items-center justify-center">
+                                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                  <path d="M5 3v18l15-9L5 3z" strokeWidth="1.6" />
                                 </svg>
                               </div>
                             </div>
-                            <div className="p-4 pt-12">
-                              <div className="flex items-center justify-between">
-                                <p className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER — WHY THIS ESCALATED</p>
-                                <p className="text-xs text-stone-400">0:47</p>
-                              </div>
-                              <h4 className="mt-2 text-sm font-semibold text-stone-50">How urgency + withdrawal turned one question into a shutdown loop.</h4>
-                              <p className="mt-2 text-sm text-stone-300">Short educational explainer tied to this moment — poster frame and caption.</p>
-                            </div>
+                          </div>
+                          <div className="p-3">
+                            <p className="text-[10px] uppercase tracking-[0.12em] text-stone-500">EXPLAINER</p>
+                            <div className="mt-1 text-sm font-semibold text-stone-50">Why this moment escalated</div>
+                            <div className="mt-1 text-xs text-stone-400">0:47 · short brief</div>
                           </div>
                         </div>
 
-                        {/* Branch Trigger (Artifact C) */}
-                        <div className="col-span-2 rounded-2xl border border-white/8 bg-[#0f1416] p-3 flex items-center justify-between">
+                        {/* Subordinate branch trigger and compact reference */}
+                        <div className="col-span-2 mt-2 flex items-center justify-between">
                           <div>
                             <p className="text-[11px] uppercase tracking-[0.12em] text-stone-500">Explore the deeper pattern</p>
-                            <p className="mt-1 text-sm text-stone-300">“This may be part of a longer urgency / retreat cycle. Open branch.”</p>
+                            <p className="mt-1 text-sm text-stone-300">This may be part of a longer urgency / retreat cycle.</p>
                           </div>
-                          <div className="ml-4">
-                            <button className="rounded-full border border-white/8 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-stone-100 hover:bg-white/[0.06]">Open branch</button>
-                          </div>
-                        </div>
-
-                        {/* Expandable reference drawer (visual only) */}
-                        <div className="col-span-2 mt-2 rounded-2xl border border-white/6 bg-[#0f1416] p-3">
-                          <div className="flex items-center justify-between">
-                            <p className="text-[11px] uppercase tracking-[0.12em] text-stone-500">Reference</p>
-                            <button className="text-sm text-stone-300">⌄</button>
-                          </div>
-                          <div className="mt-2 grid grid-cols-2 gap-3 text-sm text-stone-300">
-                            <div>word trigger: <span className="text-stone-100">always</span></div>
-                            <div>pressure level: <span className="text-stone-100">high</span></div>
-                            <div>repair window: <span className="text-stone-100">after decompression</span></div>
-                            <div>pattern signal: <span className="text-stone-100">pursuit / withdrawal</span></div>
+                          <div className="text-sm text-stone-400">
+                            <button className="rounded-full border border-white/8 bg-white/[0.02] px-3 py-1 text-sm font-medium text-stone-100 hover:bg-white/[0.04]">Open branch</button>
                           </div>
                         </div>
                       </div>
