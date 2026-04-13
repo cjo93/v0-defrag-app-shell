@@ -9,6 +9,8 @@ interface PricingCardProps {
   features: string[]
   highlighted?: boolean
   contactOnly?: boolean
+  onCheckout?: (plan: string) => void
+  loading?: boolean
 }
 
 export function PricingCard({
@@ -18,59 +20,10 @@ export function PricingCard({
   features,
   highlighted = false,
   contactOnly = false,
+  onCheckout,
+  loading = false,
 }: PricingCardProps) {
-  const [loading, setLoading] = useState(false);
   const plan = name.toLowerCase();
-
-  const handleCheckout = async () => {
-    setLoading(true)
-    try {
-      // Ensure we know whether the user is signed in so we can preserve plan intent
-      try {
-        const profileResp = await fetch('/api/profile')
-        if (!profileResp.ok) {
-          // Not signed in — route to signup with intent preserved
-          window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
-          return
-        }
-      } catch (e) {
-        // Network or other error while checking profile — preserve intent via signup
-        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
-        return
-      }
-
-      const res = await fetch('/api/billing/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: plan }),
-      })
-
-      const data = await res.json()
-
-      if (res.status === 401 || res.status === 403) {
-        // Auth unexpectedly required — route to signup so user can resume checkout
-        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
-        return
-      }
-
-      if (res.status === 503) {
-        alert(data?.error || 'Payment service is currently unavailable. Please try again later.')
-        return
-      }
-
-      if (data?.url) {
-        window.location.href = data.url
-      } else {
-        // Show a clear user-facing message instead of failing silently
-        alert(data?.error || 'Checkout is currently unavailable. Please try again later or contact support.')
-      }
-    } catch (err) {
-      console.error('Checkout error', err)
-      alert('Payment service is currently unavailable. Please try again later.')
-    } finally {
-      setLoading(false)
-    }
-  };
 
   return (
     <div
@@ -101,10 +54,10 @@ export function PricingCard({
               ? 'bg-stone-100 text-stone-950 hover:bg-white'
               : 'bg-white/10 text-stone-100 hover:bg-white/20 border border-white/10'
           }`}
-          onClick={handleCheckout}
+          onClick={() => onCheckout?.(plan)}
           disabled={loading}
         >
-          {loading ? 'Redirecting…' : 'Get Started'}
+          {loading ? 'Processing…' : 'Continue to checkout'}
         </Button>
       )}
 

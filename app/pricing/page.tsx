@@ -2,54 +2,84 @@
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { PricingCard } from '@/components/pricing/pricing-card'
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function PricingPage() {
   const router = useRouter()
 
+  // Local UI state for resume flow and per-plan loading
+  const [isResuming, setIsResuming] = useState(false)
+  const [resumeError, setResumeError] = useState<string | null>(null)
+  const [resumingPlan, setResumingPlan] = useState<string | null>(null)
+  const [planLoading, setPlanLoading] = useState<Record<string, boolean>>({})
+  const [resumeAttempted, setResumeAttempted] = useState(false)
+
+  // helper: set loading for a plan
+  const setLoadingForPlan = (plan: string, loading: boolean) => {
+    setPlanLoading((s) => ({ ...s, [plan]: loading }))
+  }
+
+  // Centralized checkout creation used by cards and resume flow.
+  const createCheckout = useCallback(async (plan: string) => {
+    setResumeError(null)
+    setLoadingForPlan(plan, true)
+    try {
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: plan }),
+      })
+      const data = await res.json().catch(() => ({}))
+
+      if (res.status === 401 || res.status === 403) {
+        // Not authenticated — send to signup preserving intent
+        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+        return
+      }
+
+      if (res.status === 503) {
+        // Stripe or payment service down — surface calm inline error with retry
+        setResumeError('We couldn’t start checkout right now. Please try again, or sign in to continue.')
+        setResumingPlan(plan)
+        return
+      }
+
+      if (data?.url) {
+        // Successful: navigate the browser to Stripe-hosted checkout
+        window.location.href = data.url
+      } else {
+        setResumeError('We couldn’t start checkout right now. Please try again, or sign in to continue.')
+        setResumingPlan(plan)
+      }
+    } catch (e) {
+      // Network or unexpected error — preserve intent by routing to signup so the user can continue after auth
+      window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+    } finally {
+      setLoadingForPlan(plan, false)
+    }
+  }, [])
+
+  // Resume checkout after returning from auth. Attempt exactly once per page load.
   useEffect(() => {
-    // If we were redirected back to pricing after signup/login with resume=1 and plan param,
-    // attempt to resume checkout automatically.
     try {
       const params = new URLSearchParams(window.location.search)
       const resume = params.get('resume')
       const plan = params.get('plan')
-      if (resume === '1' && plan) {
-        // POST to checkout with plan; the pricing card logic also does profile checks, but
-        // here we attempt a direct resume call and let the API guide us.
-        (async () => {
-          try {
-            const res = await fetch('/api/billing/checkout', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ tier: plan }),
-            })
-            const data = await res.json()
-            if (res.status === 401 || res.status === 403) {
-              // Not authenticated — send to signup preserving intent
-              window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
-              return
-            }
-            if (res.status === 503) {
-              alert(data?.error || 'Payment service is currently unavailable. Please try again later.')
-              return
-            }
-            if (data?.url) {
-              window.location.href = data.url
-            } else {
-              alert(data?.error || 'Checkout is currently unavailable. Please try again later.')
-            }
-          } catch (e) {
-            // fallback: route to signup to preserve intent
-            window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
-          }
-        })()
+      if (resume === '1' && plan && !resumeAttempted) {
+        setResumeAttempted(true)
+        setIsResuming(true)
+        setResumingPlan(plan)
+        setResumeError(null)
+        // attempt to resume by creating checkout (which will redirect on success)
+        createCheckout(plan).finally(() => {
+          setIsResuming(false)
+        })
       }
     } catch (e) {
-      // noop
+      // noop — parsing failure shouldn't break the page
     }
-  }, [router])
+  }, [router, createCheckout, resumeAttempted])
   return (
     <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
@@ -69,6 +99,36 @@ export default function PricingPage() {
           <div className="mt-4">
             <a href="/studio?qa=1" className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-transparent px-4 py-2 text-sm font-semibold text-stone-100">Try a guided demo</a>
           </div>
+          {/* Inline resume / error banner shown when returning from auth with resume intent */}
+          {isResuming && resumingPlan && (
+            <div className="mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-emerald-900/30 border border-emerald-700 px-4 py-2 text-sm text-emerald-200">
+              Resuming checkout for {resumingPlan} — attempting to continue checkout.
+            </div>
+          )}
+          {resumeError && (
+            <div className="mt-6 max-w-2xl mx-auto p-4 rounded-lg border border-white/6 bg-white/3 text-stone-100">
+              <div className="flex items-start justify-between gap-4">
+                <div className="text-sm">
+                  <div className="font-semibold">Checkout is currently unavailable.</div>
+                  <div className="text-xs text-stone-300 mt-1">{resumeError}</div>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      if (resumingPlan) {
+                        setResumeError(null)
+                        setIsResuming(true)
+                        createCheckout(resumingPlan).finally(() => setIsResuming(false))
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-950"
+                  >
+                    Try again
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -81,6 +141,8 @@ export default function PricingPage() {
               'One repair opening suggested',
               'Short private session history',
             ]}
+            onCheckout={createCheckout}
+            loading={!!planLoading['base']}
           />
 
           <PricingCard
@@ -94,6 +156,8 @@ export default function PricingPage() {
               'Priority onboarding and continuity',
             ]}
             highlighted
+            onCheckout={createCheckout}
+            loading={!!planLoading['core']}
           />
 
           <PricingCard
@@ -107,6 +171,8 @@ export default function PricingPage() {
               'Dedicated support and onboarding',
             ]}
             contactOnly
+            onCheckout={createCheckout}
+            loading={!!planLoading['studio']}
           />
         </div>
 

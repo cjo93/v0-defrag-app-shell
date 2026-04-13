@@ -9,6 +9,18 @@ export const RationaleBlockSchema = z.object({
 export const DefragStructuredResponseSchema = z.object({
   responseText: z.string(),
   relationalStatus: z.enum(["aligned", "diverging", "uncertain"]),
+  // Core relational architecture fields (Event → Filter → Distortion → Defense → Outcome → Repair lever)
+  event: z
+    .object({
+      description: z.string(),
+      quote: z.string().optional(),
+    })
+    .optional(),
+  filters: z.array(z.string()).default([]),
+  distortions: z.array(z.string()).default([]),
+  defenses: z.array(z.string()).default([]),
+  outcome: z.string().optional(),
+  repairLever: z.string().optional(),
   suggestedNextStep: z.string(),
   shouldOpenBranch: z.boolean().default(false),
   suggestedArtifact: z.enum([

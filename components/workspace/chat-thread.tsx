@@ -150,10 +150,33 @@ export function ChatThread({
                           <p className="text-white/90 text-sm">{read.responseText}</p>
                         </div>
 
-                        <div>
-                          <p className="text-xs text-white/40 uppercase tracking-wider">Risk</p>
-                          <p className="text-white/75 text-sm">{read.rationale?.[0]?.summary ?? ''}</p>
-                        </div>
+                        {/* Event & Quote */}
+                        {(read.event || read.filters?.length || read.distortions?.length) && (
+                          <div>
+                            <p className="text-xs text-white/40 uppercase tracking-wider">Event & framing</p>
+                            <div className="mt-1 text-sm text-white/80 space-y-1">
+                              {read.event?.description && <div className="text-sm">{read.event.description}</div>}
+                              {read.event?.quote && <div className="text-sm text-white/60">"{read.event.quote}"</div>}
+                              {read.filters?.length ? (
+                                <div className="text-xs text-white/60">Filters: {read.filters.join(', ')}</div>
+                              ) : null}
+                              {read.distortions?.length ? (
+                                <div className="text-xs text-amber-200">Distortions: {read.distortions.join(', ')}</div>
+                              ) : null}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Defenses and Outcome */}
+                        {(read.defenses?.length || read.outcome) && (
+                          <div>
+                            <p className="text-xs text-white/40 uppercase tracking-wider">Defensive moves & outcome</p>
+                            <div className="mt-1 text-sm text-white/75">
+                              {read.defenses?.length ? <div>Defensive moves: {read.defenses.join(', ')}</div> : null}
+                              {read.outcome ? <div className="mt-1">Likely outcome: {read.outcome}</div> : null}
+                            </div>
+                          </div>
+                        )}
 
                         <div className="border-t border-white/10 pt-4">
                           <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Next move</p>
@@ -162,6 +185,13 @@ export function ChatThread({
                             <p className="text-white text-sm font-medium">{read.suggestedNextStep}</p>
                           </div>
                         </div>
+
+                        {read.repairLever && (
+                          <div className="pt-3">
+                            <p className="text-xs text-white/40 uppercase tracking-wider">Repair lever</p>
+                            <div className="text-sm text-white/80">{read.repairLever}</div>
+                          </div>
+                        )}
                       </div>
                     )
                   }

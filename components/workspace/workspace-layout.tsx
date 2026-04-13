@@ -320,12 +320,19 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
         const structured: DefragStructuredResponse = {
           responseText: 'Simulated assistant successful read for retry.',
           relationalStatus: 'uncertain',
+          // New schema fields
+          filters: [],
+          distortions: [],
+          defenses: [],
           rationale: [{ label: 'Sim', summary: 'Simulated rationale', details: [] }],
           suggestedNextStep: 'Start with: "Can we find time to talk?"',
           rewrite: 'Simulated rewrite',
           shouldOpenBranch: false,
           suggestedArtifact: 'none',
           educationalLayer: null,
+          event: { description: 'Simulated event for retry', quote: undefined },
+          outcome: 'Unclear — requires conversation',
+          repairLever: 'Open a short, curiosity-led question to invite collaboration',
         }
         const newDefragMsg: WorkspaceMessage = {
           id: 'sim-assistant-ok-' + Date.now(),
