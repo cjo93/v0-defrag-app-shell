@@ -1,0 +1,9 @@
+{
+  // Configure default behavior for deployments. Note: team/project settings in Vercel UI can override this.
+  "public": true,
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/", "destination": "/studio", "permanent": true }
+  ]
+}
+

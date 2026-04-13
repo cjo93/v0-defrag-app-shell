@@ -2,8 +2,25 @@
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
+import StudioQAClient from './StudioQAClient'
 
-export default function StudioPage() {
+export default function StudioPage({ searchParams }: { searchParams?: Record<string, string | string[]> }) {
+  const qaParam = searchParams?.qa
+  const isQA = qaParam === '1' || (Array.isArray(qaParam) && qaParam.includes('1'))
+
+  // When QA mode is active, render the live workspace inline for testing without redirect
+  if (isQA) {
+    return (
+      <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
+        <Navbar />
+        <main className="flex-1 overflow-hidden pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <StudioQAClient />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
@@ -41,9 +58,9 @@ export default function StudioPage() {
               </div>
             </div>
             <div className="relative flex items-center justify-center">
-              {/* Cinematic workspace visual: always visible, less card stacking */}
+              {/* Replace placeholder with a working in-page preview of workspace */}
               <div className="aspect-video w-full max-w-lg rounded-3xl border border-white/10 bg-linear-to-br from-[#1a1d22] to-[#0b0c0e] shadow-2xl flex items-center justify-center">
-                <span className="text-stone-400 text-lg font-semibold">Workspace Cinematic Visual</span>
+                <span className="text-stone-400 text-lg font-semibold">What just happened?</span>
               </div>
             </div>
           </div>

@@ -3,11 +3,31 @@ import type { NextRequest } from 'next/server'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
+  // Default next response (may be recreated after cookie/header changes)
   let response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   })
+
+  // QA bypass: when ?qa=1 is present, short-circuit auth and mark the request
+  // so downstream APIs and pages can run in test mode without login or gating.
+  const isQA = request.nextUrl.searchParams.get('qa') === '1'
+  if (isQA) {
+    // Clone headers and set a QA header so APIs can detect bypass without secrets
+    const forwarded = new Headers(request.headers)
+    forwarded.set('x-defrag-qa', '1')
+
+    response = NextResponse.next({
+      request: {
+        headers: forwarded,
+      },
+    })
+
+    // Also set a non-httpOnly cookie so client-side code can detect QA mode
+    response.cookies.set({ name: 'defrag_qa', value: '1', path: '/' })
+    return response
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -61,7 +81,7 @@ export async function middleware(request: NextRequest) {
 
   const url = request.nextUrl.clone()
 
-  // Protect internal app routes
+  // Protect internal app routes (skip when user is present)
   const protectedRoutes = ['/workspace', '/dashboard', '/settings', '/learn', '/briefs', '/people', '/family']
   const isProtectedRoute = protectedRoutes.some(route => url.pathname.startsWith(route))
 
@@ -90,6 +110,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    // Run middleware for all non-static routes (includes /api so QA bypass can apply to API endpoints)
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 }
