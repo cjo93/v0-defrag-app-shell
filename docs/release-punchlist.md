@@ -30,9 +30,9 @@ This file lists issues grouped by pass. Each item includes severity, status, fil
 
 - [ ] Ensure workspace route shows degraded/demo state when backend not available
   - severity: critical
-  - status: not done
+  - status: partial
   - files: `app/workspace/page.tsx`, `components/workspace/*`
-  - action: implement
+  - action: implement (added retry affordance and demo badges; further degraded UI required)
 
 - [ ] Harden pricing -> signup -> checkout resume server-side
   - severity: critical
@@ -78,9 +78,9 @@ This file lists issues grouped by pass. Each item includes severity, status, fil
 
 - [ ] Add GitHub Actions: lint, typecheck, build, preview smoke
   - severity: critical
-  - status: not done
-  - files: `.github/workflows/preview-smoke.yml`
-  - action: implement
+  - status: partial
+  - files: `.github/workflows/ci.yml`, `.github/workflows/preview-smoke.yml`
+  - action: implement (basic PR CI added; preview-smoke job still required)
 
 - [ ] Add Vercel deployment checks and manual QA checklist
   - severity: high

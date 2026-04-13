@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { createClient } from '@/lib/supabase/client'
-import { getAuthRedirectUrl } from '@/lib/supabase/redirect'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -44,6 +43,20 @@ export default function LoginPage() {
     }
 
     setStatusMessage('Success! Opening your workspace...')
+    // First, ask the server whether a resume cookie exists and obtain the
+    // redirect URL if so. This preserves the same resume behavior as signup
+    // and keeps plan intent HttpOnly.
+    try {
+      const resp = await fetch('/api/billing/resume/continue')
+      const data = await resp.json().catch(() => ({}))
+      if (data?.ok && data?.redirectUrl) {
+        window.location.href = data.redirectUrl
+        return
+      }
+    } catch (e) {
+      // ignore and fall back to client-side checks
+    }
+
     try {
       const params = new URLSearchParams(window.location.search)
       const next = params.get('next')

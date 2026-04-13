@@ -20,6 +20,13 @@ Top blockers
 - Onboarding assumed persistence; if backend missing the UX could mislead users into believing data saved.
 - Workspace route must present explicit degraded/demo state when backend or entitlement checks fail.
 
+Pass 1 updates (current pass work)
+
+- login now calls `/api/billing/resume/continue` after successful sign-in to honor the HttpOnly resume cookie (parity with signup)
+- signup already calls `/api/billing/resume/continue` after account creation to resume pricing checkout when applicable
+- workspace now surfaces a visible "Retry workspace" affordance when composer or workspace creation errors occur; this provides a clear recovery path for degraded states
+- server-side guard added to `/api/billing/checkout` to require server-side auth (returns 401 for guests) to force client resume behavior
+- a minimal PR CI workflow was added at `.github/workflows/ci.yml` to run lint, typecheck, and build on PRs
 Risk areas
 
 - Conversion: fragile checkout flow and placeholder hero proof reduce trust and revenue.

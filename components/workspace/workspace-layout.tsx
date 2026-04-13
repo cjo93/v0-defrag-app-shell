@@ -11,7 +11,6 @@ import type { DefragStructuredResponse } from '@/lib/defrag/schemas'
 import { MessageInput } from './message-input'
 import { toast } from '@/hooks/use-toast'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import { hasAccess } from '@/lib/entitlement'
 import { UpgradeGate } from '@/components/upgrade-gate'
 
@@ -19,7 +18,7 @@ const shellCardClass =
   'rounded-[1.8rem] border border-white/8 bg-white/[0.04] shadow-[0_24px_80px_rgba(1,4,12,0.32)] backdrop-blur'
 
 export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
-  const router = useRouter()
+  // router not required in this component; navigation handled by links and window.history
   const [showAlternatives, setShowAlternatives] = useState(false)
   const [messages, setMessages] = useState<WorkspaceMessage[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -432,6 +431,17 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
             <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
               Workspace ready
             </span>
+          )}
+
+          {/* Show a lightweight retry affordance when the workspace experiences an error */}
+          {composerError && (
+            <button
+              onClick={() => seedFirstWorkspace()}
+              disabled={isLoading}
+              className="ml-2 inline-flex items-center gap-2 rounded-full border border-white/6 bg-white/[0.02] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-white/70 hover:bg-white/4 focus:outline-none"
+            >
+              Retry workspace
+            </button>
           )}
         </div>
       </div>

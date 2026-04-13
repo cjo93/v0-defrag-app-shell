@@ -40,6 +40,18 @@
 
 > NOTE: server-side guard added to `/api/billing/checkout` to require auth (returns 401 for guests) — this addresses the critical checkout resume flow. Follow-up: add preview smoke checks in CI.
 
+### Pass 1 completion notes
+
+- Implemented server-side guard on `/api/billing/checkout` to require auth and enable the resume cookie flow.
+- Login and signup now both consult `/api/billing/resume/continue` after successful auth to preserve plan-intent resume (HttpOnly cookie).
+- Workspace shows a visible retry affordance and demo badges when using the dummy Supabase client or when composer errors occur.
+
+Next required steps before merge:
+
+- Create a Git branch for this pass and push the changes, then validate the Vercel preview.
+- A minimal PR CI workflow was added at `.github/workflows/ci.yml` to run lint, typecheck, and build on PRs. Add a preview-smoke job next to hit key routes.
+- Finish workspace degraded-state UI to clearly disable unavailable actions in demo mode.
+
 ## Blockers for production promotion
 - [ ] All preview checks above are green on a production-like preview
 - [ ] No critical runtime errors in Sentry (or equivalent)
