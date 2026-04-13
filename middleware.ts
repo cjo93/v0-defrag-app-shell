@@ -29,9 +29,18 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  // Create Supabase server client only if environment variables are present.
+  // Preserve graceful handling when env vars are missing so middleware does not crash during deploy/build.
+  let supabase: any = null
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!supabaseUrl || !supabaseKey) {
+      console.warn('Supabase public environment variables missing in middleware. Skipping server-side auth check.')
+    } else {
+      supabase = createServerClient(
+        supabaseUrl,
+        supabaseKey,
     {
       cookies: {
         get(name: string) {
@@ -73,11 +82,23 @@ export async function middleware(request: NextRequest) {
         },
       },
     }
-  )
+      )
+    }
+  } catch (err) {
+    console.error('Error initializing Supabase in middleware:', err)
+    supabase = null
+  }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  if (supabase) {
+    try {
+      const result = await supabase.auth.getUser()
+      user = result?.data?.user ?? null
+    } catch (err) {
+      console.warn('Supabase auth.getUser failed in middleware; treating as unauthenticated', err)
+      user = null
+    }
+  }
 
   const url = request.nextUrl.clone()
 
