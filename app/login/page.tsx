@@ -56,8 +56,8 @@ export default function LoginPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400">
                 Secure Access
               </div>
-              <h1 className="text-3xl font-semibold text-stone-50 tracking-tight">Welcome back</h1>
-              <p className="text-stone-400 font-light text-sm">Return to your relational workspace</p>
+              <h1 className="text-3xl font-semibold text-stone-50 tracking-tight">Sign in to your Defrag workspace</h1>
+              <p className="text-stone-400 font-light text-sm">Securely return to your moments and reads</p>
             </div>
 
             <form onSubmit={handleSignIn} className="space-y-6 border border-white/10 rounded-[32px] p-10 bg-white/[0.02] backdrop-blur-xl shadow-2xl">
@@ -71,7 +71,7 @@ export default function LoginPage() {
                 <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider block ml-1">Email Address</label>
                 <input
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder="your@email.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -104,6 +104,8 @@ export default function LoginPage() {
               <Button type="submit" className="w-full h-12 rounded-full bg-stone-100 text-stone-950 font-semibold hover:bg-white shadow-lg transition-all" disabled={isSubmitting}>
                 {isSubmitting ? 'Verifying...' : 'Sign In'}
               </Button>
+
+              <p className="mt-2 text-xs text-stone-500">We only use your email for account access and session continuity.</p>
 
               {statusMessage && (
                 <div className="rounded-2xl border border-white/5 bg-white/[0.01] px-4 py-3 text-xs text-stone-500 text-center animate-pulse">

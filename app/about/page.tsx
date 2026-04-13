@@ -23,6 +23,20 @@ export default function AboutPage() {
                 Unlike generic AI or diagnostic tools, Defrag provides structured insights into the field of interaction—focusing on intent, impact, pressure, and timing. Our goal is to provide a calmer, clearer read on what is happening between people, helping you choose moves that match the field.
               </p>
             </div>
+            <div className="space-y-6 text-lg leading-8 text-stone-300">
+              <h3 className="text-xl font-semibold text-white/90">What Defrag is not</h3>
+              <p>Defrag is not a therapy service, a generalized chat assistant, or a substitute for professional help. We focus on short, practical interaction guidance — clear, concise, and actionable.</p>
+
+              <h3 className="text-xl font-semibold text-white/90">Who it's for</h3>
+              <p>Defrag is for people who value communication clarity: managers, team leads, partners, and individuals who need to move sensitive conversations forward with less friction.</p>
+
+              <h3 className="text-xl font-semibold text-white/90">How it works</h3>
+              <p>Provide a short description of a moment. Defrag analyzes likely interpretations, surfaces a concise risk summary, and offers a direct next move you can say — plus a softer rewrite.</p>
+
+              <div className="mt-6">
+                <a href="/signup" className="inline-flex h-12 items-center justify-center rounded-full bg-stone-100 px-6 text-sm font-semibold text-stone-950">Get started</a>
+              </div>
+            </div>
           </div>
         </div>
       </main>

@@ -42,7 +42,8 @@ export default function StudioPage({ searchParams }: { searchParams?: Record<str
                 <p className="mt-3 text-sm text-stone-500">See what they may be reacting to before the moment hardens.</p>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Link href="/workspace" className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20">Open Workspace</Link>
+                  {/* Preserve intent for unauthenticated users by routing into signup with next param */}
+                  <Link href="/signup?next=/workspace" className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20">Open Workspace</Link>
                   <Link href="/pricing" className="inline-flex h-14 items-center justify-center rounded-full border border-white/12 bg-white/4 px-8 text-sm font-semibold text-stone-100">See Plans</Link>
                 </div>
               </div>
@@ -55,6 +56,35 @@ export default function StudioPage({ searchParams }: { searchParams?: Record<str
         </section>
 
         <HowItWorks />
+
+        {/* Add a focused proof section showing the flow: Submit -> Read -> Next move */}
+        <section className="mx-auto max-w-6xl px-4 py-12">
+          <div className="rounded-2xl border border-white/6 bg-[#0b0c10]/60 p-6">
+            <h3 className="text-lg font-semibold text-white/90">What happens when you submit a moment</h3>
+            <div className="mt-4 grid gap-6 md:grid-cols-3">
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-white/80">1. You describe the moment</div>
+                <div className="text-sm text-white/60">A short, plain-language description is all you need.</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-white/80">2. Defrag reads the field</div>
+                <div className="text-sm text-white/60">We show Signal, Risk, and a Next move in clear, actionable blocks.</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-sm font-semibold text-white/80">3. You get a usable next move</div>
+                <div className="text-sm text-white/60">A verbatim sentence to try and a short rewrite to make it softer or clearer.</div>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <div className="max-w-md">
+                {/* Reuse the artifact card as an example read */}
+                <HeroArtifact variant="before" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <WhatDefragShows />
         <ProofContrast />
       </main>

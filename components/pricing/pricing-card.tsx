@@ -31,13 +31,20 @@ export function PricingCard({
         body: JSON.stringify({ tier: plan })
       });
       const data = await res.json();
+      if (res.status === 401 || res.status === 403) {
+        // Not authorized — route user to signup/login preserving plan intent
+        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+        return
+      }
       if (data?.url) {
         window.location.href = data.url;
       } else {
-        console.error('Checkout failed', data);
+        // Surface an inline alert rather than silently failing
+        alert(data?.error || 'Checkout is currently unavailable. Please try again later or contact support.')
       }
     } catch (err) {
       console.error('Checkout error', err);
+      alert('Payment service is currently unavailable. Please try again later.')
     } finally {
       setLoading(false);
     }

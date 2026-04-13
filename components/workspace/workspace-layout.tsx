@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { BranchThread } from './branch-thread'
 import { CanvasPanel } from './canvas-panel'
 import { ChatThread, type WorkspaceMessage } from './chat-thread'
+import type { DefragStructuredResponse } from '@/lib/defrag/schemas'
 import { MessageInput } from './message-input'
 import { toast } from '@/hooks/use-toast'
 import { createClient } from '@/lib/supabase/client'
@@ -130,6 +131,22 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const loadWorkspace = async (id: string) => {
     setIsLoading(true)
     try {
+      // Support local-only persistence/load simulation by reading URL param directly.
+      // This avoids a potential race where simulateMode state isn't yet set when loadWorkspace runs.
+      let simParam: string | null = null
+      try {
+        if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
+          const params = new URLSearchParams(window.location.search)
+          simParam = params.get('simulate')
+        }
+      } catch (e) {
+        // noop
+      }
+      if (simParam === 'persistence-load') {
+        setComposerError('Failed to load session history.')
+        setIsLoading(false)
+        return
+      }
       // 1. Fetch workspace and its primary thread
       const { data: thread, error: threadError } = await supabase
         .from('threads')
@@ -300,12 +317,15 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       // Local-only simulated assistant retry behavior (client-side):
       if (process.env.NODE_ENV !== 'production' && simulateMode === 'assistant' && messageId?.startsWith('sim-assistant-fail')) {
         // Replace the failed assistant placeholder with a successful structured message
-        const structured = {
+        const structured: DefragStructuredResponse = {
           responseText: 'Simulated assistant successful read for retry.',
-          relationalStatus: 'interpretation',
-          rationale: [{ label: 'Sim', summary: 'Simulated rationale' }],
+          relationalStatus: 'uncertain',
+          rationale: [{ label: 'Sim', summary: 'Simulated rationale', details: [] }],
           suggestedNextStep: 'Start with: "Can we find time to talk?"',
           rewrite: 'Simulated rewrite',
+          shouldOpenBranch: false,
+          suggestedArtifact: 'none',
+          educationalLayer: null,
         }
         const newDefragMsg: WorkspaceMessage = {
           id: 'sim-assistant-ok-' + Date.now(),

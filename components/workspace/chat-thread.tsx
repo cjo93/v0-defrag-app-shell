@@ -63,6 +63,8 @@ type ChatThreadProps = {
   isSubmitting?: boolean
   errorMessage?: string | null
   onRetryGeneration?: (lastUserMessageId?: string) => Promise<void>
+  onRetryWorkspace?: () => Promise<void>
+  isWorkspaceLoading?: boolean
 }
 
 export function ChatThread({
@@ -70,6 +72,8 @@ export function ChatThread({
   isSubmitting = false,
   errorMessage = null,
   onRetryGeneration,
+  onRetryWorkspace,
+  isWorkspaceLoading = false,
 }: ChatThreadProps) {
   // ...existing code...
   const renderedMessages = useMemo(() => messages, [messages])
@@ -96,9 +100,30 @@ export function ChatThread({
     <div className="flex-1 overflow-y-auto px-3 py-3.5 sm:px-4 sm:py-5">
       <div className="mx-auto max-w-2xl space-y-4 sm:space-y-5">
         {errorMessage && (
-          <div className="rounded-[1.35rem] border border-amber-400/18 bg-amber-400/8 px-4 py-3 text-sm leading-6 text-amber-50/88">
-            {errorMessage}
-          </div>
+          // If the parent provides a workspace retry handler, show a calm inline error with a primary Try again CTA
+          onRetryWorkspace ? (
+            <div className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/88">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="font-semibold text-white/92">We couldn't create your workspace.</div>
+                  <div className="text-sm mt-1 text-white/66">Nothing was lost. Try again to continue.</div>
+                </div>
+                <div className="ml-4">
+                  <button
+                    onClick={() => onRetryWorkspace().catch(() => undefined)}
+                    disabled={isWorkspaceLoading}
+                    className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition disabled:opacity-60 ${isWorkspaceLoading ? 'bg-white/8 text-white/60 border border-white/8' : 'bg-white text-black'}`}
+                  >
+                    {isWorkspaceLoading ? 'Trying...' : 'Try again'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-[1.35rem] border border-amber-400/18 bg-amber-400/8 px-4 py-3 text-sm leading-6 text-amber-50/88">
+              {errorMessage}
+            </div>
+          )
         )}
         {renderedMessages.map((message) => {
           const isAssistant = message.role === 'assistant'
