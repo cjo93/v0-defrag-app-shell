@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { runDefragAgent } from "@/lib/defrag/agent";
 import { requireTier } from '@/lib/entitlement'
 import { getCurrentUserProfile } from '@/lib/supabase/profile'
+import { isQAFromHeaders } from '@/lib/qa'
 
 type Params = { params: Promise<{ threadId: string }> };
 
@@ -27,7 +28,7 @@ export async function POST(req: Request, { params }: Params) {
     );
   }
 
-  const isQA = req.headers.get('x-defrag-qa') === '1' || req.headers.get('cookie')?.includes('defrag_qa=1')
+  const isQA = isQAFromHeaders(req.headers)
 
   const {
     data: { user },

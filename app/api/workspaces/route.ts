@@ -3,6 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { requireTier } from '@/lib/entitlement'
 import { getCurrentUserProfile } from '@/lib/supabase/profile'
+import { isQAFromHeaders } from '@/lib/qa'
 
 export async function POST(req: Request) {
   let supabase;
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
   }
 
   // QA bypass: allow unauthenticated requests in QA mode for testing
-  const isQA = req.headers.get('x-defrag-qa') === '1' || req.headers.get('cookie')?.includes('defrag_qa=1')
+  const isQA = isQAFromHeaders(req.headers)
 
   const {
     data: { user },
