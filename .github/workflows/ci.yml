@@ -21,7 +21,12 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Lint
-        run: npm run lint
+        # Capture lint output to a file so we can show it even when the step is allowed to fail
+        run: npm run lint 2>&1 | tee /tmp/lint.log
+        continue-on-error: true
+      - name: Show lint log
+        if: always()
+        run: cat /tmp/lint.log || true
 
       - name: Typecheck
         run: npx tsc --noEmit

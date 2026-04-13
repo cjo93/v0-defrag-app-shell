@@ -6,7 +6,99 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+cd /Users/cjo/IdeaProjects/thefinalfrags/v0-defrag-app-shell || exit 1
+
+# 1. fetch + checkout the PR head branch
+git fetch origin
+git checkout release/defrag-web-launch-refresh || git checkout -b release/defrag-web-launch-refresh origin/release/defrag-web-launch-refresh
+
+# 2. Untrack noise (keep files on disk)
+git rm -r --cached .idea || true
+git rm --cached tsconfig.tsbuildinfo || true
+
+# 3. Ensure .gitignore contains required entries
+grep -qxF ".idea/" .gitignore || echo ".idea/" >> .gitignore
+grep -qxF "tsconfig.tsbuildinfo" .gitignore || echo "tsconfig.tsbuildinfo" >> .gitignore
+git add .gitignore
+
+# 4. Ensure CI exists (create if missing)
+mkdir -p .github/workflows
+if [ ! -f .github/workflows/ci.yml ]; then
+  cat > .github/workflows/ci.yml <<'YAML'
+name: PR CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Show lint log
+        if: always()
+        run: cat /tmp/lint.log || true
+YAML
+  echo "Created .github/workflows/ci.yml"
+fi
+
+# 5. Stage only the intended pass files (protect against accidental staging of noise)
+git add .github/workflows/ci.yml \
+        app/login/page.tsx \
+        components/workspace/workspace-layout.tsx \
+        docs/release-readiness-audit.md \
+        docs/release-punchlist.md \
+        docs/release-gate-checklist.md || true
+
+# 6. Install + lint + typecheck + build, saving full logs to /tmp
+echo "---- START: npm install ----"
+npm install --no-audit --no-fund 2>&1 | tee /tmp/install.log
+echo "---- END: npm install ----"
+
+echo "---- START: npm run lint ----"
+npm run lint 2>&1 | tee /tmp/lint.log || true
+echo "---- END: npm run lint ----"
+
+echo "---- START: npx tsc --noEmit ----"
+npx tsc --noEmit 2>&1 | tee /tmp/tsc.log || true
+echo "---- END: npx tsc --noEmit ----"
+
+echo "---- START: npm run build ----"
+npm run build 2>&1 | tee /tmp/build.log || true
+echo "---- END: npm run build ----"
+
+# 7. Commit (single commit) and push
+git commit -m "chore(release): clean noise, add PR CI, and apply pass 1 honesty changes" || echo "Nothing to commit"
+git push --set-upstream origin release/defrag-web-launch-refresh
+
+# 8. Confirm noise removal
+git fetch origin main
+git diff --name-only origin/main...HEAD | grep -E '(^|/)(\.idea|tsconfig.tsbuildinfo)$' || echo "No noise files in branch diff"
+
+# 9. Show where logs are
+echo "Logs saved: /tmp/install.log /tmp/lint.log /tmp/tsc.log /tmp/build.log"    "lint": "next lint"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.52",
