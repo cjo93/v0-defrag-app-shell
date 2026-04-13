@@ -324,6 +324,8 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           filters: [],
           distortions: [],
           defenses: [],
+          dynamic: 'dyadic',
+          participants: [],
           rationale: [{ label: 'Sim', summary: 'Simulated rationale', details: [] }],
           suggestedNextStep: 'Start with: "Can we find time to talk?"',
           rewrite: 'Simulated rewrite',

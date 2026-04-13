@@ -19,6 +19,12 @@ export const DefragStructuredResponseSchema = z.object({
   filters: z.array(z.string()).default([]),
   distortions: z.array(z.string()).default([]),
   defenses: z.array(z.string()).default([]),
+  // Confidence: a calibrated number between 0 and 1 indicating assistant's confidence in the structured read
+  confidence: z.number().min(0).max(1).optional(),
+  // Dynamic classification of the active relational structure
+  dynamic: z.enum(["dyadic", "triadic", "systemic", "group"]).default("dyadic"),
+  // Optional list of participants referenced in the read (lightweight labels)
+  participants: z.array(z.object({ id: z.string().optional(), label: z.string() })).default([]),
   outcome: z.string().optional(),
   repairLever: z.string().optional(),
   suggestedNextStep: z.string(),
