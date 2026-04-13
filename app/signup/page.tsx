@@ -23,6 +23,13 @@ export default function SignupPage() {
     setStatusMessage('Creating your account...')
 
     const supabase = createClient()
+    if ((supabase as any).isDummy) {
+      setError('Authentication is not configured in this environment. Use a preview with auth or run locally with Supabase env vars.')
+      setIsSubmitting(false)
+      setStatusMessage(null)
+      return
+    }
+
     const redirectTo = getAuthRedirectUrl('/auth/callback')
     const { error } = await supabase.auth.signUp({
       email,
@@ -42,8 +49,21 @@ export default function SignupPage() {
       return
     }
 
-    // Redirect after successful signup. If the signup flow was started with plan intent
-    // (e.g. ?next=/pricing&plan=core), redirect to pricing with resume flag so checkout can continue.
+    // Redirect after successful signup.
+    // Prefer server-side resume: ask the server if a resume cookie exists and
+    // if so receive the pricing resume URL. This avoids exposing intent in
+    // query strings and keeps the resume state HttpOnly.
+    try {
+      const resp = await fetch('/api/billing/resume/continue')
+      const data = await resp.json().catch(() => ({}))
+      if (data?.ok && data?.redirectUrl) {
+        window.location.href = data.redirectUrl
+        return
+      }
+    } catch (e) {
+      // ignore and fall back to existing client-side query parsing
+    }
+
     try {
       const params = new URLSearchParams(window.location.search)
       const next = params.get('next')
@@ -70,6 +90,11 @@ export default function SignupPage() {
           <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl animate-pulse delay-700" />
 
           <div className="space-y-10 relative z-10">
+            {(createClient() as any).isDummy && (
+              <div className="mb-4 rounded-lg border border-yellow-500/20 bg-yellow-900/10 p-3 text-sm text-yellow-300">
+                Preview environment: authentication is disabled. Account creation will not work here. To test sign-up flows, use a preview configured with Supabase or run locally with proper env vars.
+              </div>
+            )}
             <div className="text-center space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400">
                 Begin Onboarding

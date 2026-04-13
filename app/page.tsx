@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
+import { HeroArtifact } from '@/components/landing/HeroArtifact'
 
 const heroSignals = [
   'For the moments where everyone walks away with a different version of what just happened.',
@@ -111,66 +112,11 @@ export default function LandingPage() {
             <div className="relative min-h-[min(560px,68svh)] overflow-hidden rounded-[28px] border border-white/8 bg-gradient-to-b from-[#0f1114] to-[#060708] text-stone-100 shadow-[0_40px_120px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.04]">
               <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_12%_18%,_rgba(223,191,123,0.08),_transparent_20%),radial-gradient(circle_at_80%_16%,_rgba(98,137,145,0.06),_transparent_22%)]" />
 
-              <div className="relative flex h-full flex-col p-6 lg:p-8">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">LIVE READ</p>
-                    <p className="mt-1 text-sm font-medium text-stone-100">Session · Misread intent · pattern</p>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid gap-4 lg:grid-cols-[1fr]">
-                  <div className="p-0">
-                    <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">USER MOMENT</div>
-                    <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“Why do you always go quiet when I bring this up?”</p>
-
-                    <div className="mt-4">
-                      <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">READ</div>
-                      <p className="mt-2 text-sm text-stone-300">The word “always” likely made the moment land as accusation before concern could be felt.</p>
-
-                      <ul className="mt-3 ml-4 list-inside list-disc text-sm text-stone-300 space-y-1">
-                        <li>accusation before safety</li>
-                        <li>pressure before reflection</li>
-                        <li>being cornered before being understood</li>
-                      </ul>
-                    </div>
-
-                    <div className="mt-4 bg-emerald-300/6 p-3 rounded-md">
-                      <p className="text-sm font-semibold text-stone-100">NEXT MOVE</p>
-                      <p className="mt-2 text-sm text-stone-100">Lower pressure first. Then reopen the topic without blame.</p>
-                    </div>
-
-                    <div className="mt-4">
-                      <p className="text-sm font-semibold text-stone-200">REPAIR OPENING</p>
-                      <div className="mt-2 text-sm text-stone-200">“I’m not trying to pin this on you. I want to understand what happens for you when this comes up.”</div>
-                    </div>
-                  </div>
-
-                  {/* Bottom artifact row: two compact chips/previews */}
-                  <div className="mt-3 flex items-center gap-3">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
-                      <svg className="h-4 w-4 text-emerald-300" viewBox="0 0 8 8" fill="none" aria-hidden>
-                        <circle cx="4" cy="4" r="3" fill="#34D399" />
-                      </svg>
-                      <div className="text-sm text-stone-100">Map live</div>
-                    </div>
-
-                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
-                      {/* Poster-frame visual: always show a premium fallback gradient + play affordance */}
-                      <div className="relative h-10 w-16 rounded-md overflow-hidden bg-gradient-to-br from-[#15202b] to-[#0b1116] border border-white/4">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(135,89,255,0.08),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_40%)]" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/[0.03]">
-                            <svg className="h-4 w-4 text-white/90" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-sm text-stone-100">0:47 explainer</div>
-                    </div>
-                  </div>
-                </div>
+              {/* Replace the handcrafted poster/placeholder with the reusable HeroArtifact component.
+                 This ensures the right-hero proves product capability instead of feeling like a decorative placeholder.
+               */}
+              <div className="relative flex h-full items-center justify-center p-6 lg:p-8">
+                <HeroArtifact variant="before" />
               </div>
             </div>
           </div>

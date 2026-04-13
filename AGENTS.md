@@ -50,6 +50,18 @@ Agent-specific patterns (project):
 - Server-only admin access is handled in `lib/supabase/admin.ts` and requires `SUPABASE_SERVICE_ROLE_KEY`; treat that key as server-only and avoid using it in client code or committing it to env examples.
 - Audio and TTS code checks `OPENAI_API_KEY` at runtime (see `app/api/audio/tts/route.ts`). Preserve that graceful check and the 503 response when absent.
 
+ - runDefragAgent is the canonical server-side entrypoint for AI generation in this repo. It is exported from `lib/defrag/agent.ts` and is consumed by server routes such as `app/api/defrag/generate/route.ts` and `app/api/threads/[threadId]/messages/route.ts`. Prefer calling `runDefragAgent` from server routes rather than building ad-hoc call sites.
+
+ - The agent uses the gateway wrapper when calling models. Concretely the file creates a gateway client like:
+
+   `const aiGatewayOpenai = createOpenAI({ apiKey: process.env.AI_GATEWAY_API_KEY, baseURL: process.env.AI_GATEWAY_BASE_URL })`
+
+   and `generateObject` is invoked with `model: aiGatewayOpenai(process.env.OPENAI_MODEL_PRIMARY || "gpt-4o-mini")`. Respect the `AI_GATEWAY_*` vars and the optional `OPENAI_MODEL_PRIMARY` override; do not hard-code a different client or model.
+
+ - Server routes perform entitlement checks before running the agent. Example: `app/api/defrag/generate/route.ts` calls `getCurrentUserProfile()` (see `lib/supabase/profile.ts`) and `requireTier(profile, 'core')` from `lib/entitlement.ts`. Keep those checks in place (do not bypass them in server code).
+
+ - The structured response schema is the source of truth for downstream UI rendering. If you change `lib/defrag/schemas.ts`, update any consumers (components and the `generateObject` call) and add migration notes. The schema enforces fields such as `responseText`, `event`, `filters`, `distortions`, `rationale`, and `suggestedNextStep`.
+
 ## Definition of done
 A task is not done unless:
 - the visual result is materially stronger

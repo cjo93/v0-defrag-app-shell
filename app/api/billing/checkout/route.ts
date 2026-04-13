@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { isQAFromHeaders } from '@/lib/qa'
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const priceMap: Record<string, string | undefined> = {
@@ -22,6 +24,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Stripe is not configured." }, { status: 503 });
   }
   const stripe = new Stripe(stripeSecretKey);
+
+  // Ensure we have an authenticated user server-side before starting checkout.
+  // In QA mode we allow unauthenticated flows for testing.
+  let supabase;
+  try {
+    supabase = await createSupabaseServerClient()
+  } catch (e) {
+    return NextResponse.json({ error: 'Supabase is not configured.' }, { status: 503 })
+  }
+
+  const isQA = isQAFromHeaders(req.headers)
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user && !isQA) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   let tier: string | undefined;
   let customer_email: string | undefined;

@@ -33,8 +33,20 @@ export default function PricingPage() {
       const data = await res.json().catch(() => ({}))
 
       if (res.status === 401 || res.status === 403) {
-        // Not authenticated — send to signup preserving intent
-        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+        // Not authenticated — ask server to set a short-lived resume cookie,
+        // then navigate to signup. Server will be able to resume checkout after auth.
+        try {
+          const r = await fetch('/api/billing/resume', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan }),
+          })
+          const body = await r.json().catch(() => ({}))
+          window.location.href = body?.redirect || `/signup`
+        } catch (e) {
+          // fallback: direct client redirect if server resume failed
+          window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+        }
         return
       }
 

@@ -22,14 +22,17 @@ export default function OnboardingPage() {
     setError(null)
     try {
       const supabase = createClient()
-      // Update user profile with onboarding context
-      await supabase.from('profiles').upsert({
-        // user id will be set by RLS/session
-        relation,
-        onboarding_moment: moment,
-        onboarding_goal: goal,
-        completed_onboarding: true,
-      })
+      // If Supabase is not configured, avoid pretending to persist profile data.
+      if (!(supabase as any).isDummy) {
+        // Update user profile with onboarding context
+        await supabase.from('profiles').upsert({
+          // user id will be set by RLS/session
+          relation,
+          onboarding_moment: moment,
+          onboarding_goal: goal,
+          completed_onboarding: true,
+        })
+      }
       // Create starter workspace/thread if missing
       let created = false;
       try {
@@ -86,6 +89,12 @@ export default function OnboardingPage() {
             Back
           </Link>
         </div>
+
+        {(createClient() as any).isDummy && (
+          <div className="mb-4 rounded-lg border border-yellow-500/20 bg-yellow-900/10 p-3 text-sm text-yellow-300">
+            Preview environment: persistent onboarding and profile saving are disabled. Workspace creation may fail in this preview. To test full onboarding, use a preview with backend configured or run locally with env vars.
+          </div>
+        )}
 
         {step === 'orientation' && (
           <div className="rounded-[1.8rem] border border-white/8 bg-white/3 p-6 xl:p-8">

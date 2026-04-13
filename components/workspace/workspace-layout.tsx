@@ -32,6 +32,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const [profileLoading, setProfileLoading] = useState(true)
 
   const supabase = createClient()
+  const isDummyClient = (supabase as any).isDummy
 
   useEffect(() => {
     if (workspaceId) {
@@ -423,9 +424,15 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           </button>
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-              <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
-            Workspace ready
-          </span>
+          {isDummyClient ? (
+            <span className="inline-flex rounded-full border border-yellow-500/20 bg-yellow-900/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-yellow-300">
+              Demo mode
+            </span>
+          ) : (
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/52">
+              Workspace ready
+            </span>
+          )}
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-hidden scroll-smooth overflow-y-auto">
@@ -461,7 +468,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
 
   const introPanel = (
     <section className={`p-5 sm:p-6 animate-in fade-in duration-300 transition-all`} style={{ background: 'rgba(18,22,32,0.92)' }}>
-      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">Workspace overview</p>
           <h2 className="mt-2 text-lg font-semibold text-white/90">Keep the moment on the left and the read on the right.</h2>
@@ -469,9 +476,11 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
             The workspace stays focused on one moment, one read, one next move, and one rewrite.
           </p>
         </div>
-        <span className="rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
-          Live
-        </span>
+        {isDummyClient ? (
+          <span className="rounded-full border border-yellow-500/20 bg-yellow-900/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-yellow-300">Demo</span>
+        ) : (
+          <span className="rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">Live</span>
+        )}
       </div>
     </section>
   )

@@ -7,12 +7,20 @@ export function createClient() {
   if (!url || !key) {
     // Return a dummy client for build time / missing env vars
     // This allows the build to proceed even if secrets are missing
-    return {
+    // The dummy client intentionally signals that it is non-functional
+    // so callers can surface honest UI (no silent success).
+    const dummy = {
+      isDummy: true,
       auth: {
         getUser: async () => ({ data: { user: null }, error: null }),
-        signOut: async () => {},
+        signOut: async () => ({}),
+        // Sign in/up return an error object to avoid pretending to authenticate
+        signInWithPassword: async () => ({ data: null, error: new Error('Supabase not configured in this environment') }),
+        signUp: async () => ({ data: null, error: new Error('Supabase not configured in this environment') }),
       },
-      from: () => ({
+      from: (table: string) => ({
+        // upsert should return an explicit error when attempted in a non-configured environment
+        upsert: async (_: any) => ({ data: null, error: new Error('Supabase not configured in this environment') }),
         select: () => ({
           order: () => ({
             limit: () => Promise.resolve({ data: [], error: null }),
@@ -20,6 +28,8 @@ export function createClient() {
         }),
       }),
     } as any
+
+    return dummy
   }
 
   return createBrowserClient(url, key)

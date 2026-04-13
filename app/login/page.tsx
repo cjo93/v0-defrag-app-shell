@@ -24,6 +24,13 @@ export default function LoginPage() {
     setStatusMessage('Signing you in...')
 
     const supabase = createClient()
+    if ((supabase as any).isDummy) {
+      setError('Authentication is not configured in this environment. Use a preview with auth or run locally with Supabase env vars.')
+      setIsSubmitting(false)
+      setStatusMessage(null)
+      return
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -64,6 +71,11 @@ export default function LoginPage() {
           <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl animate-pulse delay-700" />
           
           <div className="space-y-10 relative z-10">
+            {(createClient() as any).isDummy && (
+              <div className="mb-4 rounded-lg border border-yellow-500/20 bg-yellow-900/10 p-3 text-sm text-yellow-300">
+                Preview environment: authentication is disabled. Sign-in will not work here. To test sign-in flows, use a preview configured with Supabase or run locally with proper env vars.
+              </div>
+            )}
             <div className="text-center space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400">
                 Secure Access
