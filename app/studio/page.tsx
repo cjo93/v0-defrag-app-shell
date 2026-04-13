@@ -3,6 +3,10 @@ import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
 import StudioQAClient from './StudioQAClient'
+import { HeroArtifact } from '@/components/landing/HeroArtifact'
+import { HowItWorks } from '@/components/landing/HowItWorks'
+import { WhatDefragShows } from '@/components/landing/WhatDefragShows'
+import { ProofContrast } from '@/components/landing/ProofContrast'
 
 export default function StudioPage({ searchParams }: { searchParams?: Record<string, string | string[]> }) {
   const qaParam = searchParams?.qa
@@ -24,47 +28,35 @@ export default function StudioPage({ searchParams }: { searchParams?: Record<str
   return (
     <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />
-      <main className="flex-1 overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(199,160,92,0.18),transparent_26%),radial-gradient(circle_at_80%_16%,rgba(72,117,125,0.16),transparent_24%),linear-gradient(180deg,#101113_0%,#0b0c0e_100%)] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <section className="relative isolate border-b border-white/8">
-          <div className="absolute inset-0 opacity-50">
-            <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
-            <div className="absolute inset-y-0 left-[7%] w-px bg-white/5" />
-            <div className="absolute inset-y-0 right-[7%] w-px bg-white/5" />
-          </div>
-          <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-360 grid-cols-1 gap-10 px-4 pb-10 pt-8 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(min(100%,560px),1fr)] lg:px-10 lg:pb-14 lg:pt-10">
-            <div className="relative flex flex-col justify-between gap-10 lg:py-10">
-              <div className="space-y-8">
+      <main className="flex-1 overflow-hidden pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        <section className="relative border-b border-white/8">
+          <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+            <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+              <div className="max-w-xl">
                 <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/4 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
                   <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
-                  DEFRAG workspace
+                  DEFRAG
                 </div>
-                <div className="max-w-xl space-y-4">
-                  <h1 className="text-balance text-[2.35rem] font-semibold leading-[1.02] tracking-[-0.04em] text-stone-50 sm:text-[3.25rem] lg:text-[4.25rem]">
-                    Your relationship-intelligence studio
-                  </h1>
-                  <p className="max-w-lg text-base leading-7 text-stone-300 sm:text-lg">
-                    See how a moment is landing, why it feels so different from your intent, and what to do next. Defrag is a cinematic workspace for relational clarity.
-                  </p>
-                  <p className="max-w-lg text-sm leading-6 text-stone-500">Not a chatbot. A relational intelligence system for moments that can still go either way.</p>
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row items-start">
-                  <Link href="/workspace" className="inline-flex h-14 min-h-12 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white">
-                    Open Workspace
-                  </Link>
-                  <Link href="/pricing" className="inline-flex h-14 min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/4 px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/8">
-                    See Plans
-                  </Link>
+                <h1 className="mt-6 text-[2.35rem] font-semibold leading-[1.02] tracking-[-0.02em] text-stone-50 sm:text-[3rem] lg:text-[3.75rem]">Before you answer, see the other side.</h1>
+                <p className="mt-4 text-lg text-stone-300">Defrag helps you see how the moment may be landing on the other side, why it feels so different from your intent, and what to do next.</p>
+                <p className="mt-3 text-sm text-stone-500">See what they may be reacting to before the moment hardens.</p>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/workspace" className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20">Open Workspace</Link>
+                  <Link href="/pricing" className="inline-flex h-14 items-center justify-center rounded-full border border-white/12 bg-white/4 px-8 text-sm font-semibold text-stone-100">See Plans</Link>
                 </div>
               </div>
-            </div>
-            <div className="relative flex items-center justify-center">
-              {/* Replace placeholder with a working in-page preview of workspace */}
-              <div className="aspect-video w-full max-w-lg rounded-3xl border border-white/10 bg-linear-to-br from-[#1a1d22] to-[#0b0c0e] shadow-2xl flex items-center justify-center">
-                <span className="text-stone-400 text-lg font-semibold">What just happened?</span>
+
+              <div className="flex items-center justify-center">
+                <HeroArtifact />
               </div>
             </div>
           </div>
         </section>
+
+        <HowItWorks />
+        <WhatDefragShows />
+        <ProofContrast />
       </main>
       <Footer />
     </div>
