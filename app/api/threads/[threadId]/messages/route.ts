@@ -30,6 +30,11 @@ export async function POST(req: Request, { params }: Params) {
 
   const isQA = isQAFromHeaders(req.headers)
 
+  // Development-only simulation header to allow safe local failure testing.
+  // Usage: include header `x-simulate-failure: user-insert|assistant-generation|persistence-load`
+  // This guard ensures we never enable simulation in production.
+  const simulate = (process.env.NODE_ENV !== 'production') ? (req.headers.get('x-simulate-failure') || null) : null
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -59,6 +64,12 @@ export async function POST(req: Request, { params }: Params) {
     .eq("id", threadId)
     .single();
 
+  // If developer requested a simulated persistence/load failure, return 500 here to emulate a
+  // failing loadWorkspace flow on the client. This is purposely only allowed in non-production.
+  if (simulate === 'persistence-load') {
+    return NextResponse.json({ error: 'Simulated persistence/load failure' }, { status: 500 })
+  }
+
   const workspace = thread?.workspace && Array.isArray(thread.workspace) ? thread.workspace[0] : thread?.workspace;
 
   // Allow QA owner to operate on test workspaces
@@ -82,6 +93,11 @@ export async function POST(req: Request, { params }: Params) {
     userMessage = originalMsg
   } else {
     // Insert user message
+    // Allow a simulated user-insert failure for local testing if requested.
+    if (simulate === 'user-insert') {
+      return NextResponse.json({ error: 'Simulated user insert failure' }, { status: 500 })
+    }
+
     const { data: um, error: userMsgError } = await supabaseAdmin
       .from('messages')
       .insert({
@@ -114,6 +130,12 @@ export async function POST(req: Request, { params }: Params) {
       rewrite: 'A softer way to open the topic and invite collaboration.',
     }
   } else {
+    // Allow a simulated assistant-generation failure for local testing.
+    if (simulate === 'assistant-generation') {
+      // Simulate agent failure
+      return NextResponse.json({ error: 'Simulated assistant generation failure' }, { status: 500 })
+    }
+
     structured = await runDefragAgent({
       userMessage: promptContent,
       workspaceTitle: workspace.title,

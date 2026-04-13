@@ -26,6 +26,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState<string | null>(workspaceId || null)
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(!!workspaceId)
+  const [simulateMode, setSimulateMode] = useState<string | null>(null)
   const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null)
   const [profileLoading, setProfileLoading] = useState(true)
 
@@ -39,6 +40,19 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       seedFirstWorkspace()
     }
   }, [workspaceId])
+
+  // Read simulation mode from URL query for local-only testing
+  useEffect(() => {
+    try {
+      if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search)
+        const sim = params.get('simulate')
+        if (sim) setSimulateMode(sim)
+      }
+    } catch (e) {
+      // noop
+    }
+  }, [])
 
   // Guarantee: if no thread/messages, always auto-seed starter workspace
   useEffect(() => {
@@ -64,9 +78,25 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   }, [])
 
   // Seed starter workspace/thread for first session
+  // Idempotent starter workspace creation with safe retry
   const seedFirstWorkspace = async () => {
+    // Use a separate loading flag so the chat thread can show disabled state
     setIsLoading(true)
+    setComposerError(null)
     try {
+      // If a workspace was partially created in a prior attempt, try to find it first
+      try {
+        const { data: existing } = await (createClient()).from('workspaces').select('id').limit(1)
+        if (existing && existing.length > 0) {
+          const foundId = existing[0].id
+          setCurrentWorkspaceId(foundId)
+          await loadWorkspace(foundId)
+          return
+        }
+      } catch (lookupErr) {
+        // ignore lookup failures and proceed to create
+      }
+
       const response = await fetch('/api/workspaces', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,12 +111,17 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Failed to create workspace')
-      setCurrentWorkspaceId(data.workspace.id)
-      loadWorkspace(data.workspace.id)
+      // Protect against duplicate creation by verifying returned id
+      if (data?.workspace?.id) {
+        setCurrentWorkspaceId(data.workspace.id)
+        await loadWorkspace(data.workspace.id)
+      } else {
+        throw new Error('Workspace creation response missing id')
+      }
     } catch (err) {
       // Friendly message for users and allow retry
       console.error('Failed to create starter workspace:', err)
-      setComposerError('We couldn\'t create your workspace. Try again.')
+      setComposerError("We couldn't create your workspace.")
     } finally {
       setIsLoading(false)
     }
@@ -148,6 +183,10 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
     let tId = currentThreadId
 
     try {
+      // Local-only simulation: simulate a message send failure before persisting
+      if (process.env.NODE_ENV !== 'production' && simulateMode === 'send') {
+        throw new Error('Simulated message send failure')
+      }
       // 1. Ensure we have a workspace and thread
       if (!wId) {
         const title = input.slice(0, 40) + (input.length > 40 ? '...' : '')
@@ -229,6 +268,19 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
         return [...withoutTemp, realUserMsg, newDefragMsg]
       })
 
+      // Local-only simulation for assistant failure: append a failed assistant placeholder
+      if (process.env.NODE_ENV !== 'production' && simulateMode === 'assistant') {
+        const failedAssistant: WorkspaceMessage = {
+          id: 'sim-assistant-fail-' + Date.now(),
+          author: 'Defrag',
+          content: '—',
+          timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+          type: 'interpretation',
+          // no structured field to trigger in-thread error block
+        }
+        setMessages(curr => [...curr, failedAssistant])
+      }
+
     } catch (err: any) {
       setComposerError(err.message || 'Something went wrong.')
       // surface toast for actionable errors
@@ -245,6 +297,31 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
   const handleRetryGeneration = async (messageId?: string) => {
     if (!currentThreadId) return
     try {
+      // Local-only simulated assistant retry behavior (client-side):
+      if (process.env.NODE_ENV !== 'production' && simulateMode === 'assistant' && messageId?.startsWith('sim-assistant-fail')) {
+        // Replace the failed assistant placeholder with a successful structured message
+        const structured = {
+          responseText: 'Simulated assistant successful read for retry.',
+          relationalStatus: 'interpretation',
+          rationale: [{ label: 'Sim', summary: 'Simulated rationale' }],
+          suggestedNextStep: 'Start with: "Can we find time to talk?"',
+          rewrite: 'Simulated rewrite',
+        }
+        const newDefragMsg: WorkspaceMessage = {
+          id: 'sim-assistant-ok-' + Date.now(),
+          author: 'Defrag',
+          content: structured.responseText,
+          timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+          type: 'interpretation',
+          sources: structured.rationale?.map((r: any) => ({ name: r.label, description: r.summary, detail: '' })),
+          structured,
+        }
+        setMessages(curr => curr.map(m => m.id === messageId ? newDefragMsg : m))
+        // Clear composer error on successful retry
+        setComposerError(null)
+        return
+      }
+
       const res = await fetch(`/api/threads/${currentThreadId}/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -323,7 +400,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-hidden scroll-smooth overflow-y-auto">
-        <ChatThread messages={messages} isSubmitting={isSubmitting} errorMessage={composerError} />
+          <ChatThread messages={messages} isSubmitting={isSubmitting} errorMessage={composerError} onRetryGeneration={handleRetryGeneration} onRetryWorkspace={seedFirstWorkspace} isWorkspaceLoading={isLoading} />
       </div>
       <div className="border-t border-white/8 bg-[#090b12]/94 px-4 py-3 sm:px-5">
         <MessageInput
