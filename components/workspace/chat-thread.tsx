@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { type DefragStructuredResponse } from '@/lib/defrag/schemas'
 import { BasedOnDisclosure } from './based-on-disclosure'
 import {
   Empty,
@@ -31,6 +32,8 @@ export type WorkspaceMessage = {
     label: string
     action: string
   }[]
+  // Structured AI response when available
+  structured?: DefragStructuredResponse
 }
 
 export const initialWorkspaceMessages: WorkspaceMessage[] = [
@@ -66,6 +69,7 @@ export function ChatThread({
   isSubmitting = false,
   errorMessage = null,
 }: ChatThreadProps) {
+  // ...existing code...
   const renderedMessages = useMemo(() => messages, [messages])
 
   if (renderedMessages.length === 0) {
@@ -109,9 +113,55 @@ export function ChatThread({
                 )}
               </div>
               {isAssistant ? (
-                <div className="overflow-hidden rounded-[1.55rem] border p-4 shadow-[0_20px_50px_rgba(0,0,0,0.22)] transition-colors sm:p-5 border-white/10 bg-white/5">
-                  <p className="text-[15px] leading-7 text-white/84 sm:text-base">{message.content}</p>
-                </div>
+                (() => {
+                  const read = message.structured
+                  if (read) {
+                    return (
+                      <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-3">
+                        <div>
+                          <p className="text-xs text-white/40 uppercase tracking-wider">Signal</p>
+                          <p className="text-white/90 text-sm">{read.responseText}</p>
+                        </div>
+
+                        <div>
+                          <p className="text-xs text-white/40 uppercase tracking-wider">Risk</p>
+                          <p className="text-white/75 text-sm">{read.rationale?.[0]?.summary ?? ''}</p>
+                        </div>
+
+                        <div className="border-t border-white/10 pt-4">
+                          <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Next move</p>
+
+                          <div className="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-3">
+                            <p className="text-white text-sm font-medium">{read.suggestedNextStep}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+
+                  // Fallback to previous plain content split when structured is missing
+                  return (
+                    <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-3">
+                      <div>
+                        <p className="text-xs text-white/40 uppercase tracking-wider">Signal</p>
+                        <p className="text-white/90 text-sm">{message.content}</p>
+                      </div>
+
+                      <div>
+                        <p className="text-xs text-white/40 uppercase tracking-wider">Risk</p>
+                        <p className="text-white/75 text-sm">{message.content}</p>
+                      </div>
+
+                      <div className="border-t border-white/10 pt-4">
+                        <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Next move</p>
+
+                        <div className="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-3">
+                          <p className="text-white text-sm font-medium">Lower pressure first. Then reopen without blame.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })()
               ) : (
                 <div className="ml-auto max-w-[94%] rounded-[1.35rem] border border-white/10 bg-white/5 px-4 py-3.5 text-[15px] leading-7 text-white/78 sm:max-w-[80%] sm:rounded-[1.45rem]">
                   {message.content}

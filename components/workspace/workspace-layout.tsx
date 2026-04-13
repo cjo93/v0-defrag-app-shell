@@ -123,6 +123,9 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           description: rb.payload?.summary || '',
           detail: Array.isArray(rb.payload?.details) ? rb.payload.details.join('. ') : rb.payload?.details || ''
         }))
+        ,
+        // attach structured response if present in DB
+        structured: msg.structured_output || undefined
       }))
 
       setMessages(formattedMessages)
@@ -207,6 +210,7 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
           description: r.summary,
           detail: Array.isArray(r.details) ? r.details.join('. ') : r.details,
         })),
+        structured: structured || undefined,
       }
 
       setMessages(curr => {
