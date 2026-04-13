@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+// Import only types at module-eval time to avoid any runtime validation or
+// initialization inside the imported module during build. We'll dynamically
+// import the runtime factory when environment variables are present so the
+// middleware never throws during build or when envs are intentionally missing.
+import type { CookieOptions } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
   // Default next response (may be recreated after cookie/header changes)
@@ -35,57 +39,56 @@ export async function middleware(request: NextRequest) {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
     if (!supabaseUrl || !supabaseKey) {
+      // Intentionally do not error here — middleware should be safe to run
+      // without Supabase configuration (e.g. during builds or in preview).
       console.warn('Supabase public environment variables missing in middleware. Skipping server-side auth check.')
     } else {
-      supabase = createServerClient(
-        supabaseUrl,
-        supabaseKey,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          })
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
+      // Dynamically import the factory to avoid any module-eval side-effects
+      // when env vars are missing or intentionally withheld.
+      try {
+        const mod = await import('@supabase/ssr')
+        const createServerClient = mod.createServerClient
+
+        supabase = createServerClient(
+          supabaseUrl,
+          supabaseKey,
+          {
+            cookies: {
+              get(name: string) {
+                return request.cookies.get(name)?.value
+              },
+              set(name: string, value: string, options: CookieOptions) {
+                // NextRequest cookies are read-only in the edge runtime; mirror
+                // the cookie on the response so client-side code can see QA state
+                // or auth changes. Recreate response to ensure headers/cookies are set.
+                response = NextResponse.next({
+                  request: {
+                    headers: request.headers,
+                  },
+                })
+                response.cookies.set({ name, value, ...options })
+              },
+              remove(name: string, options: CookieOptions) {
+                response = NextResponse.next({
+                  request: {
+                    headers: request.headers,
+                  },
+                })
+                response.cookies.set({ name, value: '', ...options })
+              },
             },
-          })
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          })
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: '',
-            ...options,
-          })
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          })
-          response.cookies.set({
-            name,
-            value: '',
-            ...options,
-          })
-        },
-      },
-    }
-      )
+          }
+        )
+      } catch (err) {
+        // If dynamic import or initialization fails, do not crash middleware.
+        console.error('Error importing or initializing Supabase in middleware:', err)
+        supabase = null
+      }
     }
   } catch (err) {
-    console.error('Error initializing Supabase in middleware:', err)
+    console.error('Unexpected error while initializing Supabase in middleware:', err)
     supabase = null
   }
 
