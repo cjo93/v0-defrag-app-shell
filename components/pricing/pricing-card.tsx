@@ -23,30 +23,52 @@ export function PricingCard({
   const plan = name.toLowerCase();
 
   const handleCheckout = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const res = await fetch('/api/billing/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier: plan })
-      });
-      const data = await res.json();
-      if (res.status === 401 || res.status === 403) {
-        // Not authorized — route user to signup/login preserving plan intent
+      // Ensure we know whether the user is signed in so we can preserve plan intent
+      try {
+        const profileResp = await fetch('/api/profile')
+        if (!profileResp.ok) {
+          // Not signed in — route to signup with intent preserved
+          window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+          return
+        }
+      } catch (e) {
+        // Network or other error while checking profile — preserve intent via signup
         window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
         return
       }
+
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: plan }),
+      })
+
+      const data = await res.json()
+
+      if (res.status === 401 || res.status === 403) {
+        // Auth unexpectedly required — route to signup so user can resume checkout
+        window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+        return
+      }
+
+      if (res.status === 503) {
+        alert(data?.error || 'Payment service is currently unavailable. Please try again later.')
+        return
+      }
+
       if (data?.url) {
-        window.location.href = data.url;
+        window.location.href = data.url
       } else {
-        // Surface an inline alert rather than silently failing
+        // Show a clear user-facing message instead of failing silently
         alert(data?.error || 'Checkout is currently unavailable. Please try again later or contact support.')
       }
     } catch (err) {
-      console.error('Checkout error', err);
+      console.error('Checkout error', err)
       alert('Payment service is currently unavailable. Please try again later.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   };
 
