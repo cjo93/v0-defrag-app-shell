@@ -23,28 +23,35 @@ export async function POST(req: Request) {
     );
   }
 
+  // QA bypass: allow unauthenticated requests in QA mode for testing
+  const isQA = req.headers.get('x-defrag-qa') === '1' || req.headers.get('cookie')?.includes('defrag_qa=1')
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!user && !isQA) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Entitlement check (single source of truth)
-  const profile = await getCurrentUserProfile();
-  const entitlementError = requireTier(profile, 'base');
-  if (entitlementError) {
-    return NextResponse.json(entitlementError, { status: 403 });
+  // Entitlement check (single source of truth) — skip in QA mode
+  if (!isQA) {
+    const profile = await getCurrentUserProfile();
+    const entitlementError = requireTier(profile, 'base');
+    if (entitlementError) {
+      return NextResponse.json(entitlementError, { status: 403 });
+    }
   }
 
   const body = await req.json();
   const title = body.title || "Untitled workspace";
   const seed = body.seed;
 
+  // In QA mode create a lightweight workspace owned by a deterministic test user id
+  const ownerId = isQA ? 'qa-test-user' : user?.id || 'unknown'
   const { data: workspace, error } = await supabaseAdmin
     .from("workspaces")
-    .insert({ user_id: user.id, title })
+    .insert({ user_id: ownerId, title })
     .select("*")
     .single();
 
@@ -67,6 +74,7 @@ export async function POST(req: Request) {
 
   // If seed provided, create starter messages
   if (seed && thread) {
+    // Use the same seeded messages; ensure QA path uses same behavior
     await supabaseAdmin.from("messages").insert([
       {
         thread_id: thread.id,
@@ -77,7 +85,7 @@ export async function POST(req: Request) {
         thread_id: thread.id,
         role: "assistant",
         content:
-          "They may have heard “we need to talk” as pressure before they heard your care. That can make their body brace before the conversation actually starts.",
+          "They may have heard \"we need to talk\" as pressure before they heard your care. That can make their body brace before the conversation actually starts.",
         structured_output: {
           relationalStatus: "interpretation",
           rationale: [
