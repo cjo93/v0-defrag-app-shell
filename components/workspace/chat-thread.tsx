@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { type DefragStructuredResponse } from '@/lib/defrag/schemas'
 import { BasedOnDisclosure } from './based-on-disclosure'
+import { SystemOrbit } from './system-orbit'
 import {
   Empty,
   EmptyContent,
