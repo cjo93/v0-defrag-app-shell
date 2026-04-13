@@ -16,6 +16,7 @@ type MessageInputProps = {
   isSubmitting?: boolean
   disabled?: boolean
   helperText?: string
+  onError?: (err: Error) => void
 }
 
 export function MessageInput({
@@ -24,6 +25,7 @@ export function MessageInput({
   isSubmitting = false,
   disabled = false,
   helperText,
+  onError,
 }: MessageInputProps) {
   const [message, setMessage] = useState('')
 
@@ -42,7 +44,10 @@ export function MessageInput({
       await onSubmit?.(message.trim())
       setMessage('')
     } catch (err) {
-      console.error('Message send failed', err)
+      const e = err instanceof Error ? err : new Error('Message send failed')
+      console.error('Message send failed', e)
+      onError?.(e)
+      // Do not clear the draft so user can retry
     }
   }
 

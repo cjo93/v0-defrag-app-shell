@@ -62,12 +62,14 @@ type ChatThreadProps = {
   messages?: WorkspaceMessage[]
   isSubmitting?: boolean
   errorMessage?: string | null
+  onRetryGeneration?: (lastUserMessageId?: string) => Promise<void>
 }
 
 export function ChatThread({
   messages = initialWorkspaceMessages,
   isSubmitting = false,
   errorMessage = null,
+  onRetryGeneration,
 }: ChatThreadProps) {
   // ...existing code...
   const renderedMessages = useMemo(() => messages, [messages])
@@ -138,25 +140,21 @@ export function ChatThread({
                       </div>
                     )
                   }
-
-                  // Fallback to previous plain content split when structured is missing
+                  // If structured is missing, show an error block with retry option
                   return (
-                    <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-3">
-                      <div>
-                        <p className="text-xs text-white/40 uppercase tracking-wider">Signal</p>
-                        <p className="text-white/90 text-sm">{message.content}</p>
-                      </div>
-
-                      <div>
-                        <p className="text-xs text-white/40 uppercase tracking-wider">Risk</p>
-                        <p className="text-white/75 text-sm">{message.content}</p>
-                      </div>
-
-                      <div className="border-t border-white/10 pt-4">
-                        <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Next move</p>
-
-                        <div className="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-3">
-                          <p className="text-white text-sm font-medium">Lower pressure first. Then reopen without blame.</p>
+                    <div className="rounded-2xl border border-amber-400/18 bg-amber-400/8 px-4 py-3 text-sm leading-6 text-amber-50/88">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="font-semibold">We couldn\'t finish the read.</div>
+                          <div className="text-sm mt-1">Something interrupted the assistant response. You can retry or save your message to try again.</div>
+                        </div>
+                        <div className="ml-4">
+                          <button
+                            onClick={() => onRetryGeneration?.(message.id)}
+                            className="rounded-full bg-amber-500/90 px-3 py-1 text-sm font-semibold text-white"
+                          >
+                            Retry
+                          </button>
                         </div>
                       </div>
                     </div>

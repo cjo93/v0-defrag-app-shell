@@ -8,6 +8,7 @@ import { BranchThread } from './branch-thread'
 import { CanvasPanel } from './canvas-panel'
 import { ChatThread, type WorkspaceMessage } from './chat-thread'
 import { MessageInput } from './message-input'
+import { toast } from '@/hooks/use-toast'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { hasAccess } from '@/lib/entitlement'
@@ -83,7 +84,9 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
       setCurrentWorkspaceId(data.workspace.id)
       loadWorkspace(data.workspace.id)
     } catch (err) {
-      setComposerError('Failed to create starter workspace.')
+      // Friendly message for users and allow retry
+      console.error('Failed to create starter workspace:', err)
+      setComposerError('We couldn\'t create your workspace. Try again.')
     } finally {
       setIsLoading(false)
     }
@@ -228,8 +231,44 @@ export function WorkspaceLayout({ workspaceId }: { workspaceId?: string }) {
 
     } catch (err: any) {
       setComposerError(err.message || 'Something went wrong.')
+      // surface toast for actionable errors
+      toast({
+        title: 'Message failed to send',
+        description: err.message || 'Try again',
+        action: undefined,
+      })
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleRetryGeneration = async (messageId?: string) => {
+    if (!currentThreadId) return
+    try {
+      const res = await fetch(`/api/threads/${currentThreadId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ retryForMessageId: messageId }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Retry failed')
+
+      const assistantMsg = data.assistantMessage
+      const structured = data.structured
+
+      const newDefragMsg: WorkspaceMessage = {
+        id: assistantMsg.id,
+        author: 'Defrag',
+        content: assistantMsg.content,
+        timestamp: new Date(assistantMsg.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+        type: structured.relationalStatus === 'aligned' ? 'insight' : 'interpretation',
+        sources: structured.rationale?.map((r: any) => ({ name: r.label, description: r.summary, detail: Array.isArray(r.details) ? r.details.join('. ') : r.details })),
+        structured: structured || undefined,
+      }
+
+      setMessages(curr => [...curr, newDefragMsg])
+    } catch (err: any) {
+      toast({ title: 'Retry failed', description: err.message || 'Something went wrong' })
     }
   }
 

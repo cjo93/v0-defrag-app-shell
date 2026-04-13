@@ -38,7 +38,9 @@ export async function POST(req: Request, { params }: Params) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { content } = await req.json();
+  const body = await req.json();
+  const content = body.content as string | undefined
+  const retryForMessageId = body.retryForMessageId as string | undefined
 
   // Fetch user profile and check entitlement (single source of truth) — skip in QA
   if (!isQA) {
@@ -65,37 +67,55 @@ export async function POST(req: Request, { params }: Params) {
     return NextResponse.json({ error: "Thread not found" }, { status: 404 });
   }
 
-  // Insert user message
-  const { data: userMessage, error: userMsgError } = await supabaseAdmin
-    .from("messages")
-    .insert({
-      thread_id: threadId,
-      role: "user",
-      content,
-    })
-    .select("*")
-    .single();
+  // If retryForMessageId provided, re-run generation for that user message
+  let userMessage: any = null
+  if (retryForMessageId) {
+    const { data: originalMsg, error: origErr } = await supabaseAdmin
+      .from('messages')
+      .select('*')
+      .eq('id', retryForMessageId)
+      .single()
 
-  if (userMsgError) {
-    return NextResponse.json({ error: userMsgError.message }, { status: 500 });
+    if (origErr || !originalMsg) {
+      return NextResponse.json({ error: 'Original message not found' }, { status: 404 })
+    }
+    userMessage = originalMsg
+  } else {
+    // Insert user message
+    const { data: um, error: userMsgError } = await supabaseAdmin
+      .from('messages')
+      .insert({
+        thread_id: threadId,
+        role: "user",
+        content,
+      })
+      .select("*")
+      .single();
+
+    if (userMsgError) {
+      return NextResponse.json({ error: userMsgError.message }, { status: 500 });
+    }
+    userMessage = um
   }
 
+  // Determine content to run the agent on
+  const promptContent = (userMessage && userMessage.content) || content || ''
+
   // Insert "Reading..." placeholder or handle AI generation
-  // In QA mode, return a deterministic structured response without calling AI
-  let structured
+  let structured: any
   if (isQA) {
     structured = {
-      responseText: `"${content}" — may come across as direct.`,
+      responseText: `"${promptContent}" — may come across as direct.`,
       relationalStatus: 'interpretation',
       rationale: [
-        { label: 'Wording', summary: `Quoted: "${content.split(' ').slice(0,6).join(' ')}..."`, details: '' },
+        { label: 'Wording', summary: `Quoted: "${promptContent.split(' ').slice(0,6).join(' ')}..."`, details: '' },
       ],
       suggestedNextStep: 'Start with: "Can we find a time to talk that works for you?"',
       rewrite: 'A softer way to open the topic and invite collaboration.',
     }
   } else {
     structured = await runDefragAgent({
-      userMessage: content,
+      userMessage: promptContent,
       workspaceTitle: workspace.title,
       threadKind: thread.kind,
     });
@@ -123,7 +143,7 @@ export async function POST(req: Request, { params }: Params) {
   // Insert rationale blocks
   if (structured.rationale && structured.rationale.length > 0) {
     await supabaseAdmin.from("rationale_blocks").insert(
-      structured.rationale.map((r) => ({
+      structured.rationale.map((r: any) => ({
         message_id: assistantMessage.id,
         label: r.label,
         payload: r,
