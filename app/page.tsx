@@ -86,20 +86,20 @@ export default function LandingPage() {
                     Before you answer, see the other side.
                   </h1>
                   <p className="max-w-lg text-base leading-7 text-stone-300 sm:text-lg">
-                    Defrag helps you see how the moment may be landing on the other side, why it feels so different from your intent, and what to do next.
+                    Defrag helps you understand how a moment may land for the other person, what is shaping that reaction, and one clearer next move you can try.
                   </p>
-                  <p className="max-w-lg text-sm leading-6 text-stone-500">See the pattern, the pressure, and the repair opening before the same conflict repeats.</p>
-                  <p className="text-xs text-stone-400 mt-1">Not a chatbot. A relational intelligence system for moments that can still go either way.</p>
+                  <p className="max-w-lg text-sm leading-6 text-stone-500">Spot the pattern, the pressure, and the low-cost repair before the same conflict repeats.</p>
+                  <p className="text-xs text-stone-400 mt-1">Not a generic chatbot — a private relational intelligence system focused on what to do next.</p>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row items-start">
-                  <Link href="/workspace" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white">
-                    Open Workspace
-                  </Link>
-                  <Link href="/pricing" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full border border-white/12 bg-white/[0.04] px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/[0.08]">
-                    See Pricing
-                  </Link>
-                </div>
+                 <div className="flex flex-col gap-3 sm:flex-row items-start">
+                   <Link href="/demo" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white">
+                     Try a private demo
+                   </Link>
+                   <Link href="/pricing" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full border border-white/12 bg-white/[0.04] px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/[0.08]">
+                     Plans & pricing
+                   </Link>
+                 </div>
 
                 {/* left column: kept minimal per hotfix — eyebrow, headline, subhead, support line, anti-chatbot, CTAs only */}
               </div>
