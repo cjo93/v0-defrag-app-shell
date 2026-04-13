@@ -42,7 +42,20 @@ export default function SignupPage() {
       return
     }
 
-    // Redirect to onboarding after successful signup
+    // Redirect after successful signup. If the signup flow was started with plan intent
+    // (e.g. ?next=/pricing&plan=core), redirect to pricing with resume flag so checkout can continue.
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const next = params.get('next')
+      const plan = params.get('plan')
+      if (next === '/pricing' && plan) {
+        window.location.href = `/pricing?plan=${encodeURIComponent(plan)}&resume=1`
+        return
+      }
+    } catch (e) {
+      // ignore and fall back
+    }
+
     window.location.href = '/onboarding'
   }
 

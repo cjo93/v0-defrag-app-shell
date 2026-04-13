@@ -2,8 +2,54 @@
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { PricingCard } from '@/components/pricing/pricing-card'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function PricingPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // If we were redirected back to pricing after signup/login with resume=1 and plan param,
+    // attempt to resume checkout automatically.
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const resume = params.get('resume')
+      const plan = params.get('plan')
+      if (resume === '1' && plan) {
+        // POST to checkout with plan; the pricing card logic also does profile checks, but
+        // here we attempt a direct resume call and let the API guide us.
+        (async () => {
+          try {
+            const res = await fetch('/api/billing/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ tier: plan }),
+            })
+            const data = await res.json()
+            if (res.status === 401 || res.status === 403) {
+              // Not authenticated — send to signup preserving intent
+              window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+              return
+            }
+            if (res.status === 503) {
+              alert(data?.error || 'Payment service is currently unavailable. Please try again later.')
+              return
+            }
+            if (data?.url) {
+              window.location.href = data.url
+            } else {
+              alert(data?.error || 'Checkout is currently unavailable. Please try again later.')
+            }
+          } catch (e) {
+            // fallback: route to signup to preserve intent
+            window.location.href = `/signup?next=/pricing&plan=${encodeURIComponent(plan)}`
+          }
+        })()
+      }
+    } catch (e) {
+      // noop
+    }
+  }, [router])
   return (
     <div className="min-h-screen bg-[#0d0e10] text-stone-100 flex flex-col">
       <Navbar />

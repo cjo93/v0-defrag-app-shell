@@ -37,6 +37,18 @@ export default function LoginPage() {
     }
 
     setStatusMessage('Success! Opening your workspace...')
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const next = params.get('next')
+      const plan = params.get('plan')
+      if (next === '/pricing' && plan) {
+        window.location.href = `/pricing?plan=${encodeURIComponent(plan)}&resume=1`
+        return
+      }
+    } catch (e) {
+      // ignore
+    }
+
     router.push('/dashboard')
     router.refresh()
   }
