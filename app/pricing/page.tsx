@@ -20,6 +20,9 @@ export default function PricingPage() {
             Defrag helps you see the other side before the moment hardens. Choose the level of continuity that matches how you want Defrag to follow your moments.
           </p>
           <p className="max-w-2xl mx-auto text-sm text-stone-500">Privacy, restraint, and continuity are built into every plan. All subscriptions route into onboarding so your first baseline is focused and useful.</p>
+          <div className="mt-4">
+            <a href="/studio?qa=1" className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-transparent px-4 py-2 text-sm font-semibold text-stone-100">Try a guided demo</a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

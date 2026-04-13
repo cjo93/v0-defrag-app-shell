@@ -45,6 +45,7 @@ export default function StudioPage({ searchParams }: { searchParams?: Record<str
                   {/* Preserve intent for unauthenticated users by routing into signup with next param */}
                   <Link href="/signup?next=/workspace" className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20">Open Workspace</Link>
                   <Link href="/pricing" className="inline-flex h-14 items-center justify-center rounded-full border border-white/12 bg-white/4 px-8 text-sm font-semibold text-stone-100">See Plans</Link>
+                  <Link href="/studio?qa=1" className="inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-transparent px-6 text-sm font-semibold text-stone-100">Try demo</Link>
                 </div>
               </div>
 
