@@ -1,12 +1,14 @@
 'use client'
 
+import type { ComponentType } from 'react'
+
 import { BasedOnDisclosure } from './based-on-disclosure'
-import { IconRewrite, IconPerspective, IconSimulations } from '@/components/icons/DefragIcons'
+import { IconPerspective, IconRewrite, IconSimulations } from '@/components/icons/DefragIcons'
 
 interface Scenario {
   id: string
   type: 'rewrite' | 'simulation' | 'perspective'
-  icon: React.ComponentType<{ className?: string }>
+  icon: ComponentType<{ className?: string }>
   title: string
   content: string
   sources?: {
@@ -21,108 +23,123 @@ const scenarios: Scenario[] = [
     id: '1',
     type: 'rewrite',
     icon: IconRewrite,
-    title: 'Rewritten opening',
-    content: '"I want to check in about something" removes threat signal, opens dialogue instead',
+    title: 'Softer opening',
+    content:
+      '“I want to check in about something” lowers the threat signal and gives the conversation a calmer first step.',
     sources: [
       {
         name: 'Communication safety',
         description: 'How language creates openness',
-        detail: 'Threat language ("we need to talk") can trigger defensiveness before understanding—reframing invites curiosity instead'
+        detail:
+          'Threat-coded language can trigger defensiveness before understanding, while a softer opening leaves more room for curiosity.',
       },
       {
         name: 'Body response',
         description: 'What happens before thinking',
-        detail: 'The body closes before thinking happens—defensiveness precedes comprehension until they feel safe'
-      }
-    ]
+        detail:
+          'The nervous system often closes before reflection begins, so wording that feels safer buys you more listening room.',
+      },
+    ],
   },
   {
     id: '2',
     type: 'perspective',
     icon: IconPerspective,
-    title: 'Their likely interpretation',
-    content: 'They may be hearing criticism and threat. Their body may close before you finish the question.',
+    title: 'Their likely read',
+    content:
+      'They may be hearing criticism first. If that happens, their body can brace before they fully understand what you mean.',
     sources: [
       {
         name: 'Relational history',
         description: 'Their protective patterns',
-        detail: 'Past experiences with criticism can activate defense armor before they understand your intent'
+        detail:
+          'Past experiences with criticism can activate protection quickly, especially when the opening feels sudden or loaded.',
       },
       {
         name: 'Sensitivity to pressure',
         description: 'What they may already be feeling',
-        detail: 'They may absorb stress from others—if already managing pressure, threat detection increases'
-      }
-    ]
+        detail:
+          'If they are already carrying stress, even practical language can sound more confrontational than you intended.',
+      },
+    ],
   },
   {
     id: '3',
     type: 'simulation',
     icon: IconSimulations,
-    title: 'Try leading with validation',
-    content: 'If you say "I know this is hard for you" first → They feel heard → Then the question lands → They can listen',
+    title: 'Validation-first path',
+    content:
+      'If you start with “I know this is hard for you,” they are more likely to feel seen first and stay present for the rest of the conversation.',
     sources: [
       {
         name: 'Safety before solving',
         description: 'How the nervous system works',
-        detail: 'Validation signals safety first—helps them shift from reactive to thinking mode before problem-solving'
+        detail:
+          'Validation can create enough safety for them to stay collaborative instead of shifting into reaction.',
       },
       {
         name: 'What may help now',
         description: 'Connection before correction',
-        detail: 'Leading with empathy matches what they need in this moment—increases receptivity and repair likelihood'
-      }
-    ]
+        detail:
+          'A first move that feels empathic often changes the entire shape of the conversation.',
+      },
+    ],
   },
 ]
 
+const scenarioTone = {
+  rewrite: 'border-white/10 bg-white/[0.045]',
+  perspective: 'border-secondary/16 bg-gradient-to-br from-secondary/10 via-secondary/5 to-black/18',
+  simulation: 'border-primary/18 bg-gradient-to-br from-primary/12 via-primary/6 to-black/18',
+}
+
 export function BranchThread() {
   return (
-    <div className="flex-1 overflow-y-auto space-y-4 p-4">
-      {/* Header */}
-      <div className="sticky top-0 bg-background/80 backdrop-blur-sm pb-3 mb-2 border-b border-border/30">
-        <p className="text-xs font-semibold text-foreground/80 tracking-wider uppercase">Try another approach</p>
-        <p className="text-xs text-muted-foreground/60 font-light mt-1">Alternative ways to land this conversation</p>
-      </div>
-
-      {/* Scenario Cards */}
-      {scenarios.map((scenario) => {
-        const Icon = scenario.icon
-        return (
-        <div key={scenario.id} className="space-y-2 animate-in fade-in-50">
-          <div className="flex items-center gap-2 px-1">
-            <Icon className={`w-5 h-5 ${
-              scenario.type === 'simulation'
-                ? 'text-primary/90'
-                : scenario.type === 'rewrite'
-                ? 'text-secondary/80'
-                : 'text-muted-foreground/70'
-            }`} />
-            <span className={`text-xs font-semibold tracking-wide uppercase ${
-              scenario.type === 'simulation'
-                ? 'text-primary'
-                : scenario.type === 'rewrite'
-                ? 'text-secondary/90'
-                : 'text-muted-foreground/80'
-            }`}>
-              {scenario.title}
-            </span>
-          </div>
-          <div className={`px-4 py-3.5 rounded-lg border transition-all ${
-            scenario.type === 'simulation'
-              ? 'bg-primary/12 border-primary/30 ring-1 ring-primary/10'
-              : 'bg-secondary/10 border-secondary/30'
-          }`}>
-            <p className="text-sm leading-relaxed font-light text-foreground">
-              {scenario.content}
-            </p>
-            {scenario.sources && (
-              <BasedOnDisclosure sources={scenario.sources} />
-            )}
-          </div>
+    <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4 sm:py-5">
+      <div className="mx-auto max-w-xl space-y-4">
+        <div className="sticky top-0 z-10 rounded-[1.4rem] border border-white/8 bg-[#0b0d14]/92 px-4 py-3 backdrop-blur-xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">Branch lane</p>
+          <p className="mt-1 text-sm text-white/72">Alternate ways this moment could land.</p>
         </div>
-      )
-      })}
+
+        {scenarios.map((scenario) => {
+          const Icon = scenario.icon
+
+          return (
+            <div
+              key={scenario.id}
+              className={`overflow-hidden rounded-[1.5rem] border p-4 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-5 ${scenarioTone[scenario.type]}`}
+            >
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-white/82">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">
+                      {scenario.type === 'simulation' ? 'Practice path' : scenario.type === 'rewrite' ? 'Rewrite' : 'Perspective'}
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-white/90">{scenario.title}</p>
+                  </div>
+                </div>
+
+                <p className="text-[15px] leading-7 text-white/82 sm:text-base">{scenario.content}</p>
+
+                <div className="flex flex-wrap gap-2">
+                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                    Try this wording
+                  </button>
+                  <button className="inline-flex min-h-10 items-center rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-sm font-medium text-white/72 transition-colors hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+                    Compare to primary lane
+                  </button>
+                </div>
+
+                {scenario.sources && <BasedOnDisclosure compactLabel="Why this path may land better" sources={scenario.sources} />}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

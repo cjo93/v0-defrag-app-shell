@@ -1,10 +1,43 @@
 'use client'
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { useState } from 'react'
+import Link from 'next/link'
 
 type OnboardingStep = 'welcome' | 'why' | 'profile' | 'complete'
+
+const frameworkCards = [
+  {
+    title: 'Astrology',
+    description: 'A timing lens. It helps Defrag notice where pressure, intensity, or sensitivity may be louder than usual.',
+  },
+  {
+    title: 'Human Design',
+    description: 'A decision and energy lens. It helps explain how you tend to process, pace, and respond when you feel overloaded.',
+  },
+  {
+    title: 'Gene Keys',
+    description: 'A growth-pattern lens. It helps surface the emotional themes you may revisit when connection gets hard.',
+  },
+  {
+    title: 'Numerology',
+    description: 'A cycle lens. It helps highlight recurring emphasis, rhythm, and relational themes over time.',
+  },
+]
+
+const fieldExplainers = [
+  {
+    label: 'Date of birth',
+    detail: 'Used to anchor your baseline timing and pattern layers.',
+  },
+  {
+    label: 'Birth time',
+    detail: 'Helpful for a more precise baseline. If you do not know it yet, you can add it later.',
+  },
+  {
+    label: 'Birth location',
+    detail: 'Used to calculate your baseline accurately and keep the symbolic layers consistent.',
+  },
+]
 
 export default function OnboardingPage() {
   const [step, setStep] = useState<OnboardingStep>('welcome')
@@ -13,254 +46,216 @@ export default function OnboardingPage() {
   const [birthLocation, setBirthLocation] = useState('')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/3 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Ambient background */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-primary/15 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-secondary/10 to-transparent blur-3xl"></div>
-      </div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.16),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.08),transparent_22%),linear-gradient(180deg,#05060a_0%,#080a11_42%,#05060a_100%)] px-4 py-6 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl space-y-5">
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/38">Baseline onboarding</p>
+            <h1 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-white/92 sm:text-3xl">Build your Defrag baseline</h1>
+          </div>
+          <Link href="/dashboard" className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/72 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white">
+            Back
+          </Link>
+        </div>
 
-      <div className="w-full max-w-2xl relative z-10">
-        {/* Welcome Step */}
         {step === 'welcome' && (
-          <div className="space-y-8 text-center animate-in fade-in-50 duration-500">
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight text-balance">
-                Welcome to DEFRAG
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground/80 font-light text-balance max-w-xl mx-auto">
-                A relational intelligence platform that helps you see interactions from more than one side
+          <div className="space-y-4">
+            <div className="grid gap-3 md:grid-cols-3">
+              {[
+                'Plain-language baseline setup',
+                'Privacy and trust kept visible',
+                'Built to feel calm on iPhone too',
+              ].map((item) => (
+                <div key={item} className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] px-4 py-4 text-sm text-white/68 backdrop-blur">
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[1.9rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur xl:p-8">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Start here</p>
+              <h2 className="mt-4 max-w-[12ch] text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-5xl">
+                Make your baseline feel solid before the hard moments arrive.
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-white/68">
+                Defrag uses a small set of birth details to create a steadier read on your pressure patterns, relational pacing, and recurring themes. This becomes the background layer for the workspace.
               </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setStep('why')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
+                >
+                  Start baseline
+                </button>
+                <button
+                  onClick={() => setStep('profile')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                >
+                  I already know my details
+                </button>
+              </div>
             </div>
 
-            <div className="pt-4">
-              <button
-                onClick={() => setStep('why')}
-                className="inline-flex items-center justify-center px-10 py-5 text-lg font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-foreground/20 transition-all duration-300"
-              >
-                Get Started
-              </button>
+            <div className="rounded-[1.9rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6 xl:p-8">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">What this unlocks</p>
+              <div className="mt-5 space-y-3">
+                {[
+                  'A clearer read on how you sound under pressure.',
+                  'More stable timing and pattern context in the workspace.',
+                  'A calmer baseline for repair, pacing, and reconnection.',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-3 text-sm leading-6 text-white/72">
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
           </div>
         )}
 
-        {/* Why We Ask Step */}
         {step === 'why' && (
-          <div className="space-y-10 animate-in fade-in-50 duration-500">
-            <div className="space-y-4 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight text-balance">
-                Build Your Baseline
-              </h2>
-              <p className="text-lg text-muted-foreground/80 font-light text-balance max-w-lg mx-auto">
-                DEFRAG uses your birth details to create a foundational relational profile—understanding how you tend to show up in connection, conflict, and under pressure
-              </p>
-            </div>
-
-            <div className="p-8 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/40 space-y-6">
-              <h3 className="text-lg font-bold text-foreground">What DEFRAG looks at</h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Astrology</p>
-                    <p className="text-xs text-muted-foreground/80 font-light mt-1">Helps understand timing, pressure, and how certain themes may be active</p>
+          <div className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Why we ask</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-white/92">A simple explanation of the inputs</h2>
+              <div className="mt-5 space-y-3">
+                {fieldExplainers.map((item) => (
+                  <div key={item.label} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4">
+                    <p className="text-sm font-semibold text-white/86">{item.label}</p>
+                    <p className="mt-2 text-sm leading-6 text-white/62">{item.detail}</p>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Human Design</p>
-                    <p className="text-xs text-muted-foreground/80 font-light mt-1">Helps understand how you process energy, decisions, and stress</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Gene Keys</p>
-                    <p className="text-xs text-muted-foreground/80 font-light mt-1">Helps understand recurring growth patterns and emotional themes</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 12 12">
-                      <circle cx="6" cy="6" r="5" />
-                    </svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Numerology</p>
-                    <p className="text-xs text-muted-foreground/80 font-light mt-1">Helps understand cycles, emphasis, and pattern timing</p>
-                  </div>
-                </div>
+                ))}
+              </div>
+              <div className="mt-6 rounded-2xl border border-emerald-400/16 bg-emerald-400/8 px-4 py-4 text-sm leading-6 text-emerald-100/86">
+                Defrag does not need you to know everything perfectly to begin. You can start with what you know and refine your baseline later.
               </div>
             </div>
 
-            <div className="p-6 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/25">
-              <p className="text-sm text-foreground/90 font-light leading-relaxed">
-                <span className="font-semibold">These are lenses, not beliefs.</span> DEFRAG synthesizes patterns from multiple frameworks to give you clearer relational awareness. When another person is added, DEFRAG compares both profiles and the live situation to show where meaning may be splitting.
-              </p>
-            </div>
+            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Frameworks in plain language</p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {frameworkCards.map((card) => (
+                  <div key={card.title} className="rounded-2xl border border-white/8 bg-black/18 p-4">
+                    <p className="text-sm font-semibold text-white/88">{card.title}</p>
+                    <p className="mt-2 text-sm leading-6 text-white/62">{card.description}</p>
+                  </div>
+                ))}
+              </div>
 
-            <div className="flex gap-4">
-              <button
-                onClick={() => setStep('welcome')}
-                className="flex-1 inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-foreground bg-transparent border-2 border-foreground/20 rounded-xl hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-200"
-              >
-                Back
-              </button>
-              <button
-                onClick={() => setStep('profile')}
-                className="flex-1 inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/20 transition-all duration-200"
-              >
-                Continue
-              </button>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setStep('welcome')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() => setStep('profile')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
+                >
+                  Continue to details
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Profile Entry Step */}
         {step === 'profile' && (
-          <div className="space-y-8 animate-in fade-in-50 duration-500">
-            <div className="space-y-4 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight text-balance">
-                Enter Your Birth Details
-              </h2>
-              <p className="text-lg text-muted-foreground/80 font-light text-balance max-w-lg mx-auto">
-                This information creates your foundational relational baseline
-              </p>
+          <div className="grid gap-4 xl:grid-cols-[1fr_0.82fr]">
+            <div className="rounded-[1.8rem] border border-white/8 bg-white/[0.04] p-6 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Your details</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-white/92">Enter what you know</h2>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <label className="space-y-2 sm:col-span-1">
+                  <span className="text-sm font-semibold text-white/82">Date of birth</span>
+                  <input
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    className="w-full rounded-2xl border border-white/10 bg-black/18 px-4 py-3 text-sm text-white outline-none transition focus:border-white/18"
+                  />
+                </label>
+
+                <label className="space-y-2 sm:col-span-1">
+                  <span className="text-sm font-semibold text-white/82">Birth time</span>
+                  <input
+                    type="time"
+                    value={birthTime}
+                    onChange={(e) => setBirthTime(e.target.value)}
+                    className="w-full rounded-2xl border border-white/10 bg-black/18 px-4 py-3 text-sm text-white outline-none transition focus:border-white/18"
+                  />
+                </label>
+
+                <label className="space-y-2 sm:col-span-2">
+                  <span className="text-sm font-semibold text-white/82">Birth location</span>
+                  <input
+                    type="text"
+                    placeholder="City, state, country"
+                    value={birthLocation}
+                    onChange={(e) => setBirthLocation(e.target.value)}
+                    className="w-full rounded-2xl border border-white/10 bg-black/18 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/28 focus:border-white/18"
+                  />
+                </label>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/62">
+                If your birth time is uncertain, you can keep going. Defrag will still build a useful baseline and let you refine it later.
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setStep('why')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() => setStep('complete')}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
+                >
+                  Build baseline
+                </button>
+              </div>
             </div>
 
-            <div className="p-8 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/40 space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground">Birth Date</label>
-                <input
-                  type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-background border border-border/60 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                />
+            <div className="rounded-[1.8rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Trust and privacy</p>
+              <div className="mt-5 space-y-3">
+                {[
+                  'These details are used to build your baseline, not to turn the UI into jargon.',
+                  'The symbolic layers stay behind the scenes unless you choose to open them.',
+                  'The goal is clearer relational context, not abstract language.',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-black/18 px-4 py-4 text-sm leading-6 text-white/72">
+                    {item}
+                  </div>
+                ))}
               </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground">Birth Time</label>
-                <input
-                  type="time"
-                  value={birthTime}
-                  onChange={(e) => setBirthTime(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-background border border-border/60 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                />
-                <p className="text-xs text-muted-foreground/70 font-light">If unknown, use 12:00 PM as an estimate</p>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground">Birth Location</label>
-                <input
-                  type="text"
-                  value={birthLocation}
-                  onChange={(e) => setBirthLocation(e.target.value)}
-                  placeholder="City, State/Country"
-                  className="w-full px-4 py-3 rounded-lg bg-background border border-border/60 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="p-6 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/25">
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-                <div>
-                  <p className="text-sm font-semibold text-foreground mb-1">What Stays Private</p>
-                  <p className="text-xs text-muted-foreground/80 font-light leading-relaxed">
-                    Your birth details are used to generate your baseline profile. They are never shared with other users. When relationships are added, DEFRAG compares synthesized patterns, not raw birth data.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={() => setStep('why')}
-                className="flex-1 inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-foreground bg-transparent border-2 border-foreground/20 rounded-xl hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-200"
-              >
-                Back
-              </button>
-              <button
-                onClick={() => setStep('complete')}
-                disabled={!birthDate || !birthLocation}
-                className="flex-1 inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                Complete Setup
-              </button>
             </div>
           </div>
         )}
 
-        {/* Complete Step */}
         {step === 'complete' && (
-          <div className="space-y-8 text-center animate-in fade-in-50 duration-500">
-            <div className="space-y-6">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500/25 to-emerald-500/10 border border-emerald-500/40 mx-auto">
-                <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight text-balance">
-                  Your Baseline Is Ready
-                </h2>
-                <p className="text-lg text-muted-foreground/80 font-light text-balance max-w-lg mx-auto">
-                  DEFRAG is building your relational profile across multiple lenses. This will help you understand interactions with more clarity and composure.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/25 space-y-4">
-              <h3 className="text-base font-bold text-foreground">What happens next</h3>
-              <ul className="space-y-3 text-left">
-                <li className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/20 flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-primary">1</span>
-                  </span>
-                  <p className="text-sm text-foreground/90 font-light">Your dashboard shows your baseline and current relational context</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/20 flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-primary">2</span>
-                  </span>
-                  <p className="text-sm text-foreground/90 font-light">Bring a specific moment or conversation to the workspace for clarity</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/20 flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-primary">3</span>
-                  </span>
-                  <p className="text-sm text-foreground/90 font-light">Add relationships to see how dynamics shift when both profiles are compared</p>
-                </li>
-              </ul>
-            </div>
-
-            <div className="pt-4">
+          <div className="rounded-[1.9rem] border border-primary/16 bg-gradient-to-br from-primary/12 via-primary/6 to-black/16 p-6 text-center backdrop-blur sm:p-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">Baseline ready</p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-white/92">Your Defrag baseline is ready to use.</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/66">
+              You now have a steadier starting point for timing, pressure, and relational pattern reads across the workspace and dashboard.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center justify-center px-10 py-5 text-lg font-semibold text-background bg-foreground rounded-xl hover:scale-[1.02] hover:shadow-2xl hover:shadow-foreground/20 transition-all duration-300"
+                className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/92"
               >
-                Go to Dashboard
+                Go to dashboard
+              </Link>
+              <Link
+                href="/workspace"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-sm font-semibold text-white/80 transition hover:border-white/16 hover:bg-white/[0.08] hover:text-white"
+              >
+                Open workspace
               </Link>
             </div>
           </div>

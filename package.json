@@ -65,12 +65,14 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/node": "^22",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@typescript-eslint/parser": "^8.58.2",
     "eslint": "^10.2.0",
+    "eslint-config-next": "16.2.0",
     "lightningcss-darwin-arm64": "1.31.1",
     "postcss": "^8.5",
     "tailwindcss": "^4.2.0",

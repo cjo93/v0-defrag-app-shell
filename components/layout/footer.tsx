@@ -1,94 +1,66 @@
-'use client'
-
 import Link from 'next/link'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+
+const footerLinks = [
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/learn', label: 'Learn' },
+  { href: '/invite', label: 'Invite' },
+  { href: '/settings', label: 'Settings' },
+]
 
 export function Footer() {
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = () => {
-    if (email && message) {
-      setSubmitted(true)
-      setTimeout(() => {
-        setEmail('')
-        setMessage('')
-        setSubmitted(false)
-      }, 2000)
-    }
-  }
-
   return (
-    <footer className="border-t border-border/40 bg-card/40 backdrop-blur-sm mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-12">
-          {/* About */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">About</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Defrag reveals relational context. Understand what changed the meaning before the moment breaks.
+    <footer className="border-t border-white/8 bg-[#06080f] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div className="space-y-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/74">
+              Defrag
+            </span>
+            <h3 className="max-w-xl text-2xl font-semibold tracking-[-0.04em] text-white/92 sm:text-3xl">
+              A premium relational workspace built to slow the moment down before it hardens.
+            </h3>
+            <p className="max-w-2xl text-sm leading-7 text-white/60">
+              Keep the language plain, keep the field visible, and keep privacy explicit. This surface is designed to
+              feel steady before billing and auth are fully wired for launch.
             </p>
           </div>
 
-          {/* How It Works */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">How It Works</h4>
-            <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition">Learn more</Link></li>
-              <li><Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition">See pricing</Link></li>
-              <li><Link href="/workspace" className="text-sm text-muted-foreground hover:text-foreground transition">Try workspace</Link></li>
-              <li><Link href="/learn" className="text-sm text-muted-foreground hover:text-foreground transition">Educational resources</Link></li>
-            </ul>
-          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.04] p-5 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">Move through the product</p>
+              <div className="mt-4 space-y-3">
+                {footerLinks.map((item) => (
+                  <Link key={item.href} href={item.href} className="block text-sm text-white/68 transition hover:text-white/88">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-foreground text-sm mb-4 tracking-widest uppercase">Contact</h4>
-            <div className="space-y-3">
-              <div>
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40"
-                />
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Message..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="bg-background border-border/40 text-foreground text-sm placeholder:text-muted-foreground/40 resize-none h-20"
-                />
-              </div>
-              <Button
-                onClick={handleSubmit}
-                size="sm"
-                disabled={submitted}
-                className="w-full text-xs"
-              >
-                {submitted ? 'Sent' : 'Send'}
-              </Button>
-              <p className="text-xs text-muted-foreground/60 font-light">
-                Sends to chadowen93@gmail.com
+            <div className="rounded-[1.6rem] border border-white/8 bg-gradient-to-br from-primary/12 via-primary/5 to-black/20 p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">Next best action</p>
+              <p className="mt-3 text-sm leading-6 text-white/72">
+                Use the dashboard for signal grouping, then move into the workspace when wording and timing matter.
               </p>
+              <Link
+                href="/dashboard"
+                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 text-sm font-semibold text-black transition hover:bg-white/92"
+              >
+                Open command center
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground/60">&copy; 2026 Defrag. All rights reserved.</p>
-            <div className="text-xs text-muted-foreground/60">
-              <Link href="/login" className="hover:text-foreground transition">Login</Link>
-              <span className="mx-2">•</span>
-              <Link href="/signup" className="hover:text-foreground transition">Signup</Link>
-            </div>
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/8 pt-6 text-xs text-white/34 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; 2026 Defrag. Calm, premium, plain-language relational intelligence.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="transition hover:text-white/74">
+              Sign in
+            </Link>
+            <Link href="/workspace" className="transition hover:text-white/74">
+              Workspace
+            </Link>
           </div>
         </div>
       </div>
