@@ -1,5 +1,11 @@
 'use client'
 
+<<<<<<< HEAD
+import { Sidebar } from '@/components/layout/sidebar'
+import { Button } from '@/components/ui/button'
+import { PeopleScopeSelector } from '@/components/people/people-scope-selector'
+=======
+>>>>>>> origin/main
 import Link from 'next/link'
 import { useState } from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
@@ -136,6 +142,41 @@ export default function DashboardPage() {
           </div>
         </div>
 
+<<<<<<< HEAD
+        {/* Main content */}
+        <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-10">
+          {/* Welcome section */}
+          <div className="space-y-1.5">
+            <h2 className="text-2xl font-bold text-foreground tracking-tight">Welcome back</h2>
+            <p className="text-muted-foreground/70 text-sm font-light">
+              Your relational command center
+            </p>
+          </div>
+
+          <PeopleScopeSelector />
+
+          {/* Layer 1: Baseline Profile - Shows completion state or populated baseline */}
+          {!hasCompletedBaseline ? (
+            /* Baseline Setup Required State */
+            <div className="relative p-10 rounded-2xl bg-gradient-to-br from-amber-500/12 via-amber-500/6 to-amber-500/3 border border-amber-500/30 space-y-6 overflow-hidden group hover:border-amber-500/45 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/8 via-transparent to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"></div>
+              
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-500/15 border border-amber-500/40 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-amber-500/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 space-y-3">
+                    <div>
+                      <p className="text-lg font-bold text-foreground tracking-tight">Complete Your Baseline</p>
+                      <p className="text-sm text-muted-foreground/80 font-light mt-1">Your relational profile unlocks after setup</p>
+                    </div>
+                    <p className="text-sm text-foreground/90 leading-relaxed font-light">
+                      DEFRAG builds your baseline through birth details to understand how you show up in relationships, under pressure, and in conflict. This becomes the foundation for all relational guidance.
+                    </p>
+=======
         <main className="min-h-0 flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(94,234,212,0.06),transparent_20%),linear-gradient(180deg,#05060a_0%,#080a11_44%,#05060a_100%)] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
           <div className="mx-auto max-w-6xl space-y-5 lg:space-y-6">
             <section className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
@@ -144,6 +185,7 @@ export default function DashboardPage() {
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/38">Live overview</p>
                     <h2 className="mt-2 text-xl font-semibold text-white/90">What the field is saying right now</h2>
+>>>>>>> origin/main
                   </div>
                   <span className="rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-200/90">
                     Live

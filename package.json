@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint ."
   },
@@ -70,8 +70,10 @@
     "@types/node": "^22",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "eslint": "^9.17.0",
+    "@typescript-eslint/parser": "^8.58.2",
+    "eslint": "^10.2.0",
     "eslint-config-next": "16.2.0",
+    "lightningcss-darwin-arm64": "1.31.1",
     "postcss": "^8.5",
     "tailwindcss": "^4.2.0",
     "tw-animate-css": "1.3.3",
