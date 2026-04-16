@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SharedSessionAnalysisSchema } from "@/lib/workspace/contracts";
 
 export const RationaleBlockSchema = z.object({
   label: z.string(),
@@ -36,6 +37,7 @@ export const DefragStructuredResponseSchema = z.object({
     })
     .nullable()
     .default(null),
+  sharedSessionState: SharedSessionAnalysisSchema,
 });
 
 export type DefragStructuredResponse = z.infer<

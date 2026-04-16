@@ -2,6 +2,7 @@
 
 import { Sidebar } from '@/components/layout/sidebar'
 import { Button } from '@/components/ui/button'
+import { PeopleScopeSelector } from '@/components/people/people-scope-selector'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -37,6 +38,8 @@ export default function DashboardPage() {
               Your relational command center
             </p>
           </div>
+
+          <PeopleScopeSelector />
 
           {/* Layer 1: Baseline Profile - Shows completion state or populated baseline */}
           {!hasCompletedBaseline ? (
