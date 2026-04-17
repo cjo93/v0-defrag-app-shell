@@ -9,10 +9,12 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Defrag',
   description: 'See the interaction from more than one side before the same misunderstanding gets worse.',
-  metadataBase: new URL('https://defrag.app'),
-  alternates: {
-    canonical: '/',
-  },
+  // metadataBase: prefer an explicit public site URL when provided via env in
+  // production. Fall back to the canonical production domain so builds that
+  // don't provide the env still emit correct absolute metadata (SEO/canonical).
+  // Use NEXT_PUBLIC_SITE_URL so deploys can set it (Vercel, Netlify, etc.).
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://defrag.app'),
+  alternates: { canonical: '/' },
   generator: 'v0.app',
   icons: {
     icon: [

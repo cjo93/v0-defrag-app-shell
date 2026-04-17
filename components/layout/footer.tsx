@@ -1,108 +1,66 @@
-"use client"
-
 import Link from 'next/link'
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+
+const footerLinks = [
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/learn', label: 'Learn' },
+  { href: '/invite', label: 'Invite' },
+  { href: '/settings', label: 'Settings' },
+]
 
 export function Footer() {
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e?: React.FormEvent) => {
-    // Prevent full-page reload when the form is submitted via Enter or button
-    e?.preventDefault()
-
-    if (email && message) {
-      setSubmitted(true)
-      setTimeout(() => {
-        setEmail('')
-        setMessage('')
-        setSubmitted(false)
-      }, 2000)
-    }
-  }
-
   return (
-    <footer className="border-t border-white/6 bg-[#0b0c0e] text-stone-300">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-10">
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.7fr_0.9fr]">
-          <div className="space-y-5">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Defrag</p>
-              <h3 className="mt-3 max-w-sm text-3xl font-semibold tracking-tight text-stone-50">
-                See the moment from more than one side before it hardens.
-              </h3>
-            </div>
-            <p className="max-w-md text-sm leading-7 text-stone-400">
-              Defrag is built for the moments where intent, timing, and reception split apart.
+    <footer className="border-t border-white/8 bg-[#06080f] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div className="space-y-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/74">
+              Defrag
+            </span>
+            <h3 className="max-w-xl text-2xl font-semibold tracking-[-0.04em] text-white/92 sm:text-3xl">
+              A premium relational workspace built to slow the moment down before it hardens.
+            </h3>
+            <p className="max-w-2xl text-sm leading-7 text-white/60">
+              Keep the language plain, keep the field visible, and keep privacy explicit. This surface is designed to
+              feel steady before billing and auth are fully wired for launch.
             </p>
           </div>
 
-          <div className="space-y-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Navigate</p>
-            <div className="space-y-2 text-sm text-stone-400">
-              <Link href="/workspace" className="block transition hover:text-stone-50">Workspace</Link>
-              <Link href="/dashboard" className="block transition hover:text-stone-50">Dashboard</Link>
-              <Link href="/pricing" className="block transition hover:text-stone-50">Pricing</Link>
-              <Link href="/learn" className="block transition hover:text-stone-50">Learn</Link>
-              <Link href="/about" className="block transition hover:text-stone-50">About</Link>
-              <Link href="/onboarding" className="block transition hover:text-stone-50">Baseline</Link>
-            </div>
-          </div>
-
-          <div className="space-y-4 rounded-[28px] border border-white/6 bg-[#0f1114]/60 p-5 backdrop-blur-sm">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">Private feedback</p>
-              <p className="mt-2 text-sm leading-6 text-stone-400">Use this channel for product questions, invite concerns, or privacy requests.</p>
-            </div>
-
-            {/* Use a semantic form so Enter submits and screen readers get the expected behaviour */}
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <label htmlFor="footer-email" className="sr-only">Your email</label>
-              <Input
-                id="footer-email"
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
-                aria-label="Your email"
-              />
-
-              <label htmlFor="footer-message" className="sr-only">Message</label>
-              <Textarea
-                id="footer-message"
-                placeholder="Message"
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-                className="h-24 resize-none border-white/10 bg-white/[0.02] text-stone-50 placeholder:text-stone-600"
-                aria-label="Message"
-              />
-
-              <div className="flex items-center gap-3">
-                <Button type="submit" disabled={submitted} className="h-11 rounded-full bg-stone-100 text-sm font-semibold text-stone-950 hover:bg-white">
-                  {submitted ? 'Sent' : 'Send'}
-                </Button>
-
-                {/* Visible status for assistive tech */}
-                <div role="status" aria-live="polite" className="text-sm text-stone-400">
-                  {submitted ? 'Thanks — we received your message.' : ''}
-                </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.04] p-5 backdrop-blur">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">Move through the product</p>
+              <div className="mt-4 space-y-3">
+                {footerLinks.map((item) => (
+                  <Link key={item.href} href={item.href} className="block text-sm text-white/68 transition hover:text-white/88">
+                    {item.label}
+                  </Link>
+                ))}
               </div>
-            </form>
+            </div>
+
+            <div className="rounded-[1.6rem] border border-white/8 bg-gradient-to-br from-primary/12 via-primary/5 to-black/20 p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">Next best action</p>
+              <p className="mt-3 text-sm leading-6 text-white/72">
+                Use the dashboard for signal grouping, then move into the workspace when wording and timing matter.
+              </p>
+              <Link
+                href="/dashboard"
+                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-4 text-sm font-semibold text-black transition hover:bg-white/92"
+              >
+                Open command center
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-stone-500 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Defrag. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/login" className="transition hover:text-stone-50">Login</Link>
-            <Link href="/signup?next=/onboarding" className="transition hover:text-stone-50">Signup</Link>
-            <Link href="/privacy" className="transition hover:text-stone-50">Privacy</Link>
-            <Link href="/terms" className="transition hover:text-stone-50">Terms</Link>
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/8 pt-6 text-xs text-white/34 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; 2026 Defrag. Calm, premium, plain-language relational intelligence.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="transition hover:text-white/74">
+              Sign in
+            </Link>
+            <Link href="/workspace" className="transition hover:text-white/74">
+              Workspace
+            </Link>
           </div>
         </div>
       </div>

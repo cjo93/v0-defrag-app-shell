@@ -3,171 +3,236 @@ import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
 
 const heroSignals = [
-  'For the moments where everyone walks away with a different version of what just happened.',
-  'A clearer read on what is happening between people.',
-  'See the interaction from more than one side before the same misunderstanding gets worse.',
+  { label: 'Interpretation live', value: 'How the moment may be landing' },
+  { label: 'Pressure visible', value: 'Stress and timing in view' },
+  { label: 'Next move clearer', value: 'Practical language to try next' },
 ]
 
-const narrativeSteps = [
+const productLayers = [
   {
-    eyebrow: 'Step 1',
-    title: 'Bring in the moment.',
-    body: 'What was said, what felt off, and what you were trying to convey.',
+    title: 'What may be happening for you',
+    description: 'Separate your intention from your stress so the moment stops collapsing into one feeling.',
   },
   {
-    eyebrow: 'Step 2',
-    title: 'See what may be happening on both sides.',
-    body: 'Intent, impact, pressure, and timing—without collapsing it into a generic chat reply.',
+    title: 'What they may be reacting to',
+    description: 'See how their fears, history, or pressure could be reshaping what they hear.',
   },
   {
-    eyebrow: 'Step 3',
-    title: 'Leave with a clearer next move.',
-    body: 'A safer opening, a better window, or a branch you can actually try.',
+    title: 'What may help next',
+    description: 'Get a calmer next step with language that protects connection instead of escalating friction.',
   },
 ]
 
-const valueBullets = [
+const workspaceArtifacts = [
   {
-    title: 'How a message may land before you send it',
-    body: 'Preview likely reads so you are not guessing after the fact.',
+    title: 'Relational map',
+    subtitle: 'Selected · generating',
+    tone: 'from-primary/20 via-primary/10 to-transparent',
   },
   {
-    title: 'Why someone became defensive, distant, or overwhelmed',
-    body: 'Name the pressure shaping the reaction—not just the words on the surface.',
+    title: 'System view',
+    subtitle: 'Ready · family context',
+    tone: 'from-secondary/20 via-secondary/10 to-transparent',
   },
   {
-    title: 'Whether to clarify, wait, repair, or stop pushing',
-    body: 'Choose a move that matches the field, not only your urgency.',
+    title: 'Simulations',
+    subtitle: 'Ready · alternate openings',
+    tone: 'from-amber-500/20 via-amber-500/10 to-transparent',
   },
   {
-    title: 'What kind of wording has a better chance of being heard',
-    body: 'Shift language so care arrives before threat.',
-  },
-]
-
-const productPlanes = [
-  {
-    title: 'Field',
-    body: 'A live canvas for intent, impact, and pressure.',
-  },
-  {
-    title: 'Simulation',
-    body: 'Alternate framings without losing the source thread.',
-  },
-  {
-    title: 'Baseline',
-    body: 'Patterns and context that keep compounding over time.',
+    title: 'Timing view',
+    subtitle: 'Queued · pressure scan',
+    tone: 'from-sky-500/20 via-sky-500/10 to-transparent',
   },
 ]
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0d0e10] text-stone-100">
+    <div className="min-h-screen bg-[#05060a] text-foreground">
       <Navbar />
 
-      <main className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(199,160,92,0.18),_transparent_26%),radial-gradient(circle_at_80%_16%,_rgba(72,117,125,0.16),_transparent_24%),linear-gradient(180deg,_#101113_0%,_#0b0c0e_100%)] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <section className="relative isolate border-b border-white/8">
-          <div className="absolute inset-0 opacity-50">
-            <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
-            <div className="absolute inset-y-0 left-[7%] w-px bg-white/5" />
-            <div className="absolute inset-y-0 right-[7%] w-px bg-white/5" />
-          </div>
+      <main className="overflow-hidden">
+        <section className="relative border-b border-white/8">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(135,89,255,0.18),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(94,234,212,0.12),transparent_28%),linear-gradient(180deg,#07080d_0%,#05060a_46%,#080a12_100%)]" />
+          <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:120px_120px]" />
+          <div className="pointer-events-none absolute left-[-8rem] top-20 h-72 w-72 rounded-full bg-primary/18 blur-3xl md:h-[28rem] md:w-[28rem]" />
+          <div className="pointer-events-none absolute bottom-[-10rem] right-[-6rem] h-80 w-80 rounded-full bg-secondary/12 blur-3xl md:h-[34rem] md:w-[34rem]" />
 
-          <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1440px] grid-cols-1 gap-10 px-4 pb-10 pt-8 sm:px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(min(100%,560px),1fr)] lg:px-10 lg:pb-14 lg:pt-10">
-            <div className="relative flex flex-col justify-between gap-10 lg:py-10">
-              <div className="space-y-8">
-                <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-300 backdrop-blur-sm">
-                  <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
-                  DEFRAG relational intelligence
+          <div className="relative mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center gap-10 px-4 pb-12 pt-6 sm:px-6 md:gap-16 md:pb-20 lg:grid-cols-[0.88fr_1.12fr] lg:px-8 lg:pb-24 lg:pt-10">
+            <div className="max-w-xl space-y-7 md:space-y-10">
+              <div className="space-y-5">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/78 backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.9)]" />
+                  DEFRAG
                 </div>
-                <div className="max-w-xl space-y-4">
-                  <p className="text-sm font-medium uppercase tracking-[0.28em] text-stone-500">Relational intelligence</p>
-                  <h1 className="text-balance text-[2.35rem] font-semibold leading-[1.02] tracking-[-0.04em] text-stone-50 sm:text-[3.25rem] lg:text-[4.25rem]">
-                    Before you answer, see the other side.
+
+                <div className="space-y-4">
+                  <h1 className="max-w-[11ch] text-[2.8rem] font-semibold leading-[0.94] tracking-[-0.05em] text-white sm:text-[4.15rem] md:text-[4.9rem] lg:text-[5.5rem]">
+                    See what the moment may be doing to both of you.
                   </h1>
-                  <p className="max-w-lg text-base leading-7 text-stone-300 sm:text-lg">
-                    Defrag helps you see how the moment may be landing on the other side, why it feels so different from your intent, and what to do next.
+                  <p className="max-w-lg text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
+                    Defrag helps you slow the interaction down, see what they may be reacting to, and choose a calmer next move before the misunderstanding hardens.
                   </p>
-                  <p className="max-w-lg text-sm leading-6 text-stone-500">See the pattern, the pressure, and the repair opening before the same conflict repeats.</p>
-                  <p className="text-xs text-stone-400 mt-1">Not a chatbot. A relational intelligence system for moments that can still go either way.</p>
                 </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row items-start">
-                  <Link href="/workspace" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 shadow-[0_22px_60px_rgba(0,0,0,0.42)] ring-1 ring-white/20 transition hover:-translate-y-px hover:bg-white">
-                    Open Workspace
-                  </Link>
-                  <Link href="/pricing" className="inline-flex h-14 min-h-[48px] items-center justify-center rounded-full border border-white/12 bg-white/[0.04] px-8 text-sm font-semibold text-stone-100 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md transition hover:bg-white/[0.08]">
-                    See Pricing
-                  </Link>
-                </div>
-
-                {/* left column: kept minimal per hotfix — eyebrow, headline, subhead, support line, anti-chatbot, CTAs only */}
               </div>
 
-              {/* removed the lower 3 proof blurbs to simplify hero (hotfix) */}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href="/workspace"
+                  className="inline-flex h-13 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92 hover:shadow-[0_18px_45px_rgba(255,255,255,0.14)]"
+                >
+                  Open Workspace
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="inline-flex h-13 items-center justify-center rounded-full border border-white/14 bg-white/6 px-6 text-sm font-semibold text-white/86 backdrop-blur transition-colors duration-300 hover:border-white/24 hover:bg-white/10"
+                >
+                  View Command Center
+                </Link>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {heroSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3.5 backdrop-blur-md"
+                  >
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">{signal.label}</p>
+                    <p className="mt-2 text-sm leading-6 text-white/74">{signal.value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Right column: simplified premium hero card (single-card composition) */}
-            <div className="relative min-h-[min(560px,68svh)] overflow-hidden rounded-[28px] border border-white/8 bg-gradient-to-b from-[#0f1114] to-[#060708] text-stone-100 shadow-[0_40px_120px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.04]">
-              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_12%_18%,_rgba(223,191,123,0.08),_transparent_20%),radial-gradient(circle_at_80%_16%,_rgba(98,137,145,0.06),_transparent_22%)]" />
-
-              <div className="relative flex h-full flex-col p-6 lg:p-8">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">LIVE READ</p>
-                    <p className="mt-1 text-sm font-medium text-stone-100">Session · Misread intent · pattern</p>
+            <div className="relative lg:pl-6">
+              <div className="absolute inset-x-8 top-8 h-32 rounded-full bg-primary/20 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0b0d14]/88 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:rounded-[2rem]">
+                <div className="border-b border-white/8 bg-white/[0.03] px-4 py-3 sm:px-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/14" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/14" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/14" />
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/52">Live workspace</p>
+                        <p className="text-sm text-white/72">Late-night conversation repair</p>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-200/90">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(110,231,183,0.9)]" />
+                      Field active
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-4 grid gap-4 lg:grid-cols-[1fr]">
-                  <div className="p-0">
-                    <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">USER MOMENT</div>
-                    <p className="mt-3 text-sm leading-7 text-stone-100 font-medium">“Why do you always go quiet when I bring this up?”</p>
+                <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
+                  <div className="border-b border-white/8 bg-gradient-to-b from-white/[0.03] to-transparent p-4 sm:p-5 lg:border-b-0 lg:border-r">
+                    <div className="space-y-4">
+                      <div className="rounded-2xl border border-primary/18 bg-primary/8 p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/78">What they may be hearing</p>
+                            <p className="mt-2 text-sm leading-6 text-white/78">
+                              “We need to talk” may feel like a threat before the real conversation even starts.
+                            </p>
+                          </div>
+                          <span className="rounded-full border border-primary/20 bg-primary/12 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary/80">
+                            Live
+                          </span>
+                        </div>
+                      </div>
 
-                    <div className="mt-4">
-                      <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500">READ</div>
-                      <p className="mt-2 text-sm text-stone-300">The word “always” likely made the moment land as accusation before concern could be felt.</p>
-
-                      <ul className="mt-3 ml-4 list-inside list-disc text-sm text-stone-300 space-y-1">
-                        <li>accusation before safety</li>
-                        <li>pressure before reflection</li>
-                        <li>being cornered before being understood</li>
-                      </ul>
-                    </div>
-
-                    <div className="mt-4 bg-emerald-300/6 p-3 rounded-md">
-                      <p className="text-sm font-semibold text-stone-100">NEXT MOVE</p>
-                      <p className="mt-2 text-sm text-stone-100">Lower pressure first. Then reopen the topic without blame.</p>
-                    </div>
-
-                    <div className="mt-4">
-                      <p className="text-sm font-semibold text-stone-200">REPAIR OPENING</p>
-                      <div className="mt-2 text-sm text-stone-200">“I’m not trying to pin this on you. I want to understand what happens for you when this comes up.”</div>
+                      <div className="space-y-3">
+                        <div className="rounded-2xl border border-white/8 bg-white/[0.035] p-4">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">What may be happening for you</p>
+                          <p className="mt-2 text-sm leading-6 text-white/72">
+                            You are trying to move the conversation forward, but your urgency may be leaking through as pressure.
+                          </p>
+                        </div>
+                        <div className="rounded-2xl border border-white/8 bg-white/[0.035] p-4">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">What may help next</p>
+                          <p className="mt-2 text-sm leading-6 text-white/72">
+                            Lead with safety first: “I want to understand how this felt on your side.”
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Bottom artifact row: two compact chips/previews */}
-                  <div className="mt-3 flex items-center gap-3">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
-                      <svg className="h-4 w-4 text-emerald-300" viewBox="0 0 8 8" fill="none" aria-hidden>
-                        <circle cx="4" cy="4" r="3" fill="#34D399" />
-                      </svg>
-                      <div className="text-sm text-stone-100">Map live</div>
-                    </div>
+                  <div className="relative p-4 sm:p-5">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_18%,rgba(121,99,255,0.18),transparent_30%),radial-gradient(circle_at_20%_80%,rgba(94,234,212,0.1),transparent_26%)]" />
+                    <div className="relative space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">Artifact field</p>
+                          <p className="text-sm text-white/68">Selected surfaces stay visible while the field updates.</p>
+                        </div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/42">4 surfaces</p>
+                      </div>
 
-                    <div className="inline-flex items-center gap-3 rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 text-sm">
-                      {/* Poster-frame visual: always show a premium fallback gradient + play affordance */}
-                      <div className="relative h-10 w-16 rounded-md overflow-hidden bg-gradient-to-br from-[#15202b] to-[#0b1116] border border-white/4">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(135,89,255,0.08),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_40%)]" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/[0.03]">
-                            <svg className="h-4 w-4 text-white/90" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                              <path d="M8 5v14l11-7z" />
-                            </svg>
+                      <div className="grid grid-cols-2 gap-3">
+                        {workspaceArtifacts.map((artifact, index) => (
+                          <div
+                            key={artifact.title}
+                            className={`group rounded-[1.35rem] border border-white/10 bg-gradient-to-br ${artifact.tone} p-4 transition-transform duration-300 hover:-translate-y-0.5`}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-semibold text-white/90">{artifact.title}</p>
+                                <p className="mt-1 text-xs leading-5 text-white/58">{artifact.subtitle}</p>
+                              </div>
+                              <span
+                                className={`mt-1 h-2 w-2 rounded-full shadow-[0_0_12px_rgba(255,255,255,0.3)] ${
+                                  index === 0 ? 'bg-primary' : 'bg-white/60'
+                                }`}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="rounded-[1.6rem] border border-white/10 bg-[#0e111a]/88 p-4 sm:p-5">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/46">Relational field</p>
+                            <p className="mt-1 text-sm text-white/72">Intensity is rising around timing, defensiveness, and repair.</p>
+                          </div>
+                          <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-200/90">
+                            Pressure high
+                          </span>
+                        </div>
+
+                        <div className="mt-6 grid gap-3 sm:grid-cols-[1.1fr_0.9fr]">
+                          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                            <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-white/44">
+                              <span>Signal drift</span>
+                              <span>62%</span>
+                            </div>
+                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/8">
+                              <div className="h-full w-[62%] rounded-full bg-gradient-to-r from-primary via-secondary to-amber-300 shadow-[0_0_18px_rgba(167,139,250,0.45)]" />
+                            </div>
+                            <div className="mt-4 space-y-2 text-xs text-white/58">
+                              <div className="flex items-center justify-between">
+                                <span>Safety restored by validation</span>
+                                <span className="text-emerald-200/90">+18%</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span>Escalation risk if direct</span>
+                                <span className="text-amber-200/90">Moderate</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/44">Recommended opening</p>
+                            <p className="mt-3 text-sm leading-6 text-white/74">
+                              “I don&apos;t want this to feel like blame. I want to understand what landed badly for you.”
+                            </p>
                           </div>
                         </div>
                       </div>
-                      <div className="text-sm text-stone-100">0:47 explainer</div>
                     </div>
                   </div>
                 </div>
@@ -176,108 +241,49 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="border-b border-white/8 bg-[#0d0e10]">
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-10">
-            <div className="mb-12 max-w-2xl space-y-3">
-              <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">What Defrag helps you see</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-stone-50 sm:text-4xl">
-                Compare intent with likely impact—before the moment hardens.
+        <section className="border-b border-white/8 bg-[#080a11]">
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+            <div className="max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">What Defrag helps you see</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">
+                One field, three clearer questions.
               </h2>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {valueBullets.map((item) => (
-                <div key={item.title} className="py-4">
-                  <h3 className="text-lg font-semibold text-stone-50">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-stone-400">{item.body}</p>
+
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {productLayers.map((layer) => (
+                <div key={layer.title} className="rounded-[1.6rem] border border-white/8 bg-white/[0.035] p-5 sm:p-6">
+                  <p className="text-lg font-semibold text-white/90">{layer.title}</p>
+                  <p className="mt-3 text-sm leading-6 text-white/64">{layer.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="how-it-works" className="border-b border-white/8 bg-[#0d0e10]">
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-10">
-            <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-start">
-              <div className="space-y-4">
-                <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">How it works</p>
-                <h2 className="max-w-md text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl">
-                  A workspace built for interpretation—not another chat window.
-                </h2>
-                <p className="max-w-md text-base leading-7 text-stone-400">
-                  Keep intent, impact, and repair in view at the same time.
-                </p>
-              </div>
-
-              <div className="space-y-8">
-                {narrativeSteps.map((step, index) => (
-                  <div key={step.title} className="grid gap-4 pt-5 sm:grid-cols-[72px_1fr]">
-                    <div className="text-sm font-semibold uppercase tracking-[0.26em] text-stone-500">
-                      0{index + 1} {step.eyebrow}
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-2xl font-semibold tracking-tight text-stone-50">{step.title}</h3>
-                      <p className="max-w-xl text-base leading-7 text-stone-400">{step.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-[#0b0c0e]">
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-10">
-            <div className="grid gap-8 lg:grid-cols-[1fr_0.92fr]">
-              <div className="rounded-[28px] border border-white/8 bg-white/[0.03] p-8 backdrop-blur-sm">
-                <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">What Defrag generates</p>
-                <div className="mt-8 grid gap-8 sm:grid-cols-2">
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-50">Interpretive map</h3>
-                    <p className="mt-2 text-base leading-7 text-stone-400">
-                      A visual field of meaning, defense, and missed signal.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-50">System context</h3>
-                    <p className="mt-2 text-base leading-7 text-stone-400">
-                      Family role, stress pattern, and relational history.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-50">Branch behavior</h3>
-                    <p className="mt-2 text-base leading-7 text-stone-400">
-                      Alternate openings and likely outcomes.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-50">Next move</h3>
-                    <p className="mt-2 text-base leading-7 text-stone-400">
-                      One cleaner response and one better window.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-between rounded-[28px] border border-white/8 bg-[linear-gradient(160deg,rgba(17,18,20,0.96),rgba(10,11,12,0.98))] p-8 text-stone-100">
-                <div>
-                  <p className="text-sm font-medium uppercase tracking-[0.26em] text-stone-500">Built for the moment after impact</p>
-                  <h2 className="mt-4 text-4xl font-semibold tracking-tight text-stone-50">
-                    See the other side before you repeat the same wound.
-                  </h2>
-                </div>
-
-                <div className="mt-10 space-y-4">
-                  <p className="text-base leading-7 text-stone-300">
-                    Defrag is strongest when something already feels off and the usual explanation no longer helps.
-                  </p>
-                  <Link
-                    href="/onboarding"
-                    className="inline-flex h-14 items-center justify-center rounded-full bg-stone-100 px-8 text-sm font-semibold text-slate-950 transition hover:bg-white"
-                  >
-                    Complete baseline
-                  </Link>
-                </div>
-              </div>
+        <section className="relative overflow-hidden bg-[#05060a]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(135,89,255,0.1),transparent_34%)]" />
+          <div className="relative mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8 lg:py-24">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">Ready when the moment matters</p>
+            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl md:text-5xl">
+              Open the workspace before the story hardens.
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/62 sm:text-base">
+              Bring the interaction in as it happened. Defrag helps you see the pressure, the pattern, and the next move with more steadiness.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/workspace"
+                className="inline-flex h-13 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.01] hover:bg-white/92"
+              >
+                Open Workspace
+              </Link>
+              <Link
+                href="/learn"
+                className="inline-flex h-13 items-center justify-center rounded-full border border-white/14 bg-white/6 px-6 text-sm font-semibold text-white/86 backdrop-blur transition-colors duration-300 hover:border-white/24 hover:bg-white/10"
+              >
+                Explore the Framework Layer
+              </Link>
             </div>
           </div>
         </section>
